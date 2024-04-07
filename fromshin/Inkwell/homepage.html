@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>Inkwell System</title>
+</head>
+<body>
+    <div class="container">
+        <div class="transition">
+            <div class = "cover cover1"></div>
+            <div class = "cover cover2"></div>
+            <div class="cover cover3"></div>
+        </div>
+
+        
+
+        <div class="navigation">
+         <div class="navbar">
+             <div class="logo">
+                 <img src = "logo.png">
+                
+                 <nav>
+                    <ul>
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="books.html" >Books</a></li>
+                        <li><a href="about.html" >About us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="login.html" >Log In</a></li>
+                      
+                        
+                     </ul>
+                 </nav>
+                </div>
+            </div>
+        </div>
+    
+     </div>
+      <div class="homeHeading">
+        <h1>DISCOVER OR <br>FIND YOU BOOK OF <br>INTEREST</h1>
+        <p><br><br><br> Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dicta id suscipit natus! Fugiat at totam esse illo? Culpa, 
+            quibusdam id laboriosam odit sequi aperiam labore possimus exercitationem esse. Quasi, nemo?</p>
+        </div>
+     <br><br>
+       
+     <div class="next">
+        <a href="./books.html">Next Page</a>
+    
+        </div>
+    </div>
+    
+    
+    <script>
+        // Get all elements with the class "cover"
+        const covers = document.querySelectorAll('.cover');
+    
+        // Loop through each cover element
+        covers.forEach((cover) => {
+            // Add event listener for the "animationend" event
+            cover.addEventListener('animationend', () => {
+                // Remove the cover from the DOM when animation ends
+                cover.remove();
+            });
+        });
+        </script>
+    
+    
+    <script src="activePage.js"></script>
+</body>
+</html>

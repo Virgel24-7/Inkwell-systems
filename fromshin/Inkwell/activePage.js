@@ -1,0 +1,2 @@
+Barba.Pjax.start();
+
