@@ -8,15 +8,7 @@
     <title>Inkwell System</title>
 </head>
 <body>
-    <div class="container">
-        <div class="transition">
-            <div class = "cover cover1"></div>
-            <div class = "cover cover2"></div>
-            <div class="cover cover3"></div>
-        </div>
-
-        
-
+   
         <div class="navigation">
          <div class="navbar">
              <div class="logo">
@@ -52,19 +44,6 @@
     </div>
     
     
-    <script>
-        // Get all elements with the class "cover"
-        const covers = document.querySelectorAll('.cover');
-    
-        // Loop through each cover element
-        covers.forEach((cover) => {
-            // Add event listener for the "animationend" event
-            cover.addEventListener('animationend', () => {
-                // Remove the cover from the DOM when animation ends
-                cover.remove();
-            });
-        });
-        </script>
     
     
     <script src="activePage.js"></script>
