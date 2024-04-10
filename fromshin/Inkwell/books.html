@@ -7,25 +7,38 @@
     <title>Inkwell System</title>
 </head>
 <body>
-   
-        <div class="navigation">
-            <div class="navbar">
-                <div class="logo">
-                 <img src = "logo.png">
+    
+    <nav>
+        <img src="logo.png">
+
+        <input type="checkbox" id="sidebar-active">
+        <label for="sidebar-active" class="open-sidebar-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32">
+                <path fill="#FFFFFF"d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+            </svg>
+        </label>
+
+        <div class="links-container">
+            <label for="sidebar-active" class="close-sidebar-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32">
+                    <path fill="#FFFFFF" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </label>
+
+         
+            
+           
+                <a class = "home-link" href="homepage.html">Home</a>
+                <a class = "book-link" href="books.html" >Books</a>
+                <a class = "about-link" href="about.html" >About us</a>
+                <a class = "contact-link" href="contact.html">Contact</a>
+                <a class = "login-link" href="login.html" >Log In</a>
+              
                 
-                    <nav>
-                    <ul>
-                        <li><a href="homepage.html">Home</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="login.html">Log In</a></li>
-                      
-                        
-                    </ul>
-                    </nav>
-            </div>
+             
         </div>
+           
+        
+    </nav>
         
      
         <main>
@@ -35,65 +48,10 @@
             <button type="submit"><img src="Search.png"></button>
             </form>
         </div>
-     <div class="books">
-        <div class="card">
-            <div class="imgBx">
-                <a href="#"><img src="harryPotter.jpg"></a>
-                
-            </div>
-            <h2>Harry Potter</h2>
-                <p><br>Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling1. 
-                    The first novel in the series is Harry Potter and the Philosophers Stone.</p>
-        </div>
-        <div class="card">
-            <div class="imgBx">
-                <a href="#"><img src="blueLock.jpg"></a>
-                
-            </div>
-            <h2>Blue Lock</h2>
-                <p><br>[Blue Lock] is a Japanese manga series written by Muneyuki Kaneshiro and illustrated by Yusuke Nomura. 
-                   </p>
-        </div>
-        <div class="card">
-            <div class="imgBx">
-                <a href="#"><img src="soloLeveling.jpg"></a>
-                
-            </div>
-            <h2>Solo Leveling</h2>
-                <p><br>The story is set in a world where humans, 
-                    known as hunters, who possess supernatural abilities, must battle deadly monsters to protect mankind.</p>
-        </div>
-        <div class="card">
-            <div class="imgBx">
-                <a href="#"><img src="initiald.jpg"></a>
-                
-            </div>
-            <h2>Initial D</h2>
-                <p><br>A Japanese street racing manga series written and illustrated by Shuichi Shigeno.</p>
-        </div>
-        <div class="card">
-            <div class="imgBx">
-                <a href="#"><img src="onepiece.jpg"></a>
-                
-            </div>
-            <h2>One Piece</h2>
-                <p><br>One Piece is a manga and anime series that follows Monkey D. Luffy,
-                     a young boy with a dream to become the greatest pirate in the world.</p>
-        </div>
-        <div class="card">
-            <div class="imgBx">
-                <a href="#"><img src="hajime.jpg"></a>
-                
-            </div>
-            <h2>Hajime no ippo</h2>
-                <p><br>A Japanese boxing -themed manga series written and illustrated by George Morikawa.</p>
-        </div>
-
-        </div>
-    </div>
-</div>
+    
     </main>
-   
+    
+    
     <script src="activePage.js"></script>
 </body>
 </html>
