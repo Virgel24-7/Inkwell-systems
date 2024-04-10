@@ -7,26 +7,37 @@
     <title>Inkwell System</title>
 </head>
 <body>
-    <div class="navigation">
-        <div class="navbar">
-            <div class="logo">
-                <img src = "logo.png">
+    <nav>
+        <img src="logo.png">
+
+        <input type="checkbox" id="sidebar-active">
+        <label for="sidebar-active" class="open-sidebar-button">
+            <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32">
+                <path fill="#FFFFFF"d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z"/>
+            </svg>
+        </label>
+
+        <div class="links-container">
+            <label for="sidebar-active" class="close-sidebar-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="32" viewBox="0 -960 960 960" width="32">
+                    <path fill="#FFFFFF" d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+            </label>
+
+         
+            
+           
+                <a class = "home-link" href="homepage.html">Home</a>
+                <a class = "book-link" href="books.html" >Books</a>
+                <a class = "about-link" href="about.html" >About us</a>
+                <a class = "contact-link" href="contact.html">Contact</a>
+                <a class = "login-link" href="login.html" >Log In</a>
+              
                 
-                <nav>
-                    <ul>
-                        <li><a href="homepage.html">Home</a></li>
-                        <li><a href="books.html">Books</a></li>
-                        <li><a href="about.html">About us</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                        <li><a href="login.html">Log In</a></li>
-                      
-                        
-                    </ul>
-                </nav>
-            </div>
+             
         </div>
+           
         
-    </div>
+    </nav>
     <h1>ABOUT US</h1>
     
     
