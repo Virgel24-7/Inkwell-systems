@@ -22,7 +22,7 @@ export const Bookpage = () => {
       <div className="books">
         <Bookcard
           title="Harry Potter"
-          description="Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling1. 
+          description="Harry Potter is a series of seven fantasy novels written by British author J. K. Rowling. 
                             The first novel in the series is Harry Potter and the Philosophers Stone."
           image="harryPotter.jpg"
         />
