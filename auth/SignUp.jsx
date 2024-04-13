@@ -23,20 +23,27 @@ const SignUp = (e) => {
         <div className="sign-in-container">
             <form onSubmit={(signUp)}>
                 <h1>Create Account</h1>
+
+                <div className="input-box">
                 <input 
                 type="email" 
                 placeholder="Email" 
                     value ={email}
                     onChange={(e) => setEmail(e.target.value)}>
                 </input>
-
-                <input 
+                </div>
+                
+                <div className = "input-box">
+                 <input 
                 type="password" 
                 placeholder="Password" 
                     value ={password}
                     onChange={(e) => setPassword(e.target.value)}>
                 </input>
                 <button type="submit">Sign Up User</button>
+                </div>
+        
+               
             </form>
         </div>
     );
