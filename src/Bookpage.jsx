@@ -1,5 +1,4 @@
-import { Bookcard } from "./Bookcard";
-import library from "./Library";
+import { Library } from "./Library";
 
 export const Bookpage = () => {
   return (
@@ -20,24 +19,7 @@ export const Bookpage = () => {
       <br />
       <br />
 
-      <Bookpagemain />
-    </div>
-  );
-};
-
-const Bookpagemain = () => {
-  return (
-    <div className="books">
-      {library.map((book, key) => {
-        return (
-          <Bookcard
-            key={key}
-            title={book.title}
-            description={book.description}
-            image={book.image}
-          />
-        );
-      })}
+      <Library />
     </div>
   );
 };
