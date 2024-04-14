@@ -5,7 +5,8 @@ export const Bookpage = () => {
     <div>
       <div className="search-container">
         <form action="" className="search-bar">
-          <input
+          <input 
+            id="SearchBar"
             type="text"
             placeholder="Search for title, author,classification, and keywords "
           />
@@ -15,6 +16,7 @@ export const Bookpage = () => {
         </form>
       </div>
 
+      <br />
       <br />
       <br />
       <br />
