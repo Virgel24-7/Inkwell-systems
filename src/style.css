@@ -152,6 +152,7 @@ nav ul li a:hover {
   outline: none;
   background: transparent;
   align-items: center;
+  color:#757575;
 }
 .search-bar button {
   appearance: none;
