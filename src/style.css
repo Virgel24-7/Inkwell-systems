@@ -7,55 +7,8 @@
 body {
   background-color: #000000;
   background-position: 10%;
-  overflow: auto;
-}
-.cover {
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  background-color: #8b6913;
-  top: 0;
-  right: -100vw;
-  z-index: 100;
-}
-.cover1 {
-  background-color: white;
-  animation: slide 0.3s ease-in-out forwards;
-}
-.cover2 {
-  background-color: #8b6913;
-  animation: slide 0.3s ease-in-out forwards;
-  animation-delay: 0.3s;
-}
-.cover3 {
-  background-color: black;
-  animation: slide 0.3s ease-in-out forwards;
-  animation-delay: 0.6s;
 }
 
-@keyframes slide {
-  from {
-    right: -100vw;
-  }
-  to {
-    right: 0;
-  }
-}
-
-.navigation {
-  height: 20vh;
-  width: 100%;
-  position: relative;
-  background: transparent;
-}
-
-.navbar {
-  width: 90%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: auto;
-}
 .homeHeading h1 {
   text-align: left;
   margin-left: 5%;
@@ -87,72 +40,145 @@ body {
 }
 
 /*===============================NAV BAR================================*/
-.logo {
-  display: flex;
-  align-items: center;
-}
+nav img{
+  position: fixed;
+  height: 100px;
+  margin-left: 3.2%;
+  left: 10px;
+  z-index: 100;
 
-.logo img {
-  width: 150px;
-  margin-top: 10px;
-  margin-right: 70px;
 }
-
 nav {
+  height: 100px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
+  padding: 0 20px;
+  
+ 
 }
 
-nav ul {
-  list-style: none;
+.links-container{
+  height: 100%;
+  width: 100%;
   display: flex;
-  margin-left: 700px; /* Move the list to the right by using margin-left: auto */
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+ 
 }
-
-nav ul li {
-  margin-left: 30px; /* Adjusted margin-left for spacing between list items */
-}
-
-nav ul li:last-child {
-  margin-right: 0; /* Removed the right margin for the last li item */
-}
-
-nav ul li a {
+nav a{
+  height: 10%;
+  padding: 0 20px;
+  display: inline-block;
+  align-items: center;
   text-decoration: none;
-  color: #999;
-  font-size: 12px;
-  padding: 5px 2px;
+  justify-content: flex-end;
+  
+ 
+
+}
+a{
+  position: relative;
+  text-decoration: none;
+  color: #fff;
+  padding: 0 10px;
+  justify-content: flex-end;
+  
+ 
+}
+a:after{
+  content: "";
+  position: absolute;
+  background-color: #8B6913;
+  height: 3px;
+  width: 0;
+  left: 19px;
+  bottom: -12px;
+}
+a:hover:after{
+  width: 60%;
+}
+#sidebar-active{
+  display: none;
+}
+.open-sidebar-button, .close-sidebar-button{
+  padding: 0 20px;
+  display: none;
+}
+.close-sidebar-button{
+  position: absolute;
+  top: 30px;
+
 }
 
-nav ul li a:hover {
-  color: #fff;
-  border-bottom: 3px solid #eea16d;
+
+
+
+@media(max-width:600px){
+  nav{
+      justify-content: flex-end;
+  }
+  .links-container{
+      display: none;
+      flex-direction:column;
+      align-items: flex-start;
+
+      position:fixed;
+      top: 0;
+      right: 0;
+      z-index: 10;
+      width: 300px;
+      bottom: 50%;
+
+      background-color: #333;
+      box-shadow: -5px 0 5px rgba(0, 0, 0, .25);
+  }
+  nav a{
+      box-sizing: border-box;
+      height: auto;
+      width: 100%;
+      padding: 20px 30px;
+      justify-content: flex-start;
+      bottom: 50%;
+  }
+  .open-sidebar-button, .close-sidebar-button{
+      padding: 0 20px;
+      
+      display: block;
+  }
+  #sidebar-active:checked ~ .links-container{
+      display: flex;
+  }
 }
 /*===============================BOOKS================================*/
 .search-container {
-  display: flex;
+  height: 50vh;
+  width: 50%;
   align-items: center;
   position: relative;
   background: none;
   justify-content: center;
+  left: 520px;
 }
 .search-bar {
-  height: 5%;
-  width: 65%;
-  max-width: 900px;
+  height: 10%;
+  width: 50%;
+  max-width: 700px;
   margin: 20px 50px 20px 50px;
   background: rgba(255, 255, 255, 0.2);
   display: flex;
+
   border-radius: 60px;
-  padding: 2px 20px;
+  padding: 10px 20px;
 }
 .search-bar input {
   flex: 1;
   border: none;
   outline: none;
   background: transparent;
+
   align-items: center;
-  color:#757575;
 }
 .search-bar button {
   appearance: none;
@@ -161,34 +187,40 @@ nav ul li a:hover {
   cursor: pointer;
   border: none;
 }
+
 .search-bar button img {
   height: 60px;
   width: 60px;
   position: relative;
+  bottom: 10px;
   background: transparent;
   border: none;
   outline: none;
   cursor: pointer;
 }
 .books {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  position: relative;
+  width: 1100px;
+  display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 12%;
-  margin-right: 12%;
-  gap: 6rem;
+  flex-wrap: wrap;
+  padding: 30px;
+  margin-top: 8%;
 }
 .card {
-  width: 310px; /* Consider adjusting card width if needed */
+  width: 308px;
   position: relative;
   height: 420px;
   background: #f0f0f0;
+  margin: 30px 10px;
   padding: 20px 15px;
   display: flex;
   flex-direction: column;
   box-shadow: 0.5px 10px #e6e6e6;
   transition: transform 1s;
+  bottom: 400px;
+  left: 200px;
   border-radius: 30px;
 }
 
@@ -205,10 +237,6 @@ nav ul li a:hover {
 
 .imgBx img:hover {
   transform: scale(1.3);
-}
-
-.hide{
-  display: none;
 }
 
 /*===============================LOGIN PAGE================================*/
