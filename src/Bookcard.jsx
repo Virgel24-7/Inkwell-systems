@@ -11,22 +11,31 @@ export const Bookcard = (props) => {
       const url = await getDownloadURL(reference);
       setImgUrl(url);
     };
-  
+
     getImage();
   }, [props.image]);
 
+  const updatePop = () => {
+    props.showPop();
+    props.updatePopContent(props.description);
+  };
+
   return (
-    <div className="card">
-      <div className="imgBx">
-        <a href="#">
-          <img src={imgUrl} />
-        </a>
+    <div>
+      <div className="card">
+        <div className="imgBx">
+          <a href="#">
+            <img src={imgUrl} />
+          </a>
+        </div>
+        <h2>{props.title}</h2>
+        <div>
+          <br />
+          <button onClick={updatePop}>Show Description</button>
+          <p>Copies available: {props.copies}</p>
+          <button>Reserve</button>
+        </div>
       </div>
-      <h2>{props.title}</h2>
-      <p>
-        <br />
-        {props.description}
-      </p>
     </div>
   );
 };

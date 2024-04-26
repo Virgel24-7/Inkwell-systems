@@ -5,9 +5,9 @@ import { Loginpage } from "./Loginpage";
 import { Homepage } from "./Homepage";
 
 import "./style.css";
-import { Bookpage } from "./Bookpage";
 import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
+import { Librarypage } from "./Librarypage";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <div className="content">
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="books" element={<Bookpage />} />
+            <Route path="books" element={<Librarypage />} />
             <Route path="about" element={<Aboutpage />} />
             <Route path="contact" element={<Contactpage />} />
             <Route path="login" element={<Loginpage />} />

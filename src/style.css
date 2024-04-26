@@ -40,13 +40,12 @@ body {
 }
 
 /*===============================NAV BAR================================*/
-nav img{
+nav img {
   position: fixed;
   height: 100px;
   margin-left: 3.2%;
   left: 10px;
   z-index: 100;
-
 }
 nav {
   height: 100px;
@@ -54,101 +53,91 @@ nav {
   align-items: center;
   justify-content: flex-end;
   padding: 0 20px;
-  
- 
 }
 
-.links-container{
+.links-container {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
- 
 }
-nav a{
+nav a {
   height: 10%;
   padding: 0 20px;
   display: inline-block;
   align-items: center;
   text-decoration: none;
   justify-content: flex-end;
-  
- 
-
 }
-a{
+a {
   position: relative;
   text-decoration: none;
   color: #fff;
   padding: 0 10px;
   justify-content: flex-end;
-  
- 
 }
-a:after{
+a:after {
   content: "";
   position: absolute;
-  background-color: #8B6913;
+  background-color: #8b6913;
   height: 3px;
   width: 0;
   left: 19px;
   bottom: -12px;
 }
-a:hover:after{
+a:hover:after {
   width: 60%;
 }
-#sidebar-active{
+#sidebar-active {
   display: none;
 }
-.open-sidebar-button, .close-sidebar-button{
+.open-sidebar-button,
+.close-sidebar-button {
   padding: 0 20px;
   display: none;
 }
-.close-sidebar-button{
+.close-sidebar-button {
   position: absolute;
   top: 30px;
-
 }
 
-
-
-
-@media(max-width:600px){
-  nav{
-      justify-content: flex-end;
+@media (max-width: 600px) {
+  nav {
+    justify-content: flex-end;
   }
-  .links-container{
-      display: none;
-      flex-direction:column;
-      align-items: flex-start;
+  .links-container {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
 
-      position:fixed;
-      top: 0;
-      right: 0;
-      z-index: 10;
-      width: 300px;
-      bottom: 50%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    width: 300px;
+    bottom: 50%;
 
-      background-color: #333;
-      box-shadow: -5px 0 5px rgba(0, 0, 0, .25);
+    background-color: #333;
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
   }
-  nav a{
-      box-sizing: border-box;
-      height: auto;
-      width: 100%;
-      padding: 20px 30px;
-      justify-content: flex-start;
-      bottom: 50%;
+  nav a {
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    padding: 20px 30px;
+    justify-content: flex-start;
+    bottom: 50%;
   }
-  .open-sidebar-button, .close-sidebar-button{
-      padding: 0 20px;
-      
-      display: block;
+  .open-sidebar-button,
+  .close-sidebar-button {
+    padding: 0 20px;
+
+    display: block;
   }
-  #sidebar-active:checked ~ .links-container{
-      display: flex;
+  #sidebar-active:checked ~ .links-container {
+    display: flex;
   }
 }
 /*===============================BOOKS================================*/
@@ -324,4 +313,32 @@ a:hover:after{
   font-size: 16px;
   color: #333;
   font-weight: 600;
+}
+
+/*===============================POP UP================================*/
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popContent {
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 650px;
+  background-color: white;
+}
+
+.popCloser {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
