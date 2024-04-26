@@ -4,6 +4,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
+  const [nOfCopies, setNOfCopies] = useState(Number(props.copies));
 
   useEffect(() => {
     const getImage = async () => {
@@ -20,6 +21,15 @@ export const Bookcard = (props) => {
     props.updatePopContent(props.description);
   };
 
+  const updateCopies = () => {
+    if (nOfCopies > 0) {
+      setNOfCopies(nOfCopies - 1);
+      props.updateNOfCopies(props.id, props.copies);
+    } else {
+      alert("No copy available");
+    }
+  };
+
   return (
     <div>
       <div className="card">
@@ -32,8 +42,8 @@ export const Bookcard = (props) => {
         <div>
           <br />
           <button onClick={updatePop}>Show Description</button>
-          <p>Copies available: {props.copies}</p>
-          <button>Reserve</button>
+          <p>Copies available: {nOfCopies}</p>
+          <button onClick={updateCopies}>Reserve</button>
         </div>
       </div>
     </div>
