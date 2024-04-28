@@ -19,8 +19,10 @@ export const Librarypage = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  const filteredLibrary = library.filter((book) =>
-    book.title.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredLibrary = library.filter(
+    (book) =>
+      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      book.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   //for updatepopup
@@ -39,6 +41,12 @@ export const Librarypage = () => {
     await updateDoc(tempDoc, newField);
 
     openLibrary(booksCollectionRef, setLibrary);
+  };
+
+  const updateReservers = async (id, reservers, user) => {
+    const tempDoc = doc(db, "booksdemo", id);
+    const newField = { reservers: [...reservers, user] };
+    await updateDoc(tempDoc, newField);
   };
 
   return (
@@ -66,7 +74,7 @@ export const Librarypage = () => {
             <br />
             <div className="books">
               {filteredLibrary.length === 0 ? (
-                <p>No results found.</p>
+                <p style={{ color: "white" }}>No results found.</p>
               ) : (
                 filteredLibrary.map((book, key) => (
                   <Bookcard
@@ -76,9 +84,11 @@ export const Librarypage = () => {
                     description={book.description}
                     image={book.image}
                     copies={book.copies}
+                    reservers={book.reservers}
                     showPop={showPop}
                     updatePopContent={updatePopContent}
                     updateNOfCopies={updateNumOfCopies}
+                    updateReservers={updateReservers}
                   />
                 ))
               )}

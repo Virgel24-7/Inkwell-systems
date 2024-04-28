@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
+import { currUser } from "./Loginpage";
+import { useNavigate } from "react-router-dom";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
@@ -21,12 +23,33 @@ export const Bookcard = (props) => {
     props.updatePopContent(props.description);
   };
 
-  const updateCopies = () => {
-    if (nOfCopies > 0) {
-      setNOfCopies(nOfCopies - 1);
-      props.updateNOfCopies(props.id, props.copies);
+  let navigate = useNavigate();
+  const reserve = () => {
+    console.log(currUser);
+    if (currUser === "") {
+      console.log("x");
+      navigate("/login");
     } else {
-      alert("No copy available");
+      console.log("a");
+      console.log(typeof props.reservers);
+      console.log(props.reservers.length);
+
+      const tempX = props.reservers.filter((user) => {
+        return (user = currUser);
+      });
+
+      if (nOfCopies > 0) {
+        if (props.reservers.length === 0 || tempX.length === 0) {
+          props.updateReservers(props.id, props.reservers, currUser);
+          setNOfCopies(nOfCopies - 1);
+          props.updateNOfCopies(props.id, props.copies);
+          alert("Successfully reserved");
+        } else if (tempX.length > 0) {
+          alert("Already reserved");
+        }
+      } else {
+        alert("No copy available");
+      }
     }
   };
 
@@ -43,7 +66,7 @@ export const Bookcard = (props) => {
           <br />
           <button onClick={updatePop}>Show Description</button>
           <p>Copies available: {nOfCopies}</p>
-          <button onClick={updateCopies}>Reserve</button>
+          <button onClick={reserve}>Reserve</button>
         </div>
       </div>
     </div>
