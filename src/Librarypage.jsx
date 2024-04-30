@@ -25,12 +25,8 @@ export const Librarypage = () => {
       book.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  //for updatepopup
-  const showPop = () => {
+  const showPopContent = (content) => {
     setPop(true);
-  };
-
-  const updatePopContent = (content) => {
     setPopContent(content);
   };
   //endfor updatepopup
@@ -85,8 +81,7 @@ export const Librarypage = () => {
                     image={book.image}
                     copies={book.copies}
                     reservers={book.reservers}
-                    showPop={showPop}
-                    updatePopContent={updatePopContent}
+                    showPopContent={showPopContent}
                     updateNOfCopies={updateNumOfCopies}
                     updateReservers={updateReservers}
                   />

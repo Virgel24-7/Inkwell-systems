@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-export const Navbar = () => {
+export const Navbar = (props) => {
   const [sidebarActive, setSidebarActive] = useState(false);
 
   const toggleSidebar = () => {
@@ -62,7 +62,7 @@ export const Navbar = () => {
           Contact
         </Link>
         <Link className="login-link" to="/login">
-          Log In
+          {props.userText}
         </Link>
       </div>
     </nav>

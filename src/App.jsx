@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Loginpage, currUser } from "./Loginpage";
@@ -8,13 +8,16 @@ import "./style.css";
 import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
-import UserPage from "./UserPage";
+import Userpage from "./Userpage";
 
 function App() {
+  const [userText, setUserText] = useState("");
+  const [isUser, setIsUser] = useState(false);
+
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <Navbar userText={userText === "" ? "Log In" : userText} />
         <div className="content">
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -23,7 +26,16 @@ function App() {
             <Route path="contact" element={<Contactpage />} />
             <Route
               path="login"
-              element={currUser === "" ? <Loginpage /> : <UserPage />}
+              element={
+                !isUser ? (
+                  <Loginpage
+                    updateUserText={(uText) => setUserText(uText)}
+                    logUser={() => setIsUser(true)}
+                  />
+                ) : (
+                  <Userpage />
+                )
+              }
             />
           </Routes>
         </div>

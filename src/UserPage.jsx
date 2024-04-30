@@ -1,6 +1,6 @@
 import React from "react";
 
-function UserPage() {
+function Userpage() {
   return (
     <div style={{ color: "white" }}>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse aut
@@ -13,4 +13,4 @@ function UserPage() {
   );
 }
 
-export default UserPage;
+export default Userpage;

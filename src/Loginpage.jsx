@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export let currUser = "";
 
-export const Loginpage = () => {
+export const Loginpage = (props) => {
   const [uName, setUName] = useState("");
   const [pWord, setPWord] = useState("");
 
@@ -13,6 +13,9 @@ export const Loginpage = () => {
     currUser = uName;
     console.log(currUser);
     navigate("/");
+
+    props.updateUserText(currUser.toUpperCase());
+    props.logUser();
   };
 
   return (

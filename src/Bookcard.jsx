@@ -16,14 +16,14 @@ export const Bookcard = (props) => {
     };
 
     getImage();
-  }, [props.image]);
+  });
 
   const updatePop = () => {
-    props.showPop();
     props.updatePopContent(props.description);
   };
 
   let navigate = useNavigate();
+
   const reserve = () => {
     console.log(currUser);
     if (currUser === "") {
