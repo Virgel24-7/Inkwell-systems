@@ -29,7 +29,6 @@ export const Librarypage = () => {
     setPop(true);
     setPopContent(content);
   };
-  //endfor updatepopup
 
   const updateNumOfCopies = async (id, copies) => {
     const tempDoc = doc(db, "booksdemo", id);

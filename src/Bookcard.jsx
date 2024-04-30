@@ -18,10 +18,6 @@ export const Bookcard = (props) => {
     getImage();
   });
 
-  const updatePop = () => {
-    props.updatePopContent(props.description);
-  };
-
   let navigate = useNavigate();
 
   const reserve = () => {
@@ -64,7 +60,9 @@ export const Bookcard = (props) => {
         <h2>{props.title}</h2>
         <div>
           <br />
-          <button onClick={updatePop}>Show Description</button>
+          <button onClick={() => props.showPopContent(props.description)}>
+            Show Description
+          </button>
           <p>Copies available: {nOfCopies}</p>
           <button onClick={reserve}>Reserve</button>
         </div>
