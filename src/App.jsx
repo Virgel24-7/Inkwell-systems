@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
-import { Loginpage, currUser } from "./Loginpage";
+import { Loginpage } from "./Loginpage";
 import { Homepage } from "./Homepage";
 
 import "./style.css";
 import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
-import Userpage from "./Userpage";
+import { Userpage } from "./Userpage";
 
 function App() {
   const [userText, setUserText] = useState("");

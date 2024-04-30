@@ -1,6 +1,6 @@
 import React from "react";
 
-function Userpage() {
+export const Userpage = () => {
   return (
     <div style={{ color: "white" }}>
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Esse aut
@@ -11,6 +11,4 @@ function Userpage() {
       doloremque voluptas recusandae?
     </div>
   );
-}
-
-export default Userpage;
+};
