@@ -8,7 +8,7 @@ import "./style.css";
 import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
-import { Userpage } from "./Userpage";
+import { Userpage } from "./UserPage";
 
 function App() {
   const [userText, setUserText] = useState("");
