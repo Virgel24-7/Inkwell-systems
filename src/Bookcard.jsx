@@ -63,10 +63,16 @@ export const Bookcard = (props) => {
         <div>
           <br />
           <button onClick={() => props.showPopContent(props.author, props.dewey, props.description)}>
-          Show Description
+          Description
           </button>
+          <br />
           <p>Copies available: {nOfCopies}</p>
-          <button onClick={reserve}>Reserve</button>
+          <button class="learn-more" onClick={reserve}>
+            <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+            </span>
+            <span class="button-text">Reserve</span>
+          </button>
         </div>
       </div>
     </div>

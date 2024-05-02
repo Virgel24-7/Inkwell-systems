@@ -234,6 +234,7 @@ a:hover:after {
 .search-bar input {
   flex: 1;
   color: #ffffff;
+  font-size: 14px;
   border: none;
   outline: none;
   background: transparent;
@@ -251,8 +252,8 @@ a:hover:after {
   background: #fff;
   cursor: pointer;
   color: #000000;
-  font-size: 16px;
-  padding: 5px 10px 5px 5px;
+  font-size: 14px;
+  padding: 5px 10px 5px 10px;
   width: 55%;
   background-image: url("src/assets/Search.png");
   background-size: 55px 55px;
@@ -299,6 +300,92 @@ a:hover:after {
   border-radius: 30px;
   text-align: left;
 }
+
+ button.learn-more {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  top: 5px;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  width: 10rem;
+  height: auto;
+ }
+ 
+ button.learn-more .circle {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+  background: #282936;
+  border-radius: 1rem;
+ }
+ 
+ button.learn-more .circle .icon {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+ }
+ 
+ button.learn-more .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  left: 0.25rem;
+  width: 1rem;
+  height: 0.08rem;
+  background: none;
+ }
+ 
+ button.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.29rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+ }
+ 
+ button.learn-more .button-text {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.25rem 0;
+  margin: 0 0 0 1rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+ }
+ 
+ button:hover .circle {
+  width: 100%;
+ }
+ 
+ button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+ }
+ 
+ button:hover .button-text {
+  color: #fff;
+ }
 
 .imgBx img {
   display: flex;
