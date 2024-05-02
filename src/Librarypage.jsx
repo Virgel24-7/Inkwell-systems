@@ -10,6 +10,7 @@ export const Librarypage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pop, setPop] = useState(false);
   const [popContent, setPopContent] = useState("");
+  const [filterOption, setFilterOption] = useState("title");
 
   useEffect(() => {
     openLibrary(booksCollectionRef, setLibrary);
@@ -19,15 +20,27 @@ export const Librarypage = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  const filteredLibrary = library.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredLibrary = library.filter((book) => {
+    const searchTermLower = searchTerm.toLowerCase();
+    switch (filterOption) {
+      case "title":
+        return book.title.toLowerCase().includes(searchTermLower);
+      case "author":
+        return book.author.toLowerCase().includes(searchTermLower);
+      case "dewey":
+        return book.dewey.toLowerCase().includes(searchTermLower);
+      default:
+        return book.title.toLowerCase().includes(searchTermLower);
+    }
+  });
 
-  const showPopContent = (content) => {
+  const showPopContent = (author, dewey, description) => {
+    if (author && dewey && description) {
+      setPopContent({ author, dewey, description });
+    } else {
+      setPopContent(content);
+    }
     setPop(true);
-    setPopContent(content);
   };
 
   const updateNumOfCopies = async (id, copies) => {
@@ -52,15 +65,17 @@ export const Librarypage = () => {
         ) : (
           <>
             <div className="search-container">
-              <form action="" className="search-bar">
+              <form onSubmit={(e) => e.preventDefault()} className="search-bar">
                 <input
                   type="text"
-                  placeholder="Search for title, author, classification, and keywords..."
+                  placeholder="Search for books here..."
                   onChange={handleSearch}
                 />
-                <button type="submit">
-                  <img src="src/assets/Search.png" />
-                </button>
+                <select value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
+                  <option value="title">Search by Title</option>
+                  <option value="author">Search by Author</option>
+                  <option value="dewey">Search by Dewey Code</option>
+                </select>
               </form>
             </div>
             <br />
@@ -69,13 +84,15 @@ export const Librarypage = () => {
             <br />
             <div className="books">
               {filteredLibrary.length === 0 ? (
-                <p style={{ color: "white" }}>No results found.</p>
+                <p className="no-results-found">No results found.</p>
               ) : (
                 filteredLibrary.map((book, key) => (
                   <Bookcard
                     key={key}
                     id={book.id}
                     title={book.title}
+                    author={book.author}
+                    dewey={book.dewey}
                     description={book.description}
                     image={book.image}
                     copies={book.copies}
@@ -96,9 +113,14 @@ export const Librarypage = () => {
 
   function popupContent() {
     return (
-      <Popup trigger={pop} setTrigger={setPop}>
-        {popContent}
-      </Popup>
+      <Popup
+        trigger={pop}
+        setTrigger={setPop}
+        content={popContent} 
+        author={popContent?.author}
+        dewey={popContent?.dewey} 
+        description={popContent?.description} 
+      />
     );
   }
 };

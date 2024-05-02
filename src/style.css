@@ -41,6 +41,7 @@ body {
 
 /*===============================NAV BAR================================*/
 nav img {
+  top: 10px;
   position: fixed;
   height: 100px;
   margin-left: 3.2%;
@@ -143,50 +144,66 @@ a:hover:after {
 /*===============================BOOKS================================*/
 .search-container {
   height: 50vh;
-  width: 50%;
+  width: 55%;
   align-items: center;
   position: relative;
   background: none;
   justify-content: center;
   left: 520px;
 }
+
 .search-bar {
   height: 10%;
   width: 50%;
   max-width: 700px;
-  margin: 20px 50px 20px 50px;
+  margin: 20px 50px 25px 50px;
   background: rgba(255, 255, 255, 0.2);
   display: flex;
-
   border-radius: 60px;
   padding: 10px 20px;
 }
+
 .search-bar input {
   flex: 1;
+  color: #ffffff;
   border: none;
   outline: none;
   background: transparent;
-
   align-items: center;
-}
-.search-bar button {
-  appearance: none;
-  background: transparent;
-  outline: none;
-  cursor: pointer;
-  border: none;
+  padding: 0 10px 0 0;
 }
 
-.search-bar button img {
-  height: 60px;
-  width: 60px;
-  position: relative;
-  bottom: 10px;
-  background: transparent;
-  border: none;
+.search-bar select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #fff;
+  border-radius: 60px;
   outline: none;
+  background: #fff;
   cursor: pointer;
+  color: #000000;
+  font-size: 16px;
+  padding: 5px 10px 5px 5px;
+  width: 55%;
+  background-image: url("src/assets/Search.png");
+  background-size: 55px 55px;
+  background-repeat: no-repeat;
+  background-position: right center;
 }
+
+.search-bar select:focus {
+  border: 1px solid #ff8800;
+  border-radius: 60px;
+}
+
+.no-results-found {
+  position: absolute;
+  bottom: 350px;
+  left: 425px;
+  color: white;
+}
+
 .books {
   position: relative;
   width: 1100px;
@@ -197,6 +214,7 @@ a:hover:after {
   padding: 30px;
   margin-top: 8%;
 }
+
 .card {
   width: 308px;
   position: relative;
@@ -211,6 +229,7 @@ a:hover:after {
   bottom: 400px;
   left: 200px;
   border-radius: 30px;
+  text-align: left;
 }
 
 .imgBx img {
@@ -228,6 +247,39 @@ a:hover:after {
   transform: scale(1.3);
 }
 
+.imgBx button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.truncate-wrapper {
+  position: relative;
+}
+
+.truncate-text {
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate-popup {
+  position: absolute;
+  top: -100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.truncate-wrapper:hover .truncate-popup {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /*===============================LOGIN PAGE================================*/
 .loginpage {
   background-image: url(assets/loginbgx.jpg);
@@ -237,7 +289,6 @@ a:hover:after {
 }
 .wrapper {
   width: 420px;
-
   background: transparent;
   color: white;
   align-items: center;
@@ -313,4 +364,32 @@ a:hover:after {
   font-size: 16px;
   color: #333;
   font-weight: 600;
+}
+
+/*===============================POP UP================================*/
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popContent {
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 650px;
+  background-color: white;
+}
+
+.popCloser {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
