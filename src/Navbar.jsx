@@ -64,6 +64,9 @@ export const Navbar = (props) => {
         <Link className="login-link" to="/login">
           {props.userText}
         </Link>
+        <Link className="admin-link" to="/admin">
+          Admin
+        </Link>
       </div>
     </nav>
   );

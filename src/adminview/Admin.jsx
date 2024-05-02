@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
-import { db, auth } from "./firebase-config";
+import "./../App.css";
+import { db, auth } from "./../firebase-config";
 import {
   collection,
   getDocs,
@@ -8,7 +8,7 @@ import {
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-export function Adminview() {
+export function Admin() {
   const [newName, setNewName] = useState("");
   const [newAge, setNewAge] = useState("");
   const [email, setEmail] = useState("");
@@ -112,4 +112,4 @@ export function Adminview() {
   );
 }
 
-export default Adminview;
+export default Admin;

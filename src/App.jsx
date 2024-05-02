@@ -9,6 +9,7 @@ import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
 import { Userpage } from "./UserPage";
+import { Admin } from "./adminview/Admin";
 
 function App() {
   const [userText, setUserText] = useState("");
@@ -37,6 +38,7 @@ function App() {
                 )
               }
             />
+            <Route path="admin" element={<Admin />} /> 
           </Routes>
         </div>
       </div>
