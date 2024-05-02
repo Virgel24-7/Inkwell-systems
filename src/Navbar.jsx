@@ -10,7 +10,7 @@ export const Navbar = (props) => {
 
   return (
     <nav>
-      <img src="logo.png" alt="logo" />
+      <img src="src/assets/logo.png" alt="logo" />
 
       <input
         type="checkbox"
