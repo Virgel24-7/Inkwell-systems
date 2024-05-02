@@ -15,7 +15,11 @@ function Popup(props) {
         <button className="popCloser" onClick={closePopup}>
           Close
         </button>
-        {props.children}
+        <p>Author: {props.author}</p>
+        <br></br>
+        <p>Dewey-Decimal System: {props.dewey}</p>
+        <br></br>
+        <p>Description:  {props.description}</p>
       </div>
     </div>
   ) : (

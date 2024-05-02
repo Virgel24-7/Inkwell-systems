@@ -57,11 +57,14 @@ export const Bookcard = (props) => {
             <img src={imgUrl} />
           </a>
         </div>
-        <h2>{props.title}</h2>
+        <div class="truncate-wrapper">
+          <h2 class="truncate-text">{props.title}</h2>
+          <span class="truncate-popup">{props.title}</span>
+        </div>
         <div>
           <br />
-          <button onClick={() => props.showPopContent(props.description)}>
-            Show Description
+          <button onClick={() => props.showPopContent(props.author, props.dewey, props.description)}>
+          Show Description
           </button>
           <p>Copies available: {nOfCopies}</p>
           <button onClick={reserve}>Reserve</button>
