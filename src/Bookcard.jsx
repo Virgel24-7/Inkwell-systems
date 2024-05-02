@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
-import { currUser } from "./Loginpage";
+import { currUser } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
 
 export const Bookcard = (props) => {
