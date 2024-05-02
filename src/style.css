@@ -213,6 +213,7 @@ a:hover:after {
   padding: 30px;
   margin-top: 8%;
 }
+
 .card {
   width: 308px;
   position: relative;
@@ -227,6 +228,7 @@ a:hover:after {
   bottom: 400px;
   left: 200px;
   border-radius: 30px;
+  text-align: left;
 }
 
 .imgBx img {
