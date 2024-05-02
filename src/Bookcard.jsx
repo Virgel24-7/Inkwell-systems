@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
-import { currUser } from "./Loginbox";
+import { currUserID } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
 
 export const Bookcard = (props) => {
@@ -21,9 +21,8 @@ export const Bookcard = (props) => {
   let navigate = useNavigate();
 
   const reserve = () => {
-    console.log(currUser);
-    if (currUser === "") {
-      console.log("x");
+    console.log(currUserID);
+    if (currUserID === "") {
       navigate("/login");
     } else {
       console.log("a");
@@ -31,12 +30,12 @@ export const Bookcard = (props) => {
       console.log(props.reservers.length);
 
       const tempX = props.reservers.filter((user) => {
-        return (user = currUser);
+        return (user = currUserID);
       });
 
       if (nOfCopies > 0) {
         if (props.reservers.length === 0 || tempX.length === 0) {
-          props.updateReservers(props.id, props.reservers, currUser);
+          props.updateReservers(props.id, props.reservers, currUserID);
           setNOfCopies(nOfCopies - 1);
           props.updateNOfCopies(props.id, props.copies);
           alert("Successfully reserved");
