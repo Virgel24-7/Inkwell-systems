@@ -41,7 +41,6 @@ export const Userpage = () => {
         (user) => user.userId === currentUser.userId
       );
 
-      console.log(user[0].reserves);
       const tempFunc = async () => {
         const promises = user[0].reserves.map(async (bookId, key) => {
           const temp = await getDoc(doc(db, "booksdemo", bookId));
@@ -49,8 +48,6 @@ export const Userpage = () => {
         });
 
         setUserRes(await Promise.all(promises));
-
-        console.log(userRes);
       };
 
       await tempFunc();

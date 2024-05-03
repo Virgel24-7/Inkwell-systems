@@ -85,10 +85,10 @@ export const Loginbox = (props) => {
   );
 
   function logInAsUser() {
-    const booksCollectionRef = collection(db, "users");
+    const usersCollectionRef = collection(db, "users");
 
     const getUName = async () => {
-      const data = await getDocs(booksCollectionRef);
+      const data = await getDocs(usersCollectionRef);
       const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       const user = tempUsers.filter((user) => user.userId === currUserID);
 

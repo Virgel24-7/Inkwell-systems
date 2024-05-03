@@ -3,7 +3,7 @@ import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
 import { currUserID } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
-import { currentUser, updateUserdoc } from "./UserPage";
+import { updateUserdoc } from "./UserPage";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
@@ -22,14 +22,9 @@ export const Bookcard = (props) => {
   let navigate = useNavigate();
 
   const reserve = () => {
-    console.log(currUserID);
     if (currUserID === "") {
       navigate("/login");
     } else {
-      console.log("a");
-      console.log(typeof props.reservers);
-      console.log(props.reservers.length);
-
       const tempX = props.reservers.filter((user) => {
         return (user = currUserID);
       });
@@ -39,7 +34,6 @@ export const Bookcard = (props) => {
           props.updateReservers(props.id, props.reservers, currUserID);
           setNOfCopies(nOfCopies - 1);
           props.updateNOfCopies(props.id, props.copies);
-          console.log(currentUser.id);
           updateUserdoc(props.id);
 
           alert("Successfully reserved");
