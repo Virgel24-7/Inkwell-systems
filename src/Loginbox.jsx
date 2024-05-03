@@ -4,6 +4,7 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import { setCurrentUser } from "./UserPage";
 
 export let currUserID = "";
 export let currUserName = "";
@@ -94,6 +95,7 @@ export const Loginbox = (props) => {
       currUserName = user[0].name;
       props.updateUserText(currUserName.toUpperCase());
       props.logUser();
+      setCurrentUser(user[0]);
       navigate("/");
     };
 

@@ -3,6 +3,7 @@ import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
 import { currUserID } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
+import { currentUser, updateUserdoc } from "./UserPage";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
@@ -38,6 +39,9 @@ export const Bookcard = (props) => {
           props.updateReservers(props.id, props.reservers, currUserID);
           setNOfCopies(nOfCopies - 1);
           props.updateNOfCopies(props.id, props.copies);
+          console.log(currentUser.id);
+          updateUserdoc(props.id);
+
           alert("Successfully reserved");
         } else if (tempX.length > 0) {
           alert("Already reserved");
@@ -52,26 +56,34 @@ export const Bookcard = (props) => {
     <div>
       <div className="card">
         <div className="imgBx">
-        <button onClick={() => props.showPopContent(props.author, props.dewey, props.description)}>
-          <img src={imgUrl} />
-        </button>
+          <button
+            onClick={() =>
+              props.showPopContent(props.author, props.dewey, props.description)
+            }
+          >
+            <img src={imgUrl} />
+          </button>
         </div>
-        <div class="truncate-wrapper">
-          <h2 class="truncate-text">{props.title}</h2>
-          <span class="truncate-popup">{props.title}</span>
+        <div className="truncate-wrapper">
+          <h2 className="truncate-text">{props.title}</h2>
+          <span className="truncate-popup">{props.title}</span>
         </div>
         <div>
           <br />
-          <button onClick={() => props.showPopContent(props.author, props.dewey, props.description)}>
-          Description
+          <button
+            onClick={() =>
+              props.showPopContent(props.author, props.dewey, props.description)
+            }
+          >
+            Show Description
           </button>
           <br />
           <p>Copies available: {nOfCopies}</p>
-          <button class="learn-more" onClick={reserve}>
-            <span class="circle" aria-hidden="true">
-            <span class="icon arrow"></span>
+          <button className="learn-more" onClick={reserve}>
+            <span className="circle" aria-hidden="true">
+              <span className="icon arrow"></span>
             </span>
-            <span class="button-text">Reserve</span>
+            <span className="button-text">Reserve</span>
           </button>
         </div>
       </div>

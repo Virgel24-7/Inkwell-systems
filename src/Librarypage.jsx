@@ -71,7 +71,10 @@ export const Librarypage = () => {
                   placeholder="Search for books here..."
                   onChange={handleSearch}
                 />
-                <select value={filterOption} onChange={(e) => setFilterOption(e.target.value)}>
+                <select
+                  value={filterOption}
+                  onChange={(e) => setFilterOption(e.target.value)}
+                >
                   <option value="title">Search by Title</option>
                   <option value="author">Search by Author</option>
                   <option value="dewey">Search by Dewey Code</option>
@@ -116,10 +119,10 @@ export const Librarypage = () => {
       <Popup
         trigger={pop}
         setTrigger={setPop}
-        content={popContent} 
+        content={popContent}
         author={popContent?.author}
-        dewey={popContent?.dewey} 
-        description={popContent?.description} 
+        dewey={popContent?.dewey}
+        description={popContent?.description}
       />
     );
   }
