@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
-import { Loginpage } from "./Loginpage";
 import { Homepage } from "./Homepage";
+import { Signupbox } from "./Signupbox";
 
 import "./style.css";
 import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
 import { Userpage } from "./UserPage";
-import { Admin } from "./adminview/Admin";
+import { Accesspage } from "./Accesspage";
+import { Loginbox } from "./Loginbox";
 
 function App() {
   const [userText, setUserText] = useState("");
@@ -27,18 +28,28 @@ function App() {
             <Route path="contact" element={<Contactpage />} />
             <Route
               path="login"
-              element={
-                !isUser ? (
-                  <Loginpage
+              element={!isUser ? <Accesspage /> : <Userpage />}
+            >
+              <Route
+                index
+                element={
+                  <Loginbox
                     updateUserText={(uText) => setUserText(uText)}
                     logUser={() => setIsUser(true)}
                   />
-                ) : (
-                  <Userpage />
-                )
-              }
-            />
-            <Route path="admin" element={<Admin />} /> 
+                }
+              />
+              <Route
+                path="log-in"
+                element={
+                  <Loginbox
+                    updateUserText={(uText) => setUserText(uText)}
+                    logUser={() => setIsUser(true)}
+                  />
+                }
+              />
+              <Route path="sign-up" element={<Signupbox />} />
+            </Route>
           </Routes>
         </div>
       </div>

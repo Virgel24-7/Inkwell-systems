@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
-import { currUser } from "./Loginpage";
+import { currUserID } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
+import { updateUserdoc } from "./UserPage";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
@@ -21,24 +22,20 @@ export const Bookcard = (props) => {
   let navigate = useNavigate();
 
   const reserve = () => {
-    console.log(currUser);
-    if (currUser === "") {
-      console.log("x");
+    if (currUserID === "") {
       navigate("/login");
     } else {
-      console.log("a");
-      console.log(typeof props.reservers);
-      console.log(props.reservers.length);
-
       const tempX = props.reservers.filter((user) => {
-        return (user = currUser);
+        return (user = currUserID);
       });
 
       if (nOfCopies > 0) {
         if (props.reservers.length === 0 || tempX.length === 0) {
-          props.updateReservers(props.id, props.reservers, currUser);
+          props.updateReservers(props.id, props.reservers, currUserID);
           setNOfCopies(nOfCopies - 1);
           props.updateNOfCopies(props.id, props.copies);
+          updateUserdoc(props.id);
+
           alert("Successfully reserved");
         } else if (tempX.length > 0) {
           alert("Already reserved");
@@ -53,18 +50,35 @@ export const Bookcard = (props) => {
     <div>
       <div className="card">
         <div className="imgBx">
-          <a href="#">
+          <button
+            onClick={() =>
+              props.showPopContent(props.author, props.dewey, props.description)
+            }
+          >
             <img src={imgUrl} />
-          </a>
+          </button>
         </div>
-        <h2>{props.title}</h2>
+        <div className="truncate-wrapper">
+          <h2 className="truncate-text">{props.title}</h2>
+          <span className="truncate-popup">{props.title}</span>
+        </div>
         <div>
           <br />
-          <button onClick={() => props.showPopContent(props.description)}>
+          <button
+            onClick={() =>
+              props.showPopContent(props.author, props.dewey, props.description)
+            }
+          >
             Show Description
           </button>
+          <br />
           <p>Copies available: {nOfCopies}</p>
-          <button onClick={reserve}>Reserve</button>
+          <button className="learn-more" onClick={reserve}>
+            <span className="circle" aria-hidden="true">
+              <span className="icon arrow"></span>
+            </span>
+            <span className="button-text">Reserve</span>
+          </button>
         </div>
       </div>
     </div>
