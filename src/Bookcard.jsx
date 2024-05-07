@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
-<<<<<<< Updated upstream
 import { currUserID } from "./Loginbox";
-=======
-import { currUser } from "./Loginbox";
->>>>>>> Stashed changes
 import { useNavigate } from "react-router-dom";
 import { updateUserdoc } from "./UserPage";
 
