@@ -1,6 +1,11 @@
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+<<<<<<< Updated upstream
+=======
+export let currUser = "";
+
+>>>>>>> Stashed changes
 export const Accesspage = (props) => {
   return (
     <div className="loginpage">

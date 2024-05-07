@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, { useState } from "react";
 import { auth } from "./firebase-config";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
@@ -49,10 +50,32 @@ export const Loginbox = (props) => {
       .finally(() => {
         setIsLoading(false); // Reset loading state regardless of success or failure
       });
+=======
+import React from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+export let currUser = "";
+
+export const Loginbox = (props) => {
+  const [uName, setUName] = useState("");
+  const [pWord, setPWord] = useState("");
+
+  let navigate = useNavigate();
+
+  const validate = () => {
+    currUser = uName;
+    console.log(currUser);
+    navigate("/");
+
+    props.updateUserText(currUser.toUpperCase());
+    props.logUser();
+>>>>>>> Stashed changes
   };
 
   return (
     <div>
+<<<<<<< Updated upstream
       <form action="" onSubmit={signIn}>
         <h1>Log in</h1>
         <div className="input-box">
@@ -61,14 +84,27 @@ export const Loginbox = (props) => {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+=======
+      <form action="">
+        <h1>Log in</h1>
+        <div className="input-box">
+          <input
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setUName(e.target.value)}
+>>>>>>> Stashed changes
           />
         </div>
         <div className="input-box">
           <input
             type="password"
             placeholder="Password"
+<<<<<<< Updated upstream
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+=======
+            onChange={(e) => setPWord(e.target.value)}
+>>>>>>> Stashed changes
           />
         </div>
         <div className="remember-forgot">
@@ -77,12 +113,18 @@ export const Loginbox = (props) => {
           </label>
           <a href="#"> Forgot Password?</a>
         </div>
+<<<<<<< Updated upstream
         <button type="submit" className="btn" disabled={isLoading}>
           {isLoading ? "Signing In..." : "Login"}
+=======
+        <button type="submit" className="btn" onClick={validate}>
+          Login
+>>>>>>> Stashed changes
         </button>
       </form>
     </div>
   );
+<<<<<<< Updated upstream
 
   function logInAsUser() {
     const usersCollectionRef = collection(db, "users");
@@ -101,4 +143,6 @@ export const Loginbox = (props) => {
 
     getUName();
   }
+=======
+>>>>>>> Stashed changes
 };

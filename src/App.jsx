@@ -9,6 +9,10 @@ import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
 import { Userpage } from "./UserPage";
+<<<<<<< Updated upstream
+=======
+import { Admin } from "./adminview/Admin";
+>>>>>>> Stashed changes
 import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
 
@@ -37,6 +41,15 @@ function App() {
                     updateUserText={(uText) => setUserText(uText)}
                     logUser={() => setIsUser(true)}
                   />
+<<<<<<< Updated upstream
+=======
+                ) : (
+                  <Userpage />
+                )
+              }
+            />
+            <Route path="admin" element={<Admin />} /> 
+>>>>>>> Stashed changes
                 }
               />
               <Route
