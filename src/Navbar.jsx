@@ -1,8 +1,32 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { db } from "./firebase-config";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const Navbar = (props) => {
   const [sidebarActive, setSidebarActive] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // State to store admin status
+
+  useEffect(() => {
+    const fetchUserRole = async () => {
+      try {
+        const usersCollectionRef = collection(db, "users");
+        const querySnapshot = await getDocs(
+          query(usersCollectionRef, where("userId", "==", props.userId))
+        );
+        querySnapshot.forEach((doc) => {
+          const userData = doc.data();
+          setIsAdmin(userData.role === "admin");
+        });
+      } catch (error) {
+        console.log("Error fetching user role:", error);
+      }
+    };
+
+    if (props.userId) {
+      fetchUserRole();
+    }
+  }, [props.userId]);
 
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
@@ -64,9 +88,11 @@ export const Navbar = (props) => {
         <Link className="login-link" to="/login">
           {props.userText}
         </Link>
-        <Link className="admin-link" to="/admin">
-          Admin
-        </Link>
+        {isAdmin && ( // Render admin button if user is admin
+          <Link className="admin-link" to="/admin">
+            Admin
+          </Link>
+        )}
       </div>
     </nav>
   );

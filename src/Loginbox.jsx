@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { auth } from "./firebase-config";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { db } from "./firebase-config";
 import { collection, getDocs } from "firebase/firestore";
+import { db } from "./firebase-config";
 import { setCurrentUser } from "./UserPage";
 
 export let currUserID = "";
@@ -15,40 +15,42 @@ export const Loginbox = (props) => {
   const [isLoading, setIsLoading] = useState(false); // Added loading state
   const navigate = useNavigate(); // Hook for navigation
 
-  const signIn = (e) => {
+  const signIn = async (e) => {
     e.preventDefault();
     setIsLoading(true); // Set loading state while signing in
-    const currentUser = auth.currentUser;
 
-    if (currentUser) {
-      // If a user is already signed in, sign them out first
-      signOut(auth)
-        .then(() => {
-          // After signing out, proceed with signing in the new user
-          signInUser();
-        })
-        .catch((error) => {
-          console.log("Error signing out:", error);
-          setIsLoading(false); // Reset loading state
-        });
-    } else {
-      // If no user is signed in, directly proceed with signing in the new user
-      signInUser();
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      currUserID = auth.currentUser.uid;
+      logInAsUser(currUserID);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false); // Reset loading state
     }
   };
 
-  const signInUser = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        currUserID = auth.currentUser.uid;
-        logInAsUser();
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setIsLoading(false); // Reset loading state regardless of success or failure
-      });
+  const logInAsUser = async (userID) => {
+    try {
+      const usersCollectionRef = collection(db, "users");
+      const data = await getDocs(usersCollectionRef);
+      const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      const user = tempUsers.find((user) => user.userId === userID);
+
+      if (user) {
+        currUserName = user.name;
+        props.updateUserText(currUserName.toUpperCase());
+        props.logUser();
+        setCurrentUser(user);
+        props.handleLogin(userID); // Call the handleLogin function with the user ID
+        navigate("/");
+      } else {
+        console.log("User not found");
+        setIsLoading(false); // Reset loading state
+      }
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false); // Reset loading state
+    }
   };
 
   return (
@@ -83,22 +85,4 @@ export const Loginbox = (props) => {
       </form>
     </div>
   );
-
-  function logInAsUser() {
-    const usersCollectionRef = collection(db, "users");
-
-    const getUName = async () => {
-      const data = await getDocs(usersCollectionRef);
-      const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const user = tempUsers.filter((user) => user.userId === currUserID);
-
-      currUserName = user[0].name;
-      props.updateUserText(currUserName.toUpperCase());
-      props.logUser();
-      setCurrentUser(user[0]);
-      navigate("/");
-    };
-
-    getUName();
-  }
 };

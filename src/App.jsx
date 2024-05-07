@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
@@ -16,11 +15,17 @@ import { Loginbox } from "./Loginbox";
 function App() {
   const [userText, setUserText] = useState("");
   const [isUser, setIsUser] = useState(false);
+  const [userId, setUserId] = useState(""); // State to store user ID
+
+  const handleLogin = (userId) => {
+    setUserId(userId); // Set the user ID after successful login
+    setIsUser(true); // Set the user status
+  };
 
   return (
     <Router>
       <div className="App">
-        <Navbar userText={userText === "" ? "Log In" : userText} />
+        <Navbar userText={userText === "" ? "Log In" : userText} userId={userId} /> {/* Pass userId to Navbar */}
         <div className="content">
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -37,6 +42,7 @@ function App() {
                   <Loginbox
                     updateUserText={(uText) => setUserText(uText)}
                     logUser={() => setIsUser(true)}
+                    handleLogin={handleLogin} // Pass the callback function to Loginbox
                   />
                 }
               />
@@ -46,6 +52,7 @@ function App() {
                   <Loginbox
                     updateUserText={(uText) => setUserText(uText)}
                     logUser={() => setIsUser(true)}
+                    handleLogin={handleLogin} // Pass the callback function to Loginbox
                   />
                 }
               />
