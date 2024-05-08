@@ -26,7 +26,7 @@ export const Bookcard = (props) => {
       navigate("/login");
     } else {
       const tempX = props.reservers.filter((user) => {
-        return (user = currUserID);
+        return user === currUserID;
       });
 
       if (nOfCopies > 0) {

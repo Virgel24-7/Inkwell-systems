@@ -20,7 +20,11 @@ export const Loginbox = (props) => {
     setIsLoading(true); // Set loading state while signing in
 
     try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       currUserID = auth.currentUser.uid;
       logInAsUser(currUserID);
     } catch (error) {
@@ -44,7 +48,7 @@ export const Loginbox = (props) => {
         props.handleLogin(userID); // Call the handleLogin function with the user ID
         navigate("/");
       } else {
-        console.log("User not found");
+        alert("User not found");
         setIsLoading(false); // Reset loading state
       }
     } catch (error) {
