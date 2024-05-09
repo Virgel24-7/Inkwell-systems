@@ -13,8 +13,6 @@ import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
 import { Adminpage } from "./adminview/Adminpage";
 
-export let isadmin = false;
-
 function App() {
   const [userText, setUserText] = useState("");
   const [isUser, setIsUser] = useState(false);
@@ -25,7 +23,13 @@ function App() {
     setUserId(userId); // Set the user ID after successful login
     setIsUser(true); // Set the user status
     setIsAdmin(role === "admin");
-    isadmin = isAdmin;
+  };
+
+  const handleLogout = () => {
+    setUserId(""); // Set the user ID after successful login
+    setIsUser(false); // Set the user status
+    setIsAdmin(false);
+    setUserText("");
   };
 
   return (
@@ -45,7 +49,13 @@ function App() {
             <Route path="contact" element={<Contactpage />} />
             <Route
               path="login"
-              element={!isUser ? <Accesspage /> : <Userpage />}
+              element={
+                !isUser ? (
+                  <Accesspage />
+                ) : (
+                  <Userpage handleLogout={handleLogout} />
+                )
+              }
             >
               <Route
                 index

@@ -91,13 +91,14 @@ export const Bookcard = (props) => {
           {!isAdmin && (
             <div>
               <button
-                onClick={() =>
+                onClick={() => {
                   props.showPopContent(
                     props.author,
                     props.dewey,
                     props.description
-                  )
-                }
+                  );
+                  console.log(props);
+                }}
               >
                 Show Description
               </button>

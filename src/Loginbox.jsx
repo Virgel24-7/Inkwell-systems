@@ -9,6 +9,11 @@ import { setCurrentUser } from "./UserPage";
 export let currUserID = "";
 export let currUserName = "";
 export let isAdmin = false;
+export const logOut = () => {
+  currUserID = "";
+  currUserName = "";
+  isAdmin = false;
+};
 
 export const Loginbox = (props) => {
   const [email, setEmail] = useState("");
