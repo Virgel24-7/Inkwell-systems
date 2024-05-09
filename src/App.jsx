@@ -11,21 +11,32 @@ import { Librarypage } from "./Librarypage";
 import { Userpage } from "./UserPage";
 import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
+import { Adminpage } from "./adminview/Adminpage";
+
+export let isadmin = false;
 
 function App() {
   const [userText, setUserText] = useState("");
   const [isUser, setIsUser] = useState(false);
   const [userId, setUserId] = useState(""); // State to store user ID
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const handleLogin = (userId) => {
+  const handleLogin = (userId, role) => {
     setUserId(userId); // Set the user ID after successful login
     setIsUser(true); // Set the user status
+    setIsAdmin(role === "admin");
+    isadmin = isAdmin;
   };
 
   return (
     <Router>
       <div className="App">
-        <Navbar userText={userText === "" ? "Log In" : userText} userId={userId} /> {/* Pass userId to Navbar */}
+        <Navbar
+          userText={userText === "" ? "Log In" : userText}
+          userId={userId}
+          isAdmin={isAdmin}
+        />
+        {/* Pass userId to Navbar */}
         <div className="content">
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -58,6 +69,7 @@ function App() {
               />
               <Route path="sign-up" element={<Signupbox />} />
             </Route>
+            <Route path="admin" element={<Adminpage />} />
           </Routes>
         </div>
       </div>

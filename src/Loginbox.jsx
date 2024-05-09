@@ -8,6 +8,7 @@ import { setCurrentUser } from "./UserPage";
 
 export let currUserID = "";
 export let currUserName = "";
+export let isAdmin = false;
 
 export const Loginbox = (props) => {
   const [email, setEmail] = useState("");
@@ -29,6 +30,7 @@ export const Loginbox = (props) => {
       logInAsUser(currUserID);
     } catch (error) {
       console.log(error);
+      alert("User not found");
       setIsLoading(false); // Reset loading state
     }
   };
@@ -45,7 +47,8 @@ export const Loginbox = (props) => {
         props.updateUserText(currUserName.toUpperCase());
         props.logUser();
         setCurrentUser(user);
-        props.handleLogin(userID); // Call the handleLogin function with the user ID
+        props.handleLogin(userID, user.role); // Call the handleLogin function with the user ID
+        isAdmin = user.role === "admin" ? true : false;
         navigate("/");
       } else {
         alert("User not found");
