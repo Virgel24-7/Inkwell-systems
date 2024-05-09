@@ -47,13 +47,10 @@ export const Userpage = (props) => {
       const tempFunc = async () => {
         const promises = user[0].reserves.map(async (bookId, key) => {
           const temp = await getDoc(doc(db, "booksdemo", bookId));
-          console.log(temp.id);
           return { ...temp.data(), id: temp.id };
         });
 
-        console.log(await Promise.all(promises));
         setUserRes(await Promise.all(promises));
-        console.log(userRes);
       };
 
       await tempFunc();
@@ -72,50 +69,40 @@ export const Userpage = (props) => {
         logOut();
         props.handleLogout();
         navigate("/");
-        console.log("Signed out successfully");
+        alert("Signed out successfully");
       })
       .catch((error) => {
-        console.log(error);
         // An error happened.
       });
   };
 
   const cancelReserved = (bookId) => {
-    console.log(bookId);
     //delete to user reserves
     const usersCollectionRef = collection(db, "users");
 
     const deleteToUser = async () => {
       const data = await getDocs(usersCollectionRef);
       const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      console.log(tempUsers);
       const user = tempUsers.filter(
         (user) => user.userId === currentUser.userId
       );
-      console.log(user);
 
       const cuserReserves = user[0].reserves;
-      console.log(cuserReserves);
       const newCb = cuserReserves.filter((xbookid) => xbookid !== bookId);
 
-      console.log(newCb);
       const tempFunc = async () => {
         const promises = newCb.map(async (bookId, key) => {
           const temp = await getDoc(doc(db, "booksdemo", bookId));
-          console.log(temp.id);
           return { ...temp.data(), id: temp.id };
         });
 
-        console.log(await Promise.all(promises));
         setUserRes(await Promise.all(promises));
-        console.log(userRes);
       };
 
       await tempFunc();
 
       const tempDoc = doc(db, "users", currentUser.id);
       const newField = { reserves: newCb };
-      console.log(newField);
       await updateDoc(tempDoc, newField);
     };
 
@@ -125,17 +112,13 @@ export const Userpage = (props) => {
     const deleteToBook = async () => {
       const data = await getDocs(booksCollectionRef);
       const tempBooks = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      console.log(tempBooks);
       const book = tempBooks.filter((book) => book.id === bookId);
-      console.log(book);
 
       const cuservers = book[0].reservers;
-      console.log(cuservers);
       const newCu = cuservers.filter((userId) => userId !== currentUser.userId);
 
       const tempDoc = doc(db, "booksdemo", bookId);
       const newField = { reservers: newCu };
-      console.log(newField);
       await updateDoc(tempDoc, newField);
     };
 
@@ -155,7 +138,6 @@ export const Userpage = (props) => {
         {userRes.map((book, key) => (
           <div key={key}>
             {book.title}
-            {book.id}
             <button onClick={() => cancelReserved(book.id)}> Cancel </button>
           </div>
         ))}
