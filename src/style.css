@@ -199,17 +199,23 @@ a:hover:after{
 }
 /*===============================BOOKS================================*/
 .search-container {
-  height: 50vh;
-  width: 50%;
+  position: sticky;
+  top: 0;
+  height: 10%;
+  width: 100%;
+ 
+  margin: 20px auto;
+  background:black;
+  display: flex;
   align-items: center;
-  position: relative;
-  background: none;
   justify-content: center;
-  left: 520px;
+  border-radius: 60px;
+  padding: 10px 20px;
+  z-index: 1000; /* Ensure it's above other content */
 }
 .search-bar {
   height: 10%;
-  width: 50%;
+  width: 30%;
   max-width: 700px;
   margin: 20px 50px 20px 50px;
   background: rgba(255, 255, 255, 0.2);
@@ -235,6 +241,7 @@ a:hover:after{
 }
 
 .search-bar button img {
+  top: 1px;
   height: 60px;
   width: 60px;
   position: relative;
@@ -245,6 +252,7 @@ a:hover:after{
   cursor: pointer;
 }
 .books {
+  top: 300px;
   position: relative;
   width: 1100px;
   display: flex;
