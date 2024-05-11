@@ -4,57 +4,26 @@
   padding: 0;
   font-family: sans-serif;
 }
+
 body {
   background-color: #000000;
   background-position: 10%;
 }
-.cover {
-  position: fixed;
-  height: 100vh;
-  width: 100vw;
-  background-color: #8b6913;
-  top: 0;
-  right: -100vw;
-  z-index: 100;
-}
-.cover1 {
-  background-color: white;
-  animation: slide 0.3s ease-in-out forwards;
-}
-.cover2 {
-  background-color: #8b6913;
-  animation: slide 0.3s ease-in-out forwards;
-  animation-delay: 0.3s;
-}
-.cover3 {
-  background-color: black;
-  animation: slide 0.3s ease-in-out forwards;
-  animation-delay: 0.6s;
-}
 
-@keyframes slide {
-  from {
-    right: -100vw;
-  }
-  to {
-    right: 0;
-  }
-}
-
-.navigation {
-  height: 20vh;
-  width: 100%;
-  position: relative;
-  background: transparent;
-}
-
-.navbar {
-  width: 90%;
-  display: flex;
+.outer-container{
   align-items: center;
-  justify-content: space-between;
-  margin: auto;
 }
+
+.container {
+  display: grid;
+  grid-template-columns: 200fr 1fr; 
+  grid-gap: 10px; /* Optional: Add spacing between elements */
+}
+
+.next-container{
+  width: 100%;
+}
+
 .homeHeading h1 {
   text-align: left;
   margin-left: 5%;
@@ -64,15 +33,14 @@ body {
 }
 .homeHeading p {
   color: #e6e6e6;
-  text-align: left;
-  margin-right: 75%;
+  text-align: justify;
+  margin-right: 65%;
   margin-left: 5%;
 }
 .next a {
   text-decoration: none;
   color: #e6e6e6;
   margin-left: 5%;
-
   border: 3px solid #8b6913;
   padding-left: 10px;
   padding-right: 10px;
@@ -81,178 +49,231 @@ body {
   border-radius: 40px;
   transition: 0.3s all ease;
 }
+
 .next a:hover {
   background-color: #8b6913;
 }
 
+.slider {
+  position: absolute;
+  top: 225px;
+  right: 25%;
+  width: 175px; /* Adjust width as needed */
+  height: 250px; /* Adjust height as needed */
+  transform-style: preserve-3d;
+  animation: rotate 30s linear infinite;
+}
+
+@media (max-width: 1200px) { /* Adjust breakpoint as needed */
+  .slider {
+    display: none; /* Hide slider on smaller screens */
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+
+  100% {
+    transform: perspective(1000px) rotateY(360deg);
+  }
+}
+
+.slider span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  transform-style: preserve-3d;
+  transform: rotateY(calc(var(--i) * 45deg)) translateZ(350px); /* Adjust translateZ for depth */
+}
+
+.slider span img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  transition: 2s;
+}
+
+.slider span:hover img {
+  transform: translateY(-50px) scale(1.2);
+}
+
 /*===============================NAV BAR================================*/
-nav img{
+nav img {
   position: fixed;
+  top: 10px;
   height: 100px;
   margin-left: 3.2%;
   left: 10px;
   z-index: 100;
-
 }
+
 nav {
   height: 100px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
   padding: 0 20px;
-  
- 
 }
 
-.links-container{
+.links-container {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
- 
 }
-nav a{
+nav a {
   height: 10%;
   padding: 0 20px;
   display: inline-block;
   align-items: center;
   text-decoration: none;
   justify-content: flex-end;
-  
- 
-
 }
-a{
+a {
   position: relative;
   text-decoration: none;
   color: #fff;
   padding: 0 10px;
   justify-content: flex-end;
-  
- 
 }
-a:after{
+a:after {
   content: "";
   position: absolute;
-  background-color: #8B6913;
+  background-color: #8b6913;
   height: 3px;
   width: 0;
   left: 19px;
   bottom: -12px;
 }
-a:hover:after{
+a:hover:after {
   width: 60%;
 }
-#sidebar-active{
+#sidebar-active {
   display: none;
 }
-.open-sidebar-button, .close-sidebar-button{
+.open-sidebar-button,
+.close-sidebar-button {
   padding: 0 20px;
   display: none;
 }
-.close-sidebar-button{
+.close-sidebar-button {
   position: absolute;
   top: 30px;
-
 }
 
-
-
-
-@media(max-width:600px){
-  nav{
-      justify-content: flex-end;
+@media (max-width: 600px) {
+  nav {
+    justify-content: flex-end;
   }
-  .links-container{
-      display: none;
-      flex-direction:column;
-      align-items: flex-start;
+  .links-container {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
 
-      position:fixed;
-      top: 0;
-      right: 0;
-      z-index: 10;
-      width: 300px;
-      bottom: 50%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
+    width: 300px;
+    bottom: 50%;
 
-      background-color: #333;
-      box-shadow: -5px 0 5px rgba(0, 0, 0, .25);
+    background-color: #333;
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
   }
-  nav a{
-      box-sizing: border-box;
-      height: auto;
-      width: 100%;
-      padding: 20px 30px;
-      justify-content: flex-start;
-      bottom: 50%;
+  nav a {
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    padding: 20px 30px;
+    justify-content: flex-start;
+    bottom: 50%;
   }
-  .open-sidebar-button, .close-sidebar-button{
-      padding: 0 20px;
-      
-      display: block;
+  .open-sidebar-button,
+  .close-sidebar-button {
+    padding: 0 20px;
+
+    display: block;
   }
-  #sidebar-active:checked ~ .links-container{
-      display: flex;
+  #sidebar-active:checked ~ .links-container {
+    display: flex;
   }
 }
 /*===============================BOOKS================================*/
 .search-container {
-  position: sticky;
-  top: 0;
-  height: 10%;
-  width: 100%;
- 
-  margin: 20px auto;
-  background:black;
-  display: flex;
+  height: 50vh;
+  width: 55%;
   align-items: center;
+  position: relative;
+  background: none;
   justify-content: center;
-  border-radius: 60px;
-  padding: 10px 20px;
-  z-index: 1000; /* Ensure it's above other content */
+  left: 520px;
 }
+
 .search-bar {
   height: 10%;
-  width: 30%;
+  width: 50%;
   max-width: 700px;
-  margin: 20px 50px 20px 50px;
+  margin: 20px 50px 25px 50px;
   background: rgba(255, 255, 255, 0.2);
   display: flex;
-
   border-radius: 60px;
   padding: 10px 20px;
 }
+
 .search-bar input {
   flex: 1;
+  color: #ffffff;
+  font-size: 14px;
   border: none;
   outline: none;
   background: transparent;
-
   align-items: center;
-}
-.search-bar button {
-  appearance: none;
-  background: transparent;
-  outline: none;
-  cursor: pointer;
-  border: none;
+  padding: 0 10px 0 0;
 }
 
-.search-bar button img {
-  top: 1px;
-  height: 60px;
-  width: 60px;
-  position: relative;
-  bottom: 10px;
-  background: transparent;
-  border: none;
+.search-bar select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 1px solid #fff;
+  border-radius: 60px;
   outline: none;
+  background: #fff;
   cursor: pointer;
+  color: #000000;
+  font-size: 14px;
+  padding: 5px 10px 5px 10px;
+  width: 55%;
+  background-image: url("src/assets/Search.png");
+  background-size: 55px 55px;
+  background-repeat: no-repeat;
+  background-position: right center;
 }
+
+.search-bar select:focus {
+  border: 1px solid #ff8800;
+  border-radius: 60px;
+}
+
+.no-results-found {
+  position: absolute;
+  bottom: 350px;
+  left: 425px;
+  color: white;
+}
+
 .books {
-  top: 300px;
   position: relative;
   width: 1100px;
   display: flex;
@@ -262,6 +283,7 @@ a:hover:after{
   padding: 30px;
   margin-top: 8%;
 }
+
 .card {
   width: 308px;
   position: relative;
@@ -276,7 +298,94 @@ a:hover:after{
   bottom: 400px;
   left: 200px;
   border-radius: 30px;
+  text-align: left;
 }
+
+ button.learn-more {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  top: 5px;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  width: 10rem;
+  height: auto;
+ }
+ 
+ button.learn-more .circle {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  position: relative;
+  display: block;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+  background: #282936;
+  border-radius: 1rem;
+ }
+ 
+ button.learn-more .circle .icon {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #fff;
+ }
+ 
+ button.learn-more .circle .icon.arrow {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  left: 0.25rem;
+  width: 1rem;
+  height: 0.08rem;
+  background: none;
+ }
+ 
+ button.learn-more .circle .icon.arrow::before {
+  position: absolute;
+  content: "";
+  top: -0.29rem;
+  right: 0.0625rem;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-top: 0.125rem solid #fff;
+  border-right: 0.125rem solid #fff;
+  transform: rotate(45deg);
+ }
+ 
+ button.learn-more .button-text {
+  transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.25rem 0;
+  margin: 0 0 0 1rem;
+  color: #282936;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  text-transform: uppercase;
+ }
+ 
+ button:hover .circle {
+  width: 100%;
+ }
+ 
+ button:hover .circle .icon.arrow {
+  background: #fff;
+  transform: translate(1rem, 0);
+ }
+ 
+ button:hover .button-text {
+  color: #fff;
+ }
 
 .imgBx img {
   display: flex;
@@ -293,6 +402,39 @@ a:hover:after{
   transform: scale(1.3);
 }
 
+.imgBx button {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.truncate-wrapper {
+  position: relative;
+}
+
+.truncate-text {
+  width: 300px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncate-popup {
+  position: absolute;
+  top: -100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 5px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.truncate-wrapper:hover .truncate-popup {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /*===============================LOGIN PAGE================================*/
 .loginpage {
   background-image: url(assets/loginbgx.jpg);
@@ -302,7 +444,6 @@ a:hover:after{
 }
 .wrapper {
   width: 420px;
-
   background: transparent;
   color: white;
   align-items: center;
@@ -378,4 +519,32 @@ a:hover:after{
   font-size: 16px;
   color: #333;
   font-weight: 600;
+}
+
+/*===============================POP UP================================*/
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popContent {
+  position: relative;
+  padding: 32px;
+  width: 100%;
+  max-width: 650px;
+  background-color: white;
+}
+
+.popCloser {
+  position: absolute;
+  top: 20px;
+  right: 20px;
 }
