@@ -57,20 +57,24 @@ export const Navbar = (props) => {
         <Link className="book-link" to="/books">
           Books
         </Link>
-        <Link className="about-link" to="/about">
-          About us
-        </Link>
-        <Link className="contact-link" to="/contact">
-          Contact
-        </Link>
+        {props.isAdmin || (
+          <Link className="about-link" to="/about">
+            About us
+          </Link>
+        )}
+        {props.isAdmin || (
+          <Link className="contact-link" to="/contact">
+            Contact
+          </Link>
+        )}
+        {props.isAdmin && ( // Render admin button if user is admin
+          <Link className="admin-link" to="/admin">
+            Admins
+          </Link>
+        )}
         <Link className="login-link" to="/login">
           {props.userText}
         </Link>
-        {props.isAdmin && ( // Render admin button if user is admin
-          <Link className="admin-link" to="/admin">
-            Admin
-          </Link>
-        )}
       </div>
     </nav>
   );
