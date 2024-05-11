@@ -132,8 +132,7 @@ export const Userpage = (props) => {
       voluptates fugiat sapiente soluta, ullam eos ea magnam atque architecto
       ipsum maiores non molestias, omnis itaque quia assumenda rem sit
       aspernatur. Non dolorem eaque nobis voluptatem mollitia necessitatibus
-      blanditiis, consequuntur eos quos minima minus! Maiores adipisci provident
-      corporis voluptatem cum.
+      blanditiis, consequuntur eos.
       <div style={{ color: "white" }}>
         {userRes.map((book, key) => (
           <div key={key}>

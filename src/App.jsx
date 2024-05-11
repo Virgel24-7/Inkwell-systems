@@ -12,6 +12,7 @@ import { Userpage } from "./UserPage";
 import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
 import { Adminpage } from "./adminview/Adminpage";
+import { Adminlist } from "./adminview/Adminlist";
 
 function App() {
   const [userText, setUserText] = useState("");
@@ -52,8 +53,10 @@ function App() {
               element={
                 !isUser ? (
                   <Accesspage />
-                ) : (
+                ) : !isAdmin ? (
                   <Userpage handleLogout={handleLogout} />
+                ) : (
+                  <Adminpage handleLogout={handleLogout} />
                 )
               }
             >
@@ -79,7 +82,7 @@ function App() {
               />
               <Route path="sign-up" element={<Signupbox />} />
             </Route>
-            <Route path="admin" element={<Adminpage />} />
+            <Route path="admin" element={<Adminlist />} />
           </Routes>
         </div>
       </div>
