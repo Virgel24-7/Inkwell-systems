@@ -118,7 +118,7 @@ export const Userpage = (props) => {
       const newCu = cuservers.filter((userId) => userId !== currentUser.userId);
 
       const tempDoc = doc(db, "booksdemo", bookId);
-      const newField = { reservers: newCu };
+      const newField = { reservers: newCu, copies: book[0].copies + 1 };
       await updateDoc(tempDoc, newField);
     };
 
