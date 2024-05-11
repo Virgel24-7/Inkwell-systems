@@ -113,12 +113,14 @@ export const Userpage = (props) => {
       const data = await getDocs(booksCollectionRef);
       const tempBooks = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       const book = tempBooks.filter((book) => book.id === bookId);
+      console.log(book[0]);
 
       const cuservers = book[0].reservers;
       const newCu = cuservers.filter((userId) => userId !== currentUser.userId);
 
       const tempDoc = doc(db, "booksdemo", bookId);
-      const newField = { reservers: newCu };
+      const newField = { reservers: newCu, copies: book[0].copies + 1 };
+      console.log(newField);
       await updateDoc(tempDoc, newField);
     };
 
