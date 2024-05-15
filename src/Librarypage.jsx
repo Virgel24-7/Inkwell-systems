@@ -88,6 +88,7 @@ export const Librarypage = () => {
             <div className="search-container">
               <form onSubmit={(e) => e.preventDefault()} className="search-bar">
                 <input
+                  style={{ color: "white" }}
                   type="text"
                   placeholder="Search for books here..."
                   onChange={handleSearch}
@@ -100,7 +101,6 @@ export const Librarypage = () => {
                   <option value="author">Search by Author</option>
                   <option value="dewey">Search by Dewey Code</option>
                 </select>
-                
               </form>
             </div>
             <br />
