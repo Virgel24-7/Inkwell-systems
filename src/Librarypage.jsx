@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { db } from "./firebase-config";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  getDoc,
+} from "firebase/firestore";
 import { Bookcard } from "./Bookcard";
 import Popup from "./gencomponent/Popup";
 
@@ -34,26 +40,33 @@ export const Librarypage = () => {
     }
   });
 
-  const showPopContent = (author, dewey, description, code, id, copies) => {
+  const showPopContent = async (author, dewey, description, code, id) => {
     if (author && dewey && description) {
-      setPopContent({ author, dewey, description, code, id, copies });
+      const copy = await getActualCopies(id);
+      setPopContent({ author, dewey, description, code, id, copy });
     } else {
       setPopContent(content);
     }
     setPop(true);
   };
 
-  const updateNumOfCopies = async (id, copies) => {
+  const getActualCopies = async (id) => {
+    const temp = await getDoc(doc(db, "booksdemo", id));
+
+    return temp.data().copies;
+  };
+
+  const updateNumOfCopies = async (id) => {
     const tempDoc = doc(db, "booksdemo", id);
-    const newField = { copies: copies - 1 };
+    const newField = { copies: (await getActualCopies(id)) - 1 };
     await updateDoc(tempDoc, newField);
 
     openLibrary(booksCollectionRef, setLibrary);
   };
 
-  const addCopies = async (id, copies, toAdd) => {
+  const addCopies = async (id, toAdd) => {
     const tempDoc = doc(db, "booksdemo", id);
-    const newField = { copies: copies + toAdd };
+    const newField = { copies: (await getActualCopies(id)) + toAdd };
     await updateDoc(tempDoc, newField);
 
     openLibrary(booksCollectionRef, setLibrary);
@@ -107,11 +120,11 @@ export const Librarypage = () => {
                     dewey={book.dewey}
                     description={book.description}
                     image={book.image}
-                    copies={book.copies}
                     reservers={book.reservers}
                     showPopContent={showPopContent}
                     updateNOfCopies={updateNumOfCopies}
                     updateReservers={updateReservers}
+                    getActualCopies={getActualCopies}
                   />
                 ))
               )}
@@ -134,7 +147,7 @@ export const Librarypage = () => {
         description={popContent?.description}
         code={popContent?.code}
         bookId={popContent?.id}
-        copies={popContent?.copies}
+        copies={popContent?.copy}
         addCopies={addCopies}
       ></Popup>
     );

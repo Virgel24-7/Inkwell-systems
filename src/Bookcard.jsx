@@ -5,11 +5,9 @@ import { currUserID } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
 import { updateUserdoc } from "./UserPage";
 import { isAdmin } from "./Loginbox";
-import { addNumCopies, resetAddNumCopies } from "./gencomponent/Popup";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
-  const [nOfCopies, setNOfCopies] = useState(Number(props.copies));
 
   useEffect(() => {
     const getImage = async () => {
@@ -23,11 +21,16 @@ export const Bookcard = (props) => {
 
   let navigate = useNavigate();
 
-  const toggleCopy = () => {
+  const toggleCopy = async () => {
     //minus 1 for users, plus input for admin
-    console.log(isAdmin);
+    const nOfCopies = await props.getActualCopies(props.id);
+
     if (currUserID === "") {
-      navigate("/login");
+      if (nOfCopies === 0) {
+        alert("Sorry, no copy available as of this moment.");
+      } else {
+        navigate("/login");
+      }
     } else {
       if (isAdmin) {
         props.showPopContent(
@@ -35,11 +38,8 @@ export const Bookcard = (props) => {
           props.dewey,
           props.description,
           1, //with add functionality
-          props.id,
-          props.copies
+          props.id
         );
-        setNOfCopies(nOfCopies + addNumCopies);
-        resetAddNumCopies();
       } else {
         const tempX = props.reservers.filter((user) => {
           return user === currUserID;
@@ -48,16 +48,15 @@ export const Bookcard = (props) => {
         if (nOfCopies > 0) {
           if (props.reservers.length === 0 || tempX.length === 0) {
             props.updateReservers(props.id, props.reservers, currUserID);
-            setNOfCopies(nOfCopies - 1);
-            props.updateNOfCopies(props.id, props.copies);
+            props.updateNOfCopies(props.id);
             updateUserdoc(props.id);
 
-            alert("Successfully reserved");
+            alert("You have successfully reserved a copy of this book.");
           } else if (tempX.length > 0) {
-            alert("Already reserved");
+            alert("You had already reserved this book.");
           }
         } else {
-          alert("No copy available");
+          alert("Sorry, no copy available as of this moment.");
         }
       }
     }
@@ -74,8 +73,7 @@ export const Bookcard = (props) => {
                 props.dewey,
                 props.description,
                 0, //plain description
-                props.id,
-                props.copies
+                props.id
               )
             }
           >
@@ -95,15 +93,15 @@ export const Bookcard = (props) => {
                   props.showPopContent(
                     props.author,
                     props.dewey,
-                    props.description
+                    props.description,
+                    0, //plain description
+                    props.id
                   );
-                  console.log(props);
                 }}
               >
                 Show Description
               </button>
               <br />
-              <p>Copies available: {nOfCopies}</p>
             </div>
           )}
           <button className="learn-more" onClick={toggleCopy}>

@@ -1,12 +1,6 @@
-
 import React from "react";
 import "./Popup.css";
 import { useState } from "react";
-
-export let addNumCopies = Number(0);
-export function resetAddNumCopies() {
-  addNumCopies = 0;
-}
 
 function Popup(props) {
   const [nOfCopies, setNOfCopies] = useState(Number());
@@ -23,9 +17,9 @@ function Popup(props) {
         <button className="popCloser" onClick={closePopup}>
           Close
         </button>
+        <div>Current number of copies: {props.copies}</div>
         {props.code === 1 && (
           <div>
-            <div>Current number of copies: {props.copies}</div>
             <input
               type="number"
               placeholder="Number of copies to add"
@@ -35,8 +29,7 @@ function Popup(props) {
             />
             <button
               onClick={() => {
-                props.addCopies(props.bookId, props.copies, Number(nOfCopies));
-                addNumCopies = Number(nOfCopies);
+                props.addCopies(props.bookId, Number(nOfCopies));
                 closePopup();
               }}
             >
