@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Homepage } from "./Homepage";
 import { Signupbox } from "./Signupbox";
-
 import "./style.css";
 import { Aboutpage } from "./Aboutpage";
 import { Contactpage } from "./Contactpage";
@@ -13,23 +12,27 @@ import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
 import { Adminpage } from "./adminview/Adminpage";
 import { Adminlist } from "./adminview/Adminlist";
+import { Masteradmin } from "./adminview/Masteradmin"; // Adjusted import statement
 
 function App() {
   const [userText, setUserText] = useState("");
   const [isUser, setIsUser] = useState(false);
   const [userId, setUserId] = useState(""); // State to store user ID
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isMasterAdmin, setIsMasterAdmin] = useState(false); // State to store master admin status
 
   const handleLogin = (userId, role) => {
     setUserId(userId); // Set the user ID after successful login
     setIsUser(true); // Set the user status
-    setIsAdmin(role === "admin");
+    setIsAdmin(role === "admin" || role === "masteradmin");
+    setIsMasterAdmin(role === "masteradmin");
   };
 
   const handleLogout = () => {
-    setUserId(""); // Set the user ID after successful login
-    setIsUser(false); // Set the user status
+    setUserId(""); // Clear the user ID on logout
+    setIsUser(false); // Clear the user status
     setIsAdmin(false);
+    setIsMasterAdmin(false);
     setUserText("");
   };
 
@@ -40,8 +43,8 @@ function App() {
           userText={userText === "" ? "Log In" : userText}
           userId={userId}
           isAdmin={isAdmin}
+          isMasterAdmin={isMasterAdmin} // Pass isMasterAdmin to Navbar
         />
-        {/* Pass userId to Navbar */}
         <div className="content">
           <Routes>
             <Route path="/" element={<Homepage />} />
@@ -53,10 +56,12 @@ function App() {
               element={
                 !isUser ? (
                   <Accesspage />
-                ) : !isAdmin ? (
-                  <Userpage handleLogout={handleLogout} />
-                ) : (
+                ) : isMasterAdmin ? (
+                  <Masteradmin handleLogout={handleLogout} />
+                ) : isAdmin ? (
                   <Adminpage handleLogout={handleLogout} />
+                ) : (
+                  <Userpage handleLogout={handleLogout} />
                 )
               }
             >
@@ -83,6 +88,7 @@ function App() {
               <Route path="sign-up" element={<Signupbox />} />
             </Route>
             <Route path="admin" element={<Adminlist />} />
+            <Route path="masteradmin" element={<Masteradmin handleLogout={handleLogout} />} />
           </Routes>
         </div>
       </div>

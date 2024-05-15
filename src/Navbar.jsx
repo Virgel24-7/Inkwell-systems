@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { db } from "./firebase-config";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { useState } from "react";
 
 export const Navbar = (props) => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -67,9 +65,14 @@ export const Navbar = (props) => {
             Contact
           </Link>
         )}
-        {props.isAdmin && ( // Render admin button if user is admin
+        {props.isAdmin && !props.isMasterAdmin && ( // Render admin button if user is admin but not master admin
           <Link className="admin-link" to="/admin">
             Admins
+          </Link>
+        )}
+        {props.isMasterAdmin && ( // Render master admin button if user is master admin
+          <Link className="masteradmin-link" to="/masteradmin">
+            Master Admin
           </Link>
         )}
         <Link className="login-link" to="/login">
