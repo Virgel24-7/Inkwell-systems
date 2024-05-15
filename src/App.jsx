@@ -12,7 +12,7 @@ import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
 import { Adminpage } from "./adminview/Adminpage";
 import { Adminlist } from "./adminview/Adminlist";
-import { Masteradmin } from "./adminview/Masteradmin"; // Adjusted import statement
+import { Masteradmin } from "./Masteradmin"; 
 
 function App() {
   const [userText, setUserText] = useState("");
