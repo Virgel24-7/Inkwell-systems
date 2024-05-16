@@ -64,37 +64,41 @@ export const Loginbox = (props) => {
       setIsLoading(false); // Reset loading state
     }
   };
-
+<br>
+</br>
   return (
-    <div>
-      <form action="" onSubmit={signIn}>
-        <h1>Log in</h1>
-        <div className="input-box">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div className="remember-forgot">
-          <label>
-            <input type="checkbox" /> Remember me
-          </label>
-          <a href="#"> Forgot Password?</a>
-        </div>
-        <button type="submit" className="btn" disabled={isLoading}>
-          {isLoading ? "Signing In..." : "Login"}
-        </button>
-      </form>
+    
+    <div className="login-page">
+      <div className="login-container">
+        <form action="" onSubmit={signIn} className="login-form">
+          <h1>Log in</h1>
+          <div className="input-box">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="input-box">
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="remember-forgot">
+            <label>
+              <input type="checkbox" /> Remember me
+            </label>
+            <a href="#"> Forgot Password?</a>
+          </div>
+          <button type="submit" className="btn" disabled={isLoading}>
+            {isLoading ? "Signing In..." : "Login"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
