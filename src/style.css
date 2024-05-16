@@ -688,3 +688,43 @@ a:hover:after {
 .error-message {
   color: red;
 }
+
+
+.white-text {
+  color: white;
+}
+
+.container {
+  color: white;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.user-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-item {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 10px 0;
+  align-items: center;
+}
+
+.remove-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.remove-button:hover {
+  background-color: #cc0000;
+}

@@ -1,55 +1,51 @@
-import React, { useState, useEffect } from "react";
-import { db } from "./firebase-config";
+import { useState, useEffect } from "react";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore"; 
+import { db } from "./firebase-config"; // Import the Firestore instance
+import './style.css'; // Import your CSS file
 
-export const Masteradmin = () => {
+export const Masteradmin = ({ handleLogout }) => {
   const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const usersCollection = db.collection("users");
-        const snapshot = await usersCollection.get();
-        const usersData = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
+        const usersCollection = collection(db, "users");
+        const usersSnapshot = await getDocs(usersCollection);
+        const usersData = usersSnapshot.docs
+          .map((doc) => ({ ...doc.data(), id: doc.id }))
+          .filter((user) => user.role !== "masteradmin"); // Filter out masteradmin users
         setUsers(usersData);
-        setLoading(false);
       } catch (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching users: ", error);
       }
     };
 
     fetchUsers();
   }, []);
 
-  const deleteUser = async (userId) => {
-    try {
-      await db.collection("users").doc(userId).delete();
-      setUsers(users.filter((user) => user.id !== userId));
-    } catch (error) {
-      console.error("Error deleting user:", error);
+  const removeUser = async (userId) => {
+    if (window.confirm("Are you sure about deleting this user?")) {
+      try {
+        await deleteDoc(doc(db, "users", userId));
+        setUsers(users.filter(user => user.id !== userId));
+      } catch (error) {
+        console.error("Error deleting user: ", error);
+      }
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      <h2>Users List</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            {user.name}{" "}
-            <button onClick={() => deleteUser(user.id)}>Delete</button>
+    <div className="container">
+      <h1 className="title">All Users</h1>
+      <ul className="user-list">
+        {users.map((user, index) => (
+          <li key={index} className="user-item">
+            <span>{`Name: ${user.name}`}</span>
+            <span>{`Role: ${user.role}`}</span>
+            <button className="remove-button" onClick={() => removeUser(user.id)}>Remove</button>
           </li>
         ))}
       </ul>
     </div>
   );
 };
-
-export default Masteradmin;
