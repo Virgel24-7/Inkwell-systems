@@ -68,6 +68,11 @@ export const Navbar = (props) => {
           </Link>
         )}
         {props.isAdmin && ( // Render admin button if user is admin
+          <Link className="admin-link" to="/reservations">
+            Reservations
+          </Link>
+        )}
+        {props.isAdmin && ( // Render admin button if user is admin
           <Link className="admin-link" to="/admin">
             Admins
           </Link>

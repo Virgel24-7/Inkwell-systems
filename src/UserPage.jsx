@@ -4,13 +4,16 @@ import {
   doc,
   updateDoc,
   collection,
-  getDocs,
   getDoc,
+  addDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { logOut } from "./Loginbox";
+
+const due = 3;
 
 export let currentUser = null;
 export const setCurrentUser = (user) => {
@@ -18,8 +21,24 @@ export const setCurrentUser = (user) => {
 };
 
 export const updateUserdoc = async (bookId) => {
+  const dateReserved = new Date();
+  const dueDate = new Date();
+  dueDate.setDate(dateReserved.getDate() + due);
+
+  const hisCollectionRef = collection(db, "history");
+  const { id: reserveId } = await addDoc(hisCollectionRef, {
+    userid: currentUser.id,
+    state: "reserved",
+    book: bookId,
+    dateReserved: dateReserved.toDateString(),
+    dueDate: dueDate.toDateString(),
+  });
+
+  console.log(reserveId);
+  console.log(typeof reserveId);
+
   const tempDoc = doc(db, "users", currentUser.id);
-  const newField = await addToReserved(bookId);
+  const newField = await addToReserved(reserveId);
   await updateDoc(tempDoc, newField);
 };
 
@@ -35,25 +54,22 @@ export const Userpage = (props) => {
   }, []);
 
   const setReserves = async () => {
-    const usersCollectionRef = collection(db, "users");
-
     const getList = async () => {
-      const data = await getDocs(usersCollectionRef);
-      const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const user = tempUsers.filter(
-        (user) => user.userId === currentUser.userId
-      );
+      const user = await getDoc(doc(db, "users", currentUser.id));
 
-      const tempFunc = async () => {
-        const promises = user[0].reserves.map(async (bookId, key) => {
-          const temp = await getDoc(doc(db, "booksdemo", bookId));
-          return { ...temp.data(), id: temp.id };
+      const setReserves = async () => {
+        const promises = user.data().reserves.map(async (reserveId, key) => {
+          const temp = await getDoc(doc(db, "history", reserveId));
+          const title = (
+            await getDoc(doc(db, "booksdemo", temp.data().book))
+          ).data().title;
+          return { ...temp.data(), id: temp.id, title: title };
         });
 
         setUserRes(await Promise.all(promises));
       };
 
-      await tempFunc();
+      await setReserves();
     };
 
     await getList();
@@ -76,24 +92,21 @@ export const Userpage = (props) => {
       });
   };
 
-  const cancelReserved = (bookId) => {
-    //delete to user reserves
-    const usersCollectionRef = collection(db, "users");
-
+  const cancelReserved = (reserveId, bookId) => {
+    //delete to userReserves
     const deleteToUser = async () => {
-      const data = await getDocs(usersCollectionRef);
-      const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const user = tempUsers.filter(
-        (user) => user.userId === currentUser.userId
-      );
+      const user = await getDoc(doc(db, "users", currentUser.id));
 
-      const cuserReserves = user[0].reserves;
-      const newCb = cuserReserves.filter((xbookid) => xbookid !== bookId);
+      const cuserReserves = user.data().reserves;
+      const newCb = cuserReserves.filter((resId) => resId !== reserveId);
 
       const tempFunc = async () => {
-        const promises = newCb.map(async (bookId, key) => {
-          const temp = await getDoc(doc(db, "booksdemo", bookId));
-          return { ...temp.data(), id: temp.id };
+        const promises = newCb.map(async (reserveId, key) => {
+          const temp = await getDoc(doc(db, "history", reserveId));
+          const title = (
+            await getDoc(doc(db, "booksdemo", temp.data().book))
+          ).data().title;
+          return { ...temp.data(), id: temp.id, title: title };
         });
 
         setUserRes(await Promise.all(promises));
@@ -107,23 +120,26 @@ export const Userpage = (props) => {
     };
 
     //delete to bookreservers
-    const booksCollectionRef = collection(db, "booksdemo");
-
     const deleteToBook = async () => {
-      const data = await getDocs(booksCollectionRef);
-      const tempBooks = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      const book = tempBooks.filter((book) => book.id === bookId);
+      const book = await getDoc(doc(db, "booksdemo", bookId));
 
-      const cuservers = book[0].reservers;
+      const cuservers = book.data().reservers;
       const newCu = cuservers.filter((userId) => userId !== currentUser.userId);
 
       const tempDoc = doc(db, "booksdemo", bookId);
-      const newField = { reservers: newCu, copies: book[0].copies + 1 };
+      const newField = { reservers: newCu, copies: book.data().copies + 1 };
       await updateDoc(tempDoc, newField);
+    };
+
+    //delete to history
+    const deleteToHistory = async () => {
+      const historyToDelete = doc(db, "history", reserveId);
+      await deleteDoc(historyToDelete);
     };
 
     deleteToUser();
     deleteToBook();
+    deleteToHistory();
   };
 
   return (
@@ -132,12 +148,26 @@ export const Userpage = (props) => {
       voluptates fugiat sapiente soluta, ullam eos ea magnam atque architecto
       ipsum maiores non molestias, omnis itaque quia assumenda rem sit
       aspernatur. Non dolorem eaque nobis voluptatem mollitia necessitatibus
-      blanditiis, consequuntur eos.
+      blanditiis, consequuntur eos. Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Doloribus suscipit iure, eligendi accusantium velit
+      delectus quod laborum quasi minus facere hic repellat reprehenderit
+      repudiandae fuga quaerat harum in doloremque non temporibus consequatur
+      consectetur praesentium? Magnam consequuntur fugit, maiores iste
+      distinctio voluptatem tenetur consectetur eveniet incidunt quo! Eius, qui.
+      Assumenda neque itaque, aperiam animi, sed ipsa perspiciatis vel deserunt
+      labore suscipit, quae alias facere culpa voluptas? Modi excepturi pariatur
+      eaque nostrum tempora placeat. Voluptatibus magnam voluptates veniam
+      voluptatem voluptatum blanditiis perspiciatis eos minima soluta, quasi
+      ullam ipsa perferendis eius saepe non voluptas distinctio esse dolore sit
+      ea enim iure optio laudantium.
       <div style={{ color: "white" }}>
-        {userRes.map((book, key) => (
+        {userRes.map((reserve, key) => (
           <div key={key}>
-            {book.title}
-            <button onClick={() => cancelReserved(book.id)}> Cancel </button>
+            {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
+            {reserve.dueDate}
+            <button onClick={() => cancelReserved(reserve.id, reserve.book)}>
+              Cancel
+            </button>
           </div>
         ))}
       </div>
@@ -146,19 +176,12 @@ export const Userpage = (props) => {
   );
 };
 
-const addToReserved = (bookId) => {
-  const usersCollectionRef = collection(db, "users");
+const addToReserved = async (reserveId) => {
+  const tempDoc = await getDoc(doc(db, "users", currentUser.id));
+  console.log(tempDoc.data());
+  const newArray = { reserves: [...tempDoc.data().reserves, reserveId] };
 
-  const addToList = async () => {
-    const data = await getDocs(usersCollectionRef);
-    const tempUsers = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    const user = tempUsers.filter((user) => user.userId === currentUser.userId);
+  console.log(newArray);
 
-    const currUserreserves = user[0].reserves;
-    const newReserves = { reserves: [...currUserreserves, bookId] };
-
-    return newReserves;
-  };
-
-  return addToList();
+  return newArray;
 };

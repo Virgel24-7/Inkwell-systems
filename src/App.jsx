@@ -13,6 +13,7 @@ import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
 import { Adminpage } from "./adminview/Adminpage";
 import { Adminlist } from "./adminview/Adminlist";
+import { Reservationlist } from "./adminview/Reservationlist";
 
 function App() {
   const [userText, setUserText] = useState("");
@@ -83,6 +84,7 @@ function App() {
               <Route path="sign-up" element={<Signupbox />} />
             </Route>
             <Route path="admin" element={<Adminlist />} />
+            <Route path="reservations" element={<Reservationlist />} />
           </Routes>
         </div>
       </div>
