@@ -597,7 +597,7 @@ a:hover:after {
   text-decoration: none;
   color: white;
   position: relative; /* Changed to position relative */
-  top: 120px;
+  top: 600px;
 }
 
 /*===============================POP UP================================*/
@@ -713,4 +713,14 @@ a:hover:after {
 
 .remove-button:hover {
   background-color: #cc0000;
+}
+/*===============================USER PAGE================================*/
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: white; /* Ensuring the text color is white */
 }
