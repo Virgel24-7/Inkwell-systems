@@ -147,7 +147,7 @@ export const Userpage = (props) => {
   };
 
   return (
-    <div style={{ color: "white" }}>
+    <div className="center-content">
       Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius illo
       voluptates fugiat sapiente soluta, ullam eos ea magnam atque architecto
       ipsum maiores non molestias, omnis itaque quia assumenda rem sit
