@@ -36,6 +36,7 @@ export const Signupbox = () => {
         age: Number(newAge),
         userId: user.uid, // Store the user ID for reference
         reserves: [],
+        borrowed: [],
       });
 
       // Reset input fields
