@@ -598,6 +598,10 @@ a:hover:after {
   color: white;
   position: relative; /* Changed to position relative */
   top: 600px;
+  background-color: none;
+  border-radius: 10px;
+  margin-right: 10px;
+  padding: 5px;
 }
 
 /*===============================POP UP================================*/
