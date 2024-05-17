@@ -48,7 +48,6 @@ export const Homepage = () => {
             <br /> <br /> Welcome to Inkwell Systems, where every story is waiting to be explored. Start your adventure today!
           </p>
         </div>
-        <br />
         <div className="slider">
           {images.map((imageUrl, index) => (
             <span key={index} style={{ '--i': index }}>
@@ -57,13 +56,12 @@ export const Homepage = () => {
           ))}
         </div>
       </div>
-      <br />
-      <br />
       <div className="next-container">
         <div className="next">
           <Link to="books">Next Page</Link>
         </div>
       </div>
+      <br></br>
     </div>
   );
 };

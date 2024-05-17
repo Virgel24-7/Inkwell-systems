@@ -11,16 +11,14 @@ body {
 }
 
 .outer-container{
-  
   align-items: center;
-  height: 90%;
+  width: 95%;
 }
 
 .container {
-  
   display: grid;
   grid-template-columns: 200fr 1fr; 
-  grid-gap: 10px; /* Optional: Add spacing between elements */
+  grid-gap: 5px; /* Optional: Add spacing between elements */
 }
 
 .next-container {
@@ -28,7 +26,6 @@ body {
   display: flex;
   justify-content: flex-start; /* Align children to the left */
   padding-left: 5%; /* Adjust left padding */
-  margin-top: 20px; /* Optional: Add margin-top for spacing */
 }
 
 .homeHeading h1 {
@@ -41,8 +38,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-
 }
+
 .homeHeading p {
   color: #e6e6e6;
   text-align: justify;
