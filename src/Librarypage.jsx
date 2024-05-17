@@ -113,7 +113,6 @@ export const Librarypage = () => {
                 <p className="no-results-found">
                   <img src="src/assets/NoResults.png"></img>
                   <br></br>
-                  <br></br>
                   Sorry, we couldn't find any results.
                 </p>
               ) : (

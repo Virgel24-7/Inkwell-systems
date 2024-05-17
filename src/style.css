@@ -307,16 +307,16 @@ a:hover:after {
   width: 60%;
   position: absolute;
   bottom: 250px;
-  left: 400px;
+  left: 300px;
   color: white;
   text-align: left; 
   font-size: 30px; 
 }
 
 .no-results-found img {
-  width: 170px;
-  Height: 170px;
+  width: 100px;
   float: left;
+  padding-right: 10px;
 }
 
 .books {
