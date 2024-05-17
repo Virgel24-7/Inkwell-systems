@@ -488,7 +488,7 @@ a:hover:after {
 .login-page {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Align items at the bottom */
+  justify-content: center; /* Align items at the bottom */
   align-items: center; /* Center items horizontally */
   height: 100vh; /* Full viewport height */
   background-image: url(assets/loginbgx.jpg);
@@ -498,18 +498,19 @@ a:hover:after {
 }
 
 .login-container {
-  
-  bottom: 150px;
   width: 420px;
   background: transparent;
   color: white;
-  display: block;
   padding: 30px 40px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 150px; /* Adjust as needed for spacing from the bottom */
+  margin-bottom: 50px; /* Reduce margin to be more responsive */
+  display: flex;
+  flex-direction: column; /* Flex direction to stack items vertically */
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
   position: relative;
 }
 
@@ -556,7 +557,6 @@ a:hover:after {
   justify-content: space-between;
   font-size: 14.5px;
   margin: -15px 0 15px;
-  
 }
 
 .remember-forgot label input {
@@ -567,9 +567,6 @@ a:hover:after {
 .login-container .remember-forgot a {
   color: #fff;
   text-decoration: none;
-  
-  
-  
 }
 
 .login-container .remember-forgot a:hover {
@@ -590,8 +587,7 @@ a:hover:after {
   font-weight: 600;
 }
 
-
-.accessOpiton{
+.accessOption {
   align-items: center;
 }
 
@@ -600,10 +596,9 @@ a:hover:after {
   margin-bottom: 10px;
   text-decoration: none;
   color: white;
+  position: relative; /* Changed to position relative */
   top: 120px;
-  
 }
-
 
 /*===============================POP UP================================*/
 .popup {
