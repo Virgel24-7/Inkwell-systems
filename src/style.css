@@ -226,17 +226,18 @@ a:hover:after {
 /*===============================BOOKS================================*/
 .search-container {
   position: sticky;
-  top: 0;
+  top: 10px;
   height: 10%;
   width: 40%;
-  right:30%;
+  right:40%;
   margin: 10px auto;
   background:none;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 60px;
-  padding: 10px 20px;
+  padding-left: 10px;
+  padding-right: 0px;
   z-index: 1000; /* Ensure it's above other content */
 }
 .search-bar {
@@ -673,23 +674,8 @@ a:hover:after {
   background-color: #007bff;
 }
 
-.user-list {
-  margin-top: 20px;
-}
 
-.user-list > div {
-  margin-bottom: 10px;
-}
-
-.user-list p {
-  margin: 0;
-}
-
-.error-message {
-  color: red;
-}
-
-
+/*===============================MASTER ADMIN================================*/
 .white-text {
   color: white;
 }
@@ -697,6 +683,11 @@ a:hover:after {
 .container {
   color: white;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height for centering */
 }
 
 .title {
