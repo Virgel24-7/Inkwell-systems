@@ -109,7 +109,12 @@ export const Librarypage = () => {
             <br />
             <div className="books">
               {filteredLibrary.length === 0 ? (
-                <p className="no-results-found">No results found.</p>
+                <p className="no-results-found">
+                  <img src="src/assets/NoResults.png"></img>
+                  <br></br>
+                  <br></br>
+                  Sorry, we couldn't find any results.
+                </p>
               ) : (
                 filteredLibrary.map((book, key) => (
                   <Bookcard
