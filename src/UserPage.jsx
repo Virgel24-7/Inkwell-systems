@@ -43,9 +43,12 @@ export const updateUserdoc = async (bookId) => {
 };
 
 export const Userpage = (props) => {
-  const [userRes, setUserRes] = useState([{}]);
+  const [userRes, setUserRes] = useState([]);
+  const [loadRes, setLoadRes] = useState(true);
 
   useEffect(() => {
+    console.log(typeof userRes);
+    console.log(userRes.length);
     const temp = async () => {
       await setReserves();
     };
@@ -67,6 +70,7 @@ export const Userpage = (props) => {
         });
 
         setUserRes(await Promise.all(promises));
+        setLoadRes(false);
       };
 
       await setReserves();
@@ -161,15 +165,21 @@ export const Userpage = (props) => {
       ullam ipsa perferendis eius saepe non voluptas distinctio esse dolore sit
       ea enim iure optio laudantium.
       <div style={{ color: "white" }}>
-        {userRes.map((reserve, key) => (
-          <div key={key}>
-            {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
-            {reserve.dueDate}
-            <button onClick={() => cancelReserved(reserve.id, reserve.book)}>
-              Cancel
-            </button>
-          </div>
-        ))}
+        {loadRes ? (
+          <p>Loading reservations...</p>
+        ) : userRes.length === 0 ? (
+          <p>No reservations made as of this moment.</p>
+        ) : (
+          userRes.map((reserve, key) => (
+            <div key={key}>
+              {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
+              {reserve.dueDate}
+              <button onClick={() => cancelReserved(reserve.id, reserve.book)}>
+                Cancel
+              </button>
+            </div>
+          ))
+        )}
       </div>
       <button onClick={handleLogout}> LOG OUT </button>
     </div>
