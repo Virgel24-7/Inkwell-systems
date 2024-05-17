@@ -226,17 +226,18 @@ a:hover:after {
 /*===============================BOOKS================================*/
 .search-container {
   position: sticky;
-  top: 0;
+  top: 10px;
   height: 10%;
   width: 40%;
-  right:30%;
+  right:40%;
   margin: 10px auto;
   background:none;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 60px;
-  padding: 10px 20px;
+  padding-left: 10px;
+  padding-right: 0px;
   z-index: 1000; /* Ensure it's above other content */
 }
 
@@ -485,7 +486,7 @@ a:hover:after {
 .login-page {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Align items at the bottom */
+  justify-content: center; /* Align items at the bottom */
   align-items: center; /* Center items horizontally */
   height: 100vh; /* Full viewport height */
   background-image: url(assets/loginbgx.jpg);
@@ -495,18 +496,19 @@ a:hover:after {
 }
 
 .login-container {
-  
-  bottom: 150px;
   width: 420px;
   background: transparent;
   color: white;
-  display: block;
   padding: 30px 40px;
   border: 2px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 150px; /* Adjust as needed for spacing from the bottom */
+  margin-bottom: 50px; /* Reduce margin to be more responsive */
+  display: flex;
+  flex-direction: column; /* Flex direction to stack items vertically */
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
   position: relative;
 }
 
@@ -553,7 +555,6 @@ a:hover:after {
   justify-content: space-between;
   font-size: 14.5px;
   margin: -15px 0 15px;
-  
 }
 
 .remember-forgot label input {
@@ -564,9 +565,6 @@ a:hover:after {
 .login-container .remember-forgot a {
   color: #fff;
   text-decoration: none;
-  
-  
-  
 }
 
 .login-container .remember-forgot a:hover {
@@ -587,8 +585,7 @@ a:hover:after {
   font-weight: 600;
 }
 
-
-.accessOpiton{
+.accessOption {
   align-items: center;
 }
 
@@ -597,10 +594,13 @@ a:hover:after {
   margin-bottom: 10px;
   text-decoration: none;
   color: white;
-  top: 120px;
-  
+  position: relative; /* Changed to position relative */
+  top: 600px;
+  background-color: none;
+  border-radius: 10px;
+  margin-right: 10px;
+  padding: 5px;
 }
-
 
 /*===============================POP UP================================*/
 .popup {
@@ -671,23 +671,8 @@ a:hover:after {
   background-color: #007bff;
 }
 
-.user-list {
-  margin-top: 20px;
-}
 
-.user-list > div {
-  margin-bottom: 10px;
-}
-
-.user-list p {
-  margin: 0;
-}
-
-.error-message {
-  color: red;
-}
-
-
+/*===============================MASTER ADMIN================================*/
 .white-text {
   color: white;
 }
@@ -695,6 +680,11 @@ a:hover:after {
 .container {
   color: white;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height for centering */
 }
 
 .title {
@@ -725,4 +715,14 @@ a:hover:after {
 
 .remove-button:hover {
   background-color: #cc0000;
+}
+/*===============================USER PAGE================================*/
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  color: white; /* Ensuring the text color is white */
 }

@@ -20,6 +20,7 @@ export const Librarypage = () => {
 
   useEffect(() => {
     openLibrary(booksCollectionRef, setLibrary);
+    console.log(library);
   }, []);
 
   const handleSearch = (event) => {
