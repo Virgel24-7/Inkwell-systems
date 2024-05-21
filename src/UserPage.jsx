@@ -127,9 +127,30 @@ export const Userpage = (props) => {
       ullam ipsa perferendis eius saepe non voluptas distinctio esse dolore sit
       ea enim iure optio laudantium.
       <div>
-        <button onClick={() => setPage("res")}>Reservations</button>
-        <button onClick={() => setPage("bor")}>Borrowed books</button>
-        <button onClick={() => setPage("ret")}>Returned books</button>
+        <button
+          onClick={async () => {
+            setHistory();
+            setPage("res");
+          }}
+        >
+          Reservations
+        </button>
+        <button
+          onClick={async () => {
+            setHistory();
+            setPage("bor");
+          }}
+        >
+          Borrowed books
+        </button>
+        <button
+          onClick={async () => {
+            setHistory();
+            setPage("ret");
+          }}
+        >
+          Returned books
+        </button>
       </div>
       <div style={{ color: "white" }}>
         {(() => {
@@ -140,22 +161,11 @@ export const Userpage = (props) => {
               ) : userRes.length === 0 ? (
                 <p>No reservations made as of this moment.</p>
               ) : (
-                <div>
-                  LIST OF RESERVATIONS
-                  {userRes.map((reserve, key) => (
-                    <div key={key}>
-                      {reserve.title}: Date reserved: {reserve.dateReserved} -
-                      Due date: {reserve.dueDate}
-                      <button
-                        onClick={() => cancelReserved(reserve.id, reserve.book)}
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                <Reservations
+                  userRes={userRes}
+                  cancelReserved={cancelReserved}
+                />
               );
-
               break;
             case "bor":
               return loadBor ? (
@@ -163,37 +173,16 @@ export const Userpage = (props) => {
               ) : userBor.length === 0 ? (
                 <p>No borrow checkouts made as of this moment.</p>
               ) : (
-                <div>
-                  LIST OF BORROW CHECKOUTS
-                  {userBor.map((borrow, key) => (
-                    <div key={key}>
-                      {borrow.title}: Date borrowed: {borrow.dateBorrowed} - Due
-                      date: {borrow.dueDate}
-                    </div>
-                  ))}
-                </div>
+                <Borrowedlist userBor={userBor} />
               );
-
               break;
-
             default:
               return loadRet ? (
                 <p>Loading reservations...</p>
               ) : userRet.length === 0 ? (
                 <p>No returned books as of this moment.</p>
               ) : (
-                <div>
-                  LIST OF RETURNS
-                  {userRet.map((returned, key) => (
-                    <div key={key}>
-                      {returned.title}: Date borrowed: {returned.dateBorrowed} -
-                      Date returned: {returned.dateReturned}
-                      <button onClick={() => reserve(returned.book)}>
-                        Reserve again
-                      </button>
-                    </div>
-                  ))}
-                </div>
+                <Returnlist userRet={userRet} reserve={reserve} />
               );
 
               break;
@@ -210,6 +199,16 @@ export const Userpage = (props) => {
       return;
     }
 
+    if (userBor.some((bor) => bor.book === bookId)) {
+      alert("Book currently being borrowed");
+      return;
+    }
+
+    if ((await getDoc(doc(db, "booksdemo", bookId))).data().copies === 0) {
+      alert("No copy available");
+      return;
+    }
+
     const btr = doc(db, "booksdemo", bookId);
     const btrdoc = await getDoc(btr);
     const newField = {
@@ -217,18 +216,7 @@ export const Userpage = (props) => {
       copies: btrdoc.data().copies - 1,
     };
     updateDoc(btr, newField);
-    const resid = await updateUserdoc(bookId);
-    console.log(resid);
-
-    const newRes = await getDoc(doc(db, "history", resid));
-    console.log(newRes.data());
-    const newResArr = [
-      ...userRes,
-      { ...newRes.data(), id: newRes.id, title: btrdoc.data().title },
-    ];
-    console.log(newResArr);
-
-    setUserRes(newResArr);
+    await updateUserdoc(bookId);
     alert("Succesfully reserved");
   }
 
@@ -315,4 +303,54 @@ const addToReserved = async (reserveId) => {
   console.log(newArray);
 
   return newArray;
+};
+
+const Reservations = (props) => {
+  return (
+    <div>
+      LIST OF RESERVATIONS
+      {props.userRes.map((reserve, key) => (
+        <div key={key}>
+          {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
+          {reserve.dueDate}
+          <button
+            onClick={() => props.cancelReserved(reserve.id, reserve.book)}
+          >
+            Cancel
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Borrowedlist = (props) => {
+  return (
+    <div>
+      LIST OF BORROW CHECKOUTS
+      {props.userBor.map((borrow, key) => (
+        <div key={key}>
+          {borrow.title}: Date borrowed: {borrow.dateBorrowed} - Due date:{" "}
+          {borrow.dueDate}
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const Returnlist = (props) => {
+  return (
+    <div>
+      LIST OF RETURNS
+      {props.userRet.map((returned, key) => (
+        <div key={key}>
+          {returned.title}: Date borrowed: {returned.dateBorrowed} - Date
+          returned: {returned.dateReturned}
+          <button onClick={() => props.reserve(returned.book)}>
+            Reserve again
+          </button>
+        </div>
+      ))}
+    </div>
+  );
 };
