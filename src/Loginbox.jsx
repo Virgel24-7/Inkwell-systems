@@ -64,10 +64,8 @@ export const Loginbox = (props) => {
       setIsLoading(false); // Reset loading state
     }
   };
-<br>
-</br>
+  <br></br>;
   return (
-    
     <div className="login-page">
       <div className="login-container">
         <form action="" onSubmit={signIn} className="login-form">

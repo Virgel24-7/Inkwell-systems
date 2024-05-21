@@ -66,8 +66,8 @@ export const Navbar = (props) => {
           </Link>
         )}
         {props.isAdmin && ( // Render reservations button if user is admin
-          <Link className="admin-link" to="/reservations">
-            Reservations
+          <Link className="admin-link" to="/checkouts">
+            Checkouts
           </Link>
         )}
         {props.isAdmin &&
@@ -81,7 +81,7 @@ export const Navbar = (props) => {
             Master Admin
           </Link>
         )}
-        <Link className="login-link" to="/login">
+        <Link className="login-link" to={`/${props.userText.toLowerCase()}`}>
           {props.userText}
         </Link>
       </div>

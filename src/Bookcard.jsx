@@ -51,7 +51,7 @@ export const Bookcard = (props) => {
             props.updateNOfCopies(props.id);
             updateUserdoc(props.id);
 
-            alert("You have successfully reserved a copy of this book.");
+            alert("Successfully reserved a copy of this book.");
           } else if (tempX.length > 0) {
             alert("You had already reserved this book.");
           }

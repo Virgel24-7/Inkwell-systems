@@ -8,17 +8,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase-config";
 
-const duePeriod = 7;
-
-export const Reservationlist = () => {
+export const Borrowedlist = () => {
   const [loadRes, setLoadRes] = useState(true);
-  const [reservations, setReservations] = useState([]);
+  const [borroweds, setborroweds] = useState([]);
   const historyCollectionRef = collection(db, "history");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOption, setFilterOption] = useState("username");
 
   useEffect(() => {
-    openReservations(historyCollectionRef, setReservations);
+    openBorrowed(historyCollectionRef, setborroweds);
     setLoadRes(false);
   }, []);
 
@@ -26,15 +24,15 @@ export const Reservationlist = () => {
     setSearchTerm(event.target.value.toLowerCase());
   };
 
-  const filteredReserves = reservations.filter((reserved) => {
+  const filteredBorroweds = borroweds.filter((borrowed) => {
     const searchTermLower = searchTerm.toLowerCase();
     switch (filterOption) {
       case "username":
-        return reserved.name.toLowerCase().includes(searchTermLower);
+        return borrowed.name.toLowerCase().includes(searchTermLower);
       case "title":
-        return reserved.title.toLowerCase().includes(searchTermLower);
+        return borrowed.title.toLowerCase().includes(searchTermLower);
       default:
-        return reserved.name.toLowerCase().includes(searchTermLower);
+        return borrowed.name.toLowerCase().includes(searchTermLower);
     }
   });
 
@@ -45,7 +43,7 @@ export const Reservationlist = () => {
           <input
             style={{ color: "white" }}
             type="text"
-            placeholder="Search for reservations here..."
+            placeholder="Search for borrow exchange here..."
             onChange={handleSearch}
           />
           <select
@@ -63,28 +61,28 @@ export const Reservationlist = () => {
         repellendus voluptates ipsa consequatur dolorem mollitia tenetur quidem
         earum voluptatum! Ut vero labore pariatur cumque iure. Saepe magnam quia
         veritatis sit eveniet dolor placeat alias, officiis provident. Libero
-        explicabo natus facilis vero. Delectus, et velit?
+        explicabo natus facilis vero. Delectus, et velit? BORROWED
       </div>
       <div style={{ color: "white" }}>
         {loadRes ? (
-          <p>Loading reservations...</p>
-        ) : filteredReserves.length === 0 ? (
-          <p>No reservations found.</p>
+          <p>Loading borrow checkouts ...</p>
+        ) : filteredBorroweds.length === 0 ? (
+          <p>No borrow checkouts found.</p>
         ) : (
-          filteredReserves.map((reserve, key) => (
+          filteredBorroweds.map((borrowed, key) => (
             <div key={key}>
-              {reserve.name}
+              {borrowed.name}
               {"  "}
-              {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
-              {reserve.dueDate} {"  "}
+              {borrowed.title}: Date borrowed: {borrowed.dateBorrowed} - Due
+              date: {borrowed.dueDate} {"  "}
               <button
                 onClick={() => {
-                  changeToBorrow(reserve.id, reserve.userid, reserve.book);
-                  openReservations(historyCollectionRef, setReservations);
+                  changeToReturned(borrowed.id, borrowed.userid, borrowed.book);
+                  openBorrowed(historyCollectionRef, setborroweds);
                   setLoadRes(false);
                 }}
               >
-                Change to borrow
+                Change to returned
               </button>
             </div>
           ))
@@ -94,11 +92,11 @@ export const Reservationlist = () => {
   );
 };
 
-async function openReservations(historyCollectionRef, setReservations) {
+async function openBorrowed(historyCollectionRef, setborroweds) {
   const getReserves = async () => {
     const data = await getDocs(historyCollectionRef);
     const tempHis = data.docs.filter((historyDoc) => {
-      return historyDoc.data().state === "reserved";
+      return historyDoc.data().state === "borrowed";
     });
 
     const promises = tempHis.map(async (hisDoc) => ({
@@ -112,57 +110,48 @@ async function openReservations(historyCollectionRef, setReservations) {
     const tempHisObject = await Promise.all(promises);
     console.log(tempHisObject);
 
-    setReservations(tempHisObject);
+    setborroweds(tempHisObject);
   };
 
   await getReserves();
 }
 
-async function changeToBorrow(historyId, userId, bookId) {
+async function changeToReturned(historyId, userId, bookId) {
   //change historydoc
-  const resToChange = doc(db, "history", historyId);
+  const borToChange = doc(db, "history", historyId);
 
-  const dateBorrowed = new Date();
-  const dueDate = new Date();
-  dueDate.setDate(dateBorrowed.getDate() + duePeriod);
+  const dateReturned = new Date();
 
   const newField = {
-    state: "borrowed",
-    dateBorrowed: dateBorrowed.toDateString(),
-    dueDate: dueDate.toDateString(),
+    state: "returned",
+    dateReturned: dateReturned.toDateString(),
   };
-  await updateDoc(resToChange, newField);
+  await updateDoc(borToChange, newField);
 
   //change userdoc
   const userToChange = doc(db, "users", userId);
-  const borrowed = (await getDoc(userToChange)).data().borrowed;
-  borrowed.push(historyId);
+  const returned = (await getDoc(userToChange)).data().returned || [];
+  returned.push(historyId);
   const newField2 = {
-    reserves: (await getDoc(userToChange))
+    borrowed: (await getDoc(userToChange))
       .data()
-      .reserves.filter((reserved) => {
-        return reserved !== historyId;
+      .reserves.filter((borrowed) => {
+        return borrowed !== historyId;
       }),
-    borrowed: borrowed,
+    returned: returned,
   };
   await updateDoc(userToChange, newField2);
 
   //change bookdoc
   const bookToChange = doc(db, "booksdemo", bookId);
-  const borrowers = (await getDoc(bookToChange)).data().borrowers || [];
   const uidtodelete = (await getDoc(doc(db, "users", userId))).data().userId;
-  borrowers.push(uidtodelete);
   const newField3 = {
-    reservers: (await getDoc(bookToChange))
+    borrowers: (await getDoc(bookToChange))
       .data()
-      .reservers.filter((reserver) => {
-        console.log(reserver);
-        return reserver !== uidtodelete;
+      .borrowers.filter((borrower) => {
+        return borrower !== uidtodelete;
       }),
-    borrowers: borrowers,
+    copies: (await getDoc(bookToChange)).data().copies + 1,
   };
-
-  console.log(uidtodelete);
-  console.log(userId);
   await updateDoc(bookToChange, newField3);
 }

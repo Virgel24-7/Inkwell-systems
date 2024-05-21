@@ -11,7 +11,7 @@ import {
 import { useState, useEffect } from "react";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { logOut } from "./Loginbox";
+import { currUserName, logOut } from "./Loginbox";
 
 const due = 3;
 
@@ -20,43 +20,26 @@ export const setCurrentUser = (user) => {
   currentUser = user;
 };
 
-export const updateUserdoc = async (bookId) => {
-  const dateReserved = new Date();
-  const dueDate = new Date();
-  dueDate.setDate(dateReserved.getDate() + due);
-
-  const hisCollectionRef = collection(db, "history");
-  const { id: reserveId } = await addDoc(hisCollectionRef, {
-    userid: currentUser.id,
-    state: "reserved",
-    book: bookId,
-    dateReserved: dateReserved.toDateString(),
-    dueDate: dueDate.toDateString(),
-  });
-
-  console.log(reserveId);
-  console.log(typeof reserveId);
-
-  const tempDoc = doc(db, "users", currentUser.id);
-  const newField = await addToReserved(reserveId);
-  await updateDoc(tempDoc, newField);
-};
-
 export const Userpage = (props) => {
+  const [page, setPage] = useState("res");
   const [userRes, setUserRes] = useState([]);
   const [loadRes, setLoadRes] = useState(true);
+  const [userBor, setUserBor] = useState([]);
+  const [loadBor, setLoadBor] = useState(true);
+  const [userRet, setUserRet] = useState([]);
+  const [loadRet, setLoadRet] = useState(true);
 
   useEffect(() => {
     console.log(typeof userRes);
     console.log(userRes.length);
     const temp = async () => {
-      await setReserves();
+      await setHistory();
     };
 
     temp();
   }, []);
 
-  const setReserves = async () => {
+  const setHistory = async () => {
     const getList = async () => {
       const user = await getDoc(doc(db, "users", currentUser.id));
 
@@ -66,14 +49,43 @@ export const Userpage = (props) => {
           const title = (
             await getDoc(doc(db, "booksdemo", temp.data().book))
           ).data().title;
-          return { ...temp.data(), id: temp.id, title: title };
+          return { ...temp.data(), id: temp.id, title: title, key: key };
         });
 
         setUserRes(await Promise.all(promises));
         setLoadRes(false);
       };
 
+      const setBorrowed = async () => {
+        const promises = user.data().borrowed.map(async (borrowId, key) => {
+          const temp = await getDoc(doc(db, "history", borrowId));
+          const title = (
+            await getDoc(doc(db, "booksdemo", temp.data().book))
+          ).data().title;
+          return { ...temp.data(), id: temp.id, title: title, key: key };
+        });
+
+        setUserBor(await Promise.all(promises));
+        setLoadBor(false);
+      };
+
+      const setReturned = async () => {
+        const promises = user.data().returned.map(async (returnId, key) => {
+          const temp = await getDoc(doc(db, "history", returnId));
+          const title = (
+            await getDoc(doc(db, "booksdemo", temp.data().book))
+          ).data().title;
+          return { ...temp.data(), id: temp.id, title: title, key: key };
+        });
+
+        setUserRet(await Promise.all(promises));
+        setLoadRet(false);
+      };
+
       await setReserves();
+      await setBorrowed();
+      await setReturned();
+      console.log("refreshed");
     };
 
     await getList();
@@ -96,7 +108,131 @@ export const Userpage = (props) => {
       });
   };
 
-  const cancelReserved = (reserveId, bookId) => {
+  return (
+    <div className="center-content">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius illo
+      voluptates fugiat sapiente soluta, ullam eos ea magnam atque architecto
+      ipsum maiores non molestias, omnis itaque quia assumenda rem sit
+      aspernatur. Non dolorem eaque nobis voluptatem mollitia necessitatibus
+      blanditiis, consequuntur eos. Lorem ipsum dolor sit amet consectetur
+      adipisicing elit. Doloribus suscipit iure, eligendi accusantium velit
+      delectus quod laborum quasi minus facere hic repellat reprehenderit
+      repudiandae fuga quaerat harum in doloremque non temporibus consequatur
+      consectetur praesentium? Magnam consequuntur fugit, maiores iste
+      distinctio voluptatem tenetur consectetur eveniet incidunt quo! Eius, qui.
+      Assumenda neque itaque, aperiam animi, sed ipsa perspiciatis vel deserunt
+      labore suscipit, quae alias facere culpa voluptas? Modi excepturi pariatur
+      eaque nostrum tempora placeat. Voluptatibus magnam voluptates veniam
+      voluptatem voluptatum blanditiis perspiciatis eos minima soluta, quasi
+      ullam ipsa perferendis eius saepe non voluptas distinctio esse dolore sit
+      ea enim iure optio laudantium.
+      <div>
+        <button onClick={() => setPage("res")}>Reservations</button>
+        <button onClick={() => setPage("bor")}>Borrowed books</button>
+        <button onClick={() => setPage("ret")}>Returned books</button>
+      </div>
+      <div style={{ color: "white" }}>
+        {(() => {
+          switch (page) {
+            case "res":
+              return loadRes ? (
+                <p>Loading reservations...</p>
+              ) : userRes.length === 0 ? (
+                <p>No reservations made as of this moment.</p>
+              ) : (
+                <div>
+                  LIST OF RESERVATIONS
+                  {userRes.map((reserve, key) => (
+                    <div key={key}>
+                      {reserve.title}: Date reserved: {reserve.dateReserved} -
+                      Due date: {reserve.dueDate}
+                      <button
+                        onClick={() => cancelReserved(reserve.id, reserve.book)}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              );
+
+              break;
+            case "bor":
+              return loadBor ? (
+                <p>Loading borrow checkouts...</p>
+              ) : userBor.length === 0 ? (
+                <p>No borrow checkouts made as of this moment.</p>
+              ) : (
+                <div>
+                  LIST OF BORROW CHECKOUTS
+                  {userBor.map((borrow, key) => (
+                    <div key={key}>
+                      {borrow.title}: Date borrowed: {borrow.dateBorrowed} - Due
+                      date: {borrow.dueDate}
+                    </div>
+                  ))}
+                </div>
+              );
+
+              break;
+
+            default:
+              return loadRet ? (
+                <p>Loading reservations...</p>
+              ) : userRet.length === 0 ? (
+                <p>No returned books as of this moment.</p>
+              ) : (
+                <div>
+                  LIST OF RETURNS
+                  {userRet.map((returned, key) => (
+                    <div key={key}>
+                      {returned.title}: Date borrowed: {returned.dateBorrowed} -
+                      Date returned: {returned.dateReturned}
+                      <button onClick={() => reserve(returned.book)}>
+                        Reserve again
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              );
+
+              break;
+          }
+        })()}
+      </div>
+      <button onClick={handleLogout}> LOG OUT </button>
+    </div>
+  );
+
+  async function reserve(bookId) {
+    if (userRes.some((res) => res.book === bookId)) {
+      alert("Book currently being reserved");
+      return;
+    }
+
+    const btr = doc(db, "booksdemo", bookId);
+    const btrdoc = await getDoc(btr);
+    const newField = {
+      reservers: [...btrdoc.data().reservers, currentUser.userId],
+      copies: btrdoc.data().copies - 1,
+    };
+    updateDoc(btr, newField);
+    const resid = await updateUserdoc(bookId);
+    console.log(resid);
+
+    const newRes = await getDoc(doc(db, "history", resid));
+    console.log(newRes.data());
+    const newResArr = [
+      ...userRes,
+      { ...newRes.data(), id: newRes.id, title: btrdoc.data().title },
+    ];
+    console.log(newResArr);
+
+    setUserRes(newResArr);
+    alert("Succesfully reserved");
+  }
+
+  function cancelReserved(reserveId, bookId) {
     //delete to userReserves
     const deleteToUser = async () => {
       const user = await getDoc(doc(db, "users", currentUser.id));
@@ -144,46 +280,31 @@ export const Userpage = (props) => {
     deleteToUser();
     deleteToBook();
     deleteToHistory();
-  };
+  }
+};
 
-  return (
-    <div className="center-content">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius illo
-      voluptates fugiat sapiente soluta, ullam eos ea magnam atque architecto
-      ipsum maiores non molestias, omnis itaque quia assumenda rem sit
-      aspernatur. Non dolorem eaque nobis voluptatem mollitia necessitatibus
-      blanditiis, consequuntur eos. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Doloribus suscipit iure, eligendi accusantium velit
-      delectus quod laborum quasi minus facere hic repellat reprehenderit
-      repudiandae fuga quaerat harum in doloremque non temporibus consequatur
-      consectetur praesentium? Magnam consequuntur fugit, maiores iste
-      distinctio voluptatem tenetur consectetur eveniet incidunt quo! Eius, qui.
-      Assumenda neque itaque, aperiam animi, sed ipsa perspiciatis vel deserunt
-      labore suscipit, quae alias facere culpa voluptas? Modi excepturi pariatur
-      eaque nostrum tempora placeat. Voluptatibus magnam voluptates veniam
-      voluptatem voluptatum blanditiis perspiciatis eos minima soluta, quasi
-      ullam ipsa perferendis eius saepe non voluptas distinctio esse dolore sit
-      ea enim iure optio laudantium.
-      <div style={{ color: "white" }}>
-        {loadRes ? (
-          <p>Loading reservations...</p>
-        ) : userRes.length === 0 ? (
-          <p>No reservations made as of this moment.</p>
-        ) : (
-          userRes.map((reserve, key) => (
-            <div key={key}>
-              {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
-              {reserve.dueDate}
-              <button onClick={() => cancelReserved(reserve.id, reserve.book)}>
-                Cancel
-              </button>
-            </div>
-          ))
-        )}
-      </div>
-      <button onClick={handleLogout}> LOG OUT </button>
-    </div>
-  );
+export const updateUserdoc = async (bookId) => {
+  const dateReserved = new Date();
+  const dueDate = new Date();
+  dueDate.setDate(dateReserved.getDate() + due);
+
+  const hisCollectionRef = collection(db, "history");
+  const { id: reserveId } = await addDoc(hisCollectionRef, {
+    userid: currentUser.id,
+    state: "reserved",
+    book: bookId,
+    dateReserved: dateReserved.toDateString(),
+    dueDate: dueDate.toDateString(),
+  });
+
+  console.log(reserveId);
+  console.log(typeof reserveId);
+
+  const tempDoc = doc(db, "users", currentUser.id);
+  const newField = await addToReserved(reserveId);
+  await updateDoc(tempDoc, newField);
+
+  return reserveId;
 };
 
 const addToReserved = async (reserveId) => {
