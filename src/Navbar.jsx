@@ -52,9 +52,16 @@ export const Navbar = (props) => {
         <Link className="home-link" to="/">
           Home
         </Link>
-        <Link className="book-link" to="/books">
-          Books
-        </Link>
+        {!props.isMasterAdmin && (
+          <Link className="book-link" to="/books">
+            Books
+          </Link>
+        )}
+        {props.isAdmin && !props.isMasterAdmin && (
+          <Link className="admin-link" to="/checkouts">
+            Checkouts
+          </Link>
+        )}
         {props.isAdmin || (
           <Link className="about-link" to="/about">
             About us
@@ -65,12 +72,7 @@ export const Navbar = (props) => {
             Contact
           </Link>
         )}
-        {props.isAdmin && ( // Render reservations button if user is admin
-          <Link className="admin-link" to="/checkouts">
-            Checkouts
-          </Link>
-        )}
-        {props.isMasterAdmin && ( // Render master admin button if user is master admin
+        {props.isMasterAdmin && (
           <Link className="masteradmin-link" to="/masteradmin">
             Admins/Users
           </Link>
