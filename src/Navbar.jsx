@@ -75,7 +75,12 @@ export const Navbar = (props) => {
             Admins/Users
           </Link>
         )}
-        <Link className="login-link" to={`/${props.userText.toLowerCase()}`}>
+        <Link
+          className="login-link"
+          to={
+            props.userText === "" ? "login" : `/${props.userText.toLowerCase()}`
+          }
+        >
           {props.userText}
         </Link>
       </div>

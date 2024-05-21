@@ -16,7 +16,7 @@ import { Masteradmin } from "./Masteradmin";
 import { Checkoutspage } from "./adminview/Checkoutspage";
 
 function App() {
-  const [userText, setUserText] = useState("Login");
+  const [userText, setUserText] = useState("");
   const [isUser, setIsUser] = useState(false);
   const [userId, setUserId] = useState(""); // State to store user ID
   const [isAdmin, setIsAdmin] = useState(false);
@@ -41,7 +41,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar
-          userText={userText}
+          userText={userText === "" ? "Login" : userText}
           userId={userId}
           isAdmin={isAdmin}
           isMasterAdmin={isMasterAdmin} // Pass isMasterAdmin to Navbar
@@ -53,7 +53,7 @@ function App() {
             <Route path="about" element={<Aboutpage />} />
             <Route path="contact" element={<Contactpage />} />
             <Route
-              path={`/${userText.toLowerCase()}`}
+              path={userText === "" ? "login" : `/${userText.toLowerCase()}`}
               element={
                 !isUser ? (
                   <Accesspage />
