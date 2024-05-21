@@ -37,6 +37,7 @@ export const Signupbox = () => {
         userId: user.uid, // Store the user ID for reference
         reserves: [],
         borrowed: [],
+        role: "user",
       });
 
       // Reset input fields
