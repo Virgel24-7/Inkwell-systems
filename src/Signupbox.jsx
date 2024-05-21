@@ -46,6 +46,7 @@ export const Signupbox = () => {
       setEmail("");
       setPassword("");
       setError(null);
+      alert("Account Successfully Created.");
     } catch (error) {
       setError(error.message);
     }
@@ -103,16 +104,6 @@ export const Signupbox = () => {
         Create User
       </button>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <div className="user-list">
-        {users.map((user) => {
-          return (
-            <div key={user.id}>
-              <p style={{ color: "white" }}>Name: {user.name}</p>
-              <p style={{ color: "white" }}>Age: {user.age}</p>
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 };

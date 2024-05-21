@@ -70,15 +70,9 @@ export const Navbar = (props) => {
             Checkouts
           </Link>
         )}
-        {props.isAdmin &&
-          !props.isMasterAdmin && ( // Render admin button if user is admin but not master admin
-            <Link className="admin-link" to="/admin">
-              Admins
-            </Link>
-          )}
         {props.isMasterAdmin && ( // Render master admin button if user is master admin
           <Link className="masteradmin-link" to="/masteradmin">
-            Master Admin
+            Admins/Users
           </Link>
         )}
         <Link className="login-link" to={`/${props.userText.toLowerCase()}`}>
