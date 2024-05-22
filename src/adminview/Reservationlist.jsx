@@ -65,34 +65,50 @@ export const Reservationlist = () => {
         veritatis sit eveniet dolor placeat alias, officiis provident. Libero
         explicabo natus facilis vero. Delectus, et velit?
       </div>
-      <div style={{ color: "white" }}>
+      <div className="table-container">
         {loadRes ? (
           <p>Loading reservations...</p>
         ) : filteredReserves.length === 0 ? (
           <p>No reservations found.</p>
         ) : (
-          filteredReserves.map((reserve, key) => (
-            <div key={key}>
-              {reserve.name}
-              {"  "}
-              {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
-              {reserve.dueDate} {"  "}
-              <button
-                onClick={() => {
-                  changeToBorrow(reserve.id, reserve.userid, reserve.book);
-                  openReservations(historyCollectionRef, setReservations);
-                  setLoadRes(false);
-                }}
-              >
-                Change to borrow
-              </button>
-            </div>
-          ))
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Book Title</th>
+                <th>Date Reserved</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredReserves.map((reserve, key) => (
+                <tr key={key}>
+                  <td>{reserve.name}</td>
+                  <td>{reserve.title}</td>
+                  <td>{reserve.dateReserved}</td>
+                  <td>{reserve.dueDate}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        changeToBorrow(reserve.id, reserve.userid, reserve.book);
+                        openReservations(historyCollectionRef, setReservations);
+                        setLoadRes(false);
+                      }}
+                    >
+                      Change to borrow
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
     </div>
   );
 };
+
 
 async function openReservations(historyCollectionRef, setReservations) {
   const getReserves = async () => {

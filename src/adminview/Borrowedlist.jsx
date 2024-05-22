@@ -55,37 +55,44 @@ export const Borrowedlist = () => {
           </select>
         </form>
       </div>
-      <div style={{ color: "white" }}>
-        habrcsvfvbdcvsdcbhdtbvxfgcHAHAHA Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Excepturi cumque, laborum ullam vero eos illo
-        repellendus voluptates ipsa consequatur dolorem mollitia tenetur quidem
-        earum voluptatum! Ut vero labore pariatur cumque iure. Saepe magnam quia
-        veritatis sit eveniet dolor placeat alias, officiis provident. Libero
-        explicabo natus facilis vero. Delectus, et velit? BORROWED
-      </div>
-      <div style={{ color: "white" }}>
+      <div className="table-container">
         {loadRes ? (
           <p>Loading borrow checkouts ...</p>
         ) : filteredBorroweds.length === 0 ? (
           <p>No borrow checkouts found.</p>
         ) : (
-          filteredBorroweds.map((borrowed, key) => (
-            <div key={key}>
-              {borrowed.name}
-              {"  "}
-              {borrowed.title}: Date borrowed: {borrowed.dateBorrowed} - Due
-              date: {borrowed.dueDate} {"  "}
-              <button
-                onClick={() => {
-                  changeToReturned(borrowed.id, borrowed.userid, borrowed.book);
-                  openBorrowed(historyCollectionRef, setborroweds);
-                  setLoadRes(false);
-                }}
-              >
-                Change to returned
-              </button>
-            </div>
-          ))
+          <table>
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Book Title</th>
+                <th>Date Borrowed</th>
+                <th>Due Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredBorroweds.map((borrowed, key) => (
+                <tr key={key}>
+                  <td>{borrowed.name}</td>
+                  <td>{borrowed.title}</td>
+                  <td>{borrowed.dateBorrowed}</td>
+                  <td>{borrowed.dueDate}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        changeToReturned(borrowed.id, borrowed.userid, borrowed.book);
+                        openBorrowed(historyCollectionRef, setBorroweds);
+                        setLoadRes(false);
+                      }}
+                    >
+                      Change to returned
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
     </div>

@@ -24,6 +24,7 @@ export const Adminpage = (props) => {
   };
 
   return (
+   
     <div style={{ color: "white" }}>
       {" "}
       Admin Page
