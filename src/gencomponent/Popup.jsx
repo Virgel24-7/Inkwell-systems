@@ -15,17 +15,6 @@ function Popup(props) {
     <div className="popup">
       <div className="popContent">
         <p style={{ textAlign: "center" }}>{props.title.toUpperCase()}</p>
-        {props.code === 1 && (
-          <button
-            onClick={() => {
-              closePopup();
-              props.setEmptyPop(true);
-              props.setEmptyId(props.bookId);
-            }}
-          >
-            Edit Book
-          </button>
-        )}
         <hr />
         <button className="popCloser" onClick={closePopup}>
           Close
