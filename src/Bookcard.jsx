@@ -96,7 +96,7 @@ export const Bookcard = (props) => {
               <span className="icon arrow"></span>
             </span>
             <span className="button-text">
-              {isAdmin ? "Add copies" : "Reserve"}
+              {isAdmin ? "Edit book" : "Reserve"}
             </span>
           </button>
         </div>

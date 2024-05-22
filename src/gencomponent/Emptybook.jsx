@@ -1,19 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Popup.css";
 import { v4 } from "uuid";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, getDoc, doc, updateDoc } from "firebase/firestore";
 import { storage } from "../firebase-config";
-import { uploadBytes, ref } from "firebase/storage";
+import {
+  uploadBytes,
+  ref,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 import { db } from "../firebase-config";
 
 function Emptybook(props) {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [description, setDescription] = useState("");
-  const [dewey, setDewey] = useState("");
-  const [copies, setCopies] = useState(Number(-1));
-  const [cover, setCover] = useState(null);
-  const [preview, setPreview] = useState("src/assets/sampleCover.png");
+  const [book, setBook] = useState({});
+  const [reimg, setReimg] = useState(false);
+  let bookObj = null;
+
+  const titleRef = useRef();
+  const authorRef = useRef();
+  const descRef = useRef();
+  const dewRef = useRef();
+  const copRef = useRef();
+  const imageRef = useRef(null);
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    initialize();
+    if (props.bookid !== "" && props.trigger) {
+      const getBookObj = async () => {
+        bookObj = (await getDoc(doc(db, "booksdemo", props.bookid))).data();
+
+        const getImage = async () => {
+          const reference = ref(storage, `/bookcovers/${bookObj.image}`);
+          const url = await getDownloadURL(reference);
+
+          setBook({
+            ...book,
+            ...bookObj,
+            covername: bookObj.image,
+            copies: bookObj.copies,
+            preview: url,
+          });
+        };
+
+        getImage();
+      };
+
+      getBookObj();
+    }
+    console.log("rerendered");
+  }, [props.trigger, reimg]);
+
+  const initialize = () => {
+    setBook({
+      title: "",
+      author: "",
+      description: "",
+      dewey: "",
+      copies: -1,
+      covername: "",
+      preview: "src/assets/sampleCover.png",
+    });
+  };
 
   if (props.trigger) document.body.style.overflow = "hidden";
 
@@ -23,117 +71,157 @@ function Emptybook(props) {
         <button
           className="popCloser"
           onClick={() => {
-            props.setTrigger(false);
-            document.body.style.overflow = "unset";
+            closePopup();
           }}
         >
           CLOSE
         </button>
 
-        <form>
+        <form ref={formRef}>
           <div>
             Book title :
             <input
+              className="titleref"
               type="text"
-              placeholder="Title"
-              onChange={(e) => setTitle(e.target.value)}
+              ref={titleRef}
+              defaultValue={book.title}
             />
           </div>
           <div>
             Author/s :
             <input
+              className="authorref"
               type="text"
-              placeholder="Author"
-              onChange={(e) => setAuthor(e.target.value)}
+              ref={authorRef}
+              defaultValue={book.author}
             />
           </div>
           <div>
             Description:
             <input
+              className="descref"
               type="text"
-              placeholder="Description"
-              onChange={(e) => setDescription(e.target.value)}
+              ref={descRef}
+              defaultValue={book.description}
             />
           </div>
           <div>
             Dewey decimal:
             <input
+              className="dewref"
               type="text"
-              placeholder="Dewey decimal"
-              onChange={(e) => setDewey(e.target.value)}
+              ref={dewRef}
+              defaultValue={book.dewey}
             />
           </div>
-          <div>
-            Number of Copies:
-            <input
-              type="number"
-              placeholder="Number of copies"
-              onChange={(e) => setCopies(e.target.value)}
-            />
-          </div>
+          {props.bookid === "" && (
+            <div>
+              Number of Copies:
+              <input
+                className="copref"
+                type="number"
+                ref={copRef}
+                defaultValue={book.copies}
+              />
+            </div>
+          )}
           <div>
             Upload book cover{"(recommended aspect ratio(15:22))"}
             <input
+              className="imageref"
               type="file"
-              onChange={(e) => {
-                setCover(e.target.files[0]);
-                setPreview(URL.createObjectURL(e.target.files[0]));
-              }}
+              ref={imageRef}
+              style={{ display: "none" }}
+              onChange={() => setReimg(!reimg)}
             />
           </div>
         </form>
-        <button onClick={submit}>SUBMIT</button>
 
         <div className="prevBx">
-          <img src={preview} />
+          <img
+            onClick={() => imageRef.current.click()}
+            src={
+              imageRef.current === null || !imageRef.current.value
+                ? book.preview
+                : URL.createObjectURL(imageRef.current.files[0])
+            }
+          />
         </div>
+        <button onClick={submit}>SUBMIT</button>
       </div>
     </div>
   ) : (
     ""
   );
 
-  function submit() {
+  async function submit() {
+    const newBookNoimg = {
+      title: titleRef.current.value,
+      description: descRef.current.value,
+      dewey: dewRef.current.value,
+      author: authorRef.current.value,
+      copies: props.bookid === "" ? copRef.current.value : book.copies,
+    };
+
+    console.log(newBookNoimg);
+
+    let isImgChanged = !!imageRef.current.value;
+    console.log(isImgChanged);
+    let image = null;
+
     if (
-      title === "" ||
-      author === "" ||
-      description === "" ||
-      dewey === "" ||
-      copies === -1 ||
-      cover === null
+      titleRef.current.value === "" ||
+      authorRef.current.value === "" ||
+      descRef.current.value === "" ||
+      dewRef.current.value === "" ||
+      (props.bookid === "" && copRef.current.value === -1) ||
+      (!imageRef.current.value && props.bookid === "")
     ) {
       console.log("All fields required");
       return;
     }
-    console.log(title);
-    console.log(author);
-    console.log(description);
-    console.log(dewey);
-    console.log(copies);
-    console.log(cover);
 
     const booksCollectionRef = collection(db, "booksdemo");
 
-    const image = `${cover.name + v4()}`;
-    const imageLoc = `bookcovers/${image}`;
-    const imageRef = ref(storage, imageLoc);
-    uploadBytes(imageRef, cover).then(() => {
-      alert("Image uploaded");
-      console.log(imageRef);
-    });
+    if (props.bookid === "" || isImgChanged) {
+      image = `${imageRef.current.files[0].name + v4()}`;
+      const imageLoc = `bookcovers/${image}`;
+      const imageReference = ref(storage, imageLoc);
+      uploadBytes(imageReference, imageRef.current.files[0]).then(() => {
+        console.log("Image uploaded");
+        console.log(imageReference);
+      });
+    }
 
-    addDoc(booksCollectionRef, {
-      title: title,
-      description: description,
-      dewey: dewey,
-      author: author,
-      copies: copies,
-      image: image,
-    });
+    //delete past image to storage
+    if (isImgChanged && props.bookid !== "") {
+      const deleteRef = ref(storage, `bookcovers/${book.covername}`);
+      await deleteObject(deleteRef);
+    }
 
-    props.refresh();
+    if (props.bookid === "") {
+      await addDoc(booksCollectionRef, {
+        ...newBookNoimg,
+        image: image,
+      });
+    } else {
+      const btu = doc(db, "booksdemo", props.bookid);
+      const newField = {
+        ...newBookNoimg,
+        image: isImgChanged ? image : book.covername,
+      };
+      console.log("update successful");
+      await updateDoc(btu, newField);
+    }
+
+    await props.refresh();
+    closePopup();
+  }
+
+  function closePopup() {
     props.setTrigger(false);
     document.body.style.overflow = "unset";
+    formRef.current.reset();
   }
 }
 

@@ -161,15 +161,19 @@ export const Librarypage = () => {
         copies={popContent?.copy}
         title={popContent?.title}
         addCopies={addCopies}
+        setEmptyPop={setEmptyPop}
+        setEmptyId={setEmptyId}
       ></Popup>
     );
   }
 
   function emptyContent() {
+    if (emptyPop) console.log(emptyid);
     return (
       <Emptybook
         trigger={emptyPop}
         setTrigger={setEmptyPop}
+        setEmptyId={setEmptyId}
         bookid={emptyid}
         refresh={openLibrary}
       ></Emptybook>
