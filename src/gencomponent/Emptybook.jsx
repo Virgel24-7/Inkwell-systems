@@ -65,6 +65,10 @@ function Emptybook(props) {
 
   if (props.trigger) document.body.style.overflow = "hidden";
 
+  if (props.trigger) {
+    console.log(props.bookid);
+  }
+
   return props.trigger ? (
     <div className="popup">
       <div className="popContent">

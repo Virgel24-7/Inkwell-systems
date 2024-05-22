@@ -161,8 +161,8 @@ export const Librarypage = () => {
         copies={popContent?.copy}
         title={popContent?.title}
         addCopies={addCopies}
-        setEmptyPop={setEmptyPop}
         setEmptyId={setEmptyId}
+        setEmptyPop={setEmptyPop}
       ></Popup>
     );
   }
