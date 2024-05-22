@@ -20,7 +20,7 @@ function Popup(props) {
           Close
         </button>
         <div>Current number of copies: {props.copies}</div>
-        {props.code === 1 || (
+        {props.code === 1 && (
           <div>
             <input
               type="number"
@@ -38,16 +38,6 @@ function Popup(props) {
               Add to library
             </button>
             <hr />
-            <button
-              onClick={() => {
-                props.setEmptyPop(true);
-                props.setEmptyId(props.bookid);
-                console.log(props.bookid);
-                closePopup();
-              }}
-            >
-              Edit book
-            </button>
           </div>
         )}
         <p>Author: {props.author}</p>
