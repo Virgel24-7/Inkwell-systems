@@ -10,14 +10,14 @@ body {
   background-position: 10%;
 }
 
-.outer-container{
+.outer-container {
   align-items: center;
   width: 95%;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 200fr 1fr; 
+  grid-template-columns: 200fr 1fr;
   grid-gap: 5px; /* Optional: Add spacing between elements */
 }
 
@@ -69,7 +69,8 @@ body {
   animation: rotate 30s linear infinite;
 }
 
-@media (max-width: 1200px) { /* Adjust breakpoint as needed */
+@media (max-width: 1200px) {
+  /* Adjust breakpoint as needed */
   .slider {
     display: none; /* Hide slider on smaller screens */
   }
@@ -226,9 +227,9 @@ a:hover:after {
   top: 10px;
   height: 10%;
   width: 40%;
-  right:40%;
+  right: 40%;
   margin: 10px auto;
-  background:none;
+  background: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -268,7 +269,7 @@ a:hover:after {
   cursor: pointer;
   border: none;
   position: relative;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .search-bar select {
@@ -292,7 +293,6 @@ a:hover:after {
   background-size: 30px 30px;
   background-repeat: no-repeat;
   background-position: right center;
-  
 }
 
 .search-bar select:focus {
@@ -306,8 +306,8 @@ a:hover:after {
   bottom: 250px;
   left: 300px;
   color: white;
-  text-align: left; 
-  font-size: 30px; 
+  text-align: left;
+  font-size: 30px;
 }
 
 .no-results-found img {
@@ -345,7 +345,7 @@ a:hover:after {
   text-align: left;
 }
 
- button.learn-more {
+button.learn-more {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -360,9 +360,9 @@ a:hover:after {
   font-family: inherit;
   width: 10rem;
   height: auto;
- }
- 
- button.learn-more .circle {
+}
+
+button.learn-more .circle {
   transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
   position: relative;
   display: block;
@@ -371,26 +371,26 @@ a:hover:after {
   height: 2rem;
   background: #282936;
   border-radius: 1rem;
- }
- 
- button.learn-more .circle .icon {
+}
+
+button.learn-more .circle .icon {
   transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
   position: absolute;
   top: 0;
   bottom: 0;
   margin: auto;
   background: #fff;
- }
- 
- button.learn-more .circle .icon.arrow {
+}
+
+button.learn-more .circle .icon.arrow {
   transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
   left: 0.25rem;
   width: 1rem;
   height: 0.08rem;
   background: none;
- }
- 
- button.learn-more .circle .icon.arrow::before {
+}
+
+button.learn-more .circle .icon.arrow::before {
   position: absolute;
   content: "";
   top: -0.29rem;
@@ -400,9 +400,9 @@ a:hover:after {
   border-top: 0.125rem solid #fff;
   border-right: 0.125rem solid #fff;
   transform: rotate(45deg);
- }
- 
- button.learn-more .button-text {
+}
+
+button.learn-more .button-text {
   transition: all 0.45s cubic-bezier(0.45, 0, 0.05, 0.65);
   position: absolute;
   top: 0;
@@ -416,23 +416,24 @@ a:hover:after {
   line-height: 1.6;
   text-align: center;
   text-transform: uppercase;
- }
- 
- button:hover .circle {
+}
+
+button:hover .circle {
   width: 100%;
- }
- 
- button:hover .circle .icon.arrow {
+}
+
+button:hover .circle .icon.arrow {
   background: #fff;
   transform: translate(1rem, 0);
- }
- 
- button:hover .button-text {
+}
+
+button:hover .button-text {
   color: #fff;
- }
+}
 
 .imgBx img {
   display: flex;
+  width: 210px;
   height: 308px;
   float: left;
   transition: 1s;
@@ -440,6 +441,7 @@ a:hover:after {
   left: 50px;
   bottom: 50px;
   margin: 0px 0px;
+  object-fit: cover;
 }
 
 .imgBx img:hover {
@@ -628,18 +630,18 @@ a:hover:after {
 }
 /*===============================SIGN UP================================*/
 .App-admin {
-  top:120px;
+  top: 120px;
   display: flex;
   position: relative;
   flex-direction: column;
   align-items: center;
-  
+
   height: 100vh; /* Use full viewport height */
   background-color: black; /* Set background color */
   color: white;
 }
 
-.App-admin input{
+.App-admin input {
   margin-bottom: 10px;
   width: 300px; /* Adjust width as needed */
   height: 40px;
@@ -667,7 +669,6 @@ a:hover:after {
   cursor: pointer;
   background-color: #007bff;
 }
-
 
 /*===============================MASTER ADMIN================================*/
 .white-text {
@@ -729,7 +730,6 @@ a:hover:after {
   background-color: #cc0000;
 }
 
-
 /*===============================USER PAGE================================*/
 .center-content {
   display: flex;
@@ -747,7 +747,7 @@ a:hover:after {
   height: 10%;
   width: 40%;
   margin: 10px auto;
-  background:none;
+  background: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -780,7 +780,6 @@ a:hover:after {
   border: none;
   outline: none;
   background: transparent;
-
 }
 
 .search-bar-admin select {
@@ -809,30 +808,26 @@ a:hover:after {
 
 .table-container {
   width: 80%;
-  margin: 20px auto; 
-  border-collapse: collapse; 
-  color: white; 
+  margin: 20px auto;
+  border-collapse: collapse;
+  color: white;
 }
 table {
-  width: 100%; 
-  border-collapse: collapse; 
+  width: 100%;
+  border-collapse: collapse;
 }
-table th, table td {
+table th,
+table td {
   padding: 12px 15px;
-  border: 1px solid gray; 
-  text-align: left; 
+  border: 1px solid gray;
+  text-align: left;
 }
-
 
 thead th {
-  background-color: #f2f2f2; 
-  color: black; 
+  background-color: #f2f2f2;
+  color: black;
 }
 
 tbody td {
   text-align: left;
 }
-
-
-
-

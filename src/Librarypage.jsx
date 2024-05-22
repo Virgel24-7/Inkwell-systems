@@ -9,17 +9,21 @@ import {
 } from "firebase/firestore";
 import { Bookcard } from "./Bookcard";
 import Popup from "./gencomponent/Popup";
+import { isAdmin } from "./Loginbox";
+import Emptybook from "./gencomponent/Emptybook";
 
 export const Librarypage = () => {
   const [library, setLibrary] = useState([]);
   const booksCollectionRef = collection(db, "booksdemo");
   const [searchTerm, setSearchTerm] = useState("");
   const [pop, setPop] = useState(false);
+  const [emptyPop, setEmptyPop] = useState(false);
+  const [emptyid, setEmptyId] = useState("");
   const [popContent, setPopContent] = useState("");
   const [filterOption, setFilterOption] = useState("title");
 
   useEffect(() => {
-    openLibrary(booksCollectionRef, setLibrary);
+    openLibrary();
   }, []);
 
   const handleSearch = (event) => {
@@ -68,7 +72,7 @@ export const Librarypage = () => {
     const newField = { copies: (await getActualCopies(id)) + toAdd };
     await updateDoc(tempDoc, newField);
 
-    openLibrary(booksCollectionRef, setLibrary);
+    openLibrary();
   };
 
   return (
@@ -100,33 +104,46 @@ export const Librarypage = () => {
             <br />
             <br />
             <br />
-            <div className="books">
-              {filteredLibrary.length === 0 ? (
-                <p className="no-results-found">
-                  <img src="src/assets/NoResults.png"></img>
-                  <br></br>
-                  Sorry, we couldn't find any results.
-                </p>
-              ) : (
-                filteredLibrary.map((book, key) => (
-                  <Bookcard
-                    key={key}
-                    id={book.id}
-                    title={book.title}
-                    author={book.author}
-                    dewey={book.dewey}
-                    description={book.description}
-                    image={book.image}
-                    showPopContent={showPopContent}
-                    getActualCopies={getActualCopies}
-                  />
-                ))
+            <div>
+              {isAdmin && (
+                <button
+                  onClick={() => {
+                    setEmptyId("");
+                    setEmptyPop(true);
+                  }}
+                >
+                  Add a new book
+                </button>
               )}
+              <div className="books">
+                {filteredLibrary.length === 0 ? (
+                  <p className="no-results-found">
+                    <img src="src/assets/NoResults.png"></img>
+                    <br></br>
+                    Sorry, we couldn't find any results.
+                  </p>
+                ) : (
+                  filteredLibrary.map((book, key) => (
+                    <Bookcard
+                      key={key}
+                      id={book.id}
+                      title={book.title}
+                      author={book.author}
+                      dewey={book.dewey}
+                      description={book.description}
+                      image={book.image}
+                      showPopContent={showPopContent}
+                      getActualCopies={getActualCopies}
+                    />
+                  ))
+                )}
+              </div>
             </div>
           </>
         )}
       </div>
       {popupContent()}
+      {emptyContent()}
     </div>
   );
 
@@ -147,20 +164,31 @@ export const Librarypage = () => {
       ></Popup>
     );
   }
-};
 
-function openLibrary(booksCollectionRef, setLibrary) {
-  const getLibrary = async () => {
-    const data = await getDocs(booksCollectionRef);
-    const tempLib = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-    setLibrary(
-      tempLib.sort((a, b) => {
-        if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
-        if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
-        return 0;
-      })
+  function emptyContent() {
+    return (
+      <Emptybook
+        trigger={emptyPop}
+        setTrigger={setEmptyPop}
+        bookid={emptyid}
+        refresh={openLibrary}
+      ></Emptybook>
     );
-  };
+  }
 
-  getLibrary();
-}
+  function openLibrary() {
+    const getLibrary = async () => {
+      const data = await getDocs(booksCollectionRef);
+      const tempLib = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      setLibrary(
+        tempLib.sort((a, b) => {
+          if (a.title.toLowerCase() < b.title.toLowerCase()) return -1;
+          if (a.title.toLowerCase() > b.title.toLowerCase()) return 1;
+          return 0;
+        })
+      );
+    };
+
+    getLibrary();
+  }
+};

@@ -9,10 +9,12 @@ import { setCurrentUser } from "./UserPage";
 export let currUserID = "";
 export let currUserName = "";
 export let isAdmin = false;
+export let isMasterAdmin = false;
 export const logOut = () => {
   currUserID = "";
   currUserName = "";
   isAdmin = false;
+  isMasterAdmin = false;
 };
 
 export const Loginbox = (props) => {
@@ -53,7 +55,9 @@ export const Loginbox = (props) => {
         props.logUser();
         setCurrentUser(user);
         props.handleLogin(userID, user.role); // Call the handleLogin function with the user ID
-        isAdmin = user.role === "admin" ? true : false;
+        isAdmin =
+          user.role === "admin" || user.role === "masteradmin" ? true : false;
+        isMasterAdmin = user.role === "masteradmin" ? true : false;
         navigate("/");
       } else {
         alert("User not found");
