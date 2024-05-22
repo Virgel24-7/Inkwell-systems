@@ -40,8 +40,8 @@ export const Reservationlist = () => {
 
   return (
     <div style={{ color: "white" }}>
-      <div className="search-container">
-        <form onSubmit={(e) => e.preventDefault()} className="search-bar">
+      <div className="search-container-admin">
+        <form onSubmit={(e) => e.preventDefault()} className="search-bar-admin">
           <input
             style={{ color: "white" }}
             type="text"
