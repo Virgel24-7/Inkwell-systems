@@ -119,7 +119,6 @@ async function openBorrowed(historyCollectionRef, setBorroweds) {
     }));
 
     const tempHisObject = await Promise.all(promises);
-    console.log(tempHisObject);
 
     setBorroweds(tempHisObject);
   };

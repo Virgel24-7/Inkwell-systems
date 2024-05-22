@@ -10,9 +10,7 @@ import { Librarypage } from "./Librarypage";
 import { Userpage } from "./UserPage";
 import { Accesspage } from "./Accesspage";
 import { Loginbox } from "./Loginbox";
-import { Adminpage } from "./adminview/Adminpage";
-import { Adminlist } from "./adminview/Adminlist";
-import { Masteradmin } from "./Masteradmin";
+import { Masteradmin } from "./adminview/Masteradmin";
 import { Checkoutspage } from "./adminview/Checkoutspage";
 
 function App() {
@@ -45,6 +43,7 @@ function App() {
           userId={userId}
           isAdmin={isAdmin}
           isMasterAdmin={isMasterAdmin} // Pass isMasterAdmin to Navbar
+          handleLogout={handleLogout}
         />
         <div className="content">
           <Routes>
@@ -54,17 +53,7 @@ function App() {
             <Route path="contact" element={<Contactpage />} />
             <Route
               path={userText === "" ? "login" : `/${userText.toLowerCase()}`}
-              element={
-                !isUser ? (
-                  <Accesspage />
-                ) : isMasterAdmin ? (
-                  <Masteradmin handleLogout={handleLogout} />
-                ) : isAdmin ? (
-                  <Adminpage handleLogout={handleLogout} />
-                ) : (
-                  <Userpage handleLogout={handleLogout} />
-                )
-              }
+              element={!isUser ? <Accesspage /> : <Userpage />}
             >
               <Route
                 index
@@ -88,12 +77,8 @@ function App() {
               />
               <Route path="sign-up" element={<Signupbox />} />
             </Route>
-            <Route path="admin" element={<Adminlist />} />
             <Route path="checkouts" element={<Checkoutspage />} />
-            <Route
-              path="masteradmin"
-              element={<Masteradmin handleLogout={handleLogout} />}
-            />
+            <Route path="masteradmin" element={<Masteradmin />} />
           </Routes>
         </div>
       </div>

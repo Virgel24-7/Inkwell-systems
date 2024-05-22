@@ -9,9 +9,6 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { currUserName, logOut } from "./Loginbox";
 
 const due = 3;
 
@@ -46,23 +43,6 @@ export const Userpage = (props) => {
     setLoadRes(false);
     setLoadBor(false);
     setLoadRet(false);
-  };
-
-  let navigate = useNavigate();
-
-  const handleLogout = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        setCurrentUser(null);
-        logOut();
-        props.handleLogout();
-        navigate("/");
-        alert("Signed out successfully");
-      })
-      .catch((error) => {
-        // An error happened.
-      });
   };
 
   return (
@@ -146,7 +126,6 @@ export const Userpage = (props) => {
           }
         })()}
       </div>
-      <button onClick={handleLogout}> LOG OUT </button>
     </div>
   );
 

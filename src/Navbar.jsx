@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { currUserID } from "./Loginbox";
+import { logout } from "./Logout";
 
 export const Navbar = (props) => {
   const [sidebarActive, setSidebarActive] = useState(false);
@@ -77,14 +79,23 @@ export const Navbar = (props) => {
             Admins/Users
           </Link>
         )}
-        <Link
-          className="login-link"
-          to={
-            props.userText === "" ? "login" : `/${props.userText.toLowerCase()}`
-          }
-        >
-          {props.userText}
-        </Link>
+        {props.isAdmin || props.isMasterAdmin || (
+          <Link
+            className="login-link"
+            to={
+              props.userText === ""
+                ? "login"
+                : `/${props.userText.toLowerCase()}`
+            }
+          >
+            {props.userText}
+          </Link>
+        )}
+        {currUserID === "" || (
+          <Link to="/">
+            <span onClick={() => logout(props.handleLogout)}>Log out</span>
+          </Link>
+        )}
       </div>
     </nav>
   );

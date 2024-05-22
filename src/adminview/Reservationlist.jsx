@@ -129,7 +129,6 @@ async function openReservations(historyCollectionRef, setReservations) {
     }));
 
     const tempHisObject = await Promise.all(promises);
-    console.log(tempHisObject);
 
     setReservations(tempHisObject);
   };

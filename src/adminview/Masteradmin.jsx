@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs, deleteDoc, doc } from "firebase/firestore"; 
-import { db } from "./firebase-config"; // Import the Firestore instance
-import './style.css'; // Import your CSS file
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../firebase-config"; // Import the Firestore instance
 
-export const Masteradmin = ({ handleLogout }) => {
+export const Masteradmin = () => {
   const [admins, setAdmins] = useState([]);
   const [users, setUsers] = useState([]);
 
@@ -12,11 +11,16 @@ export const Masteradmin = ({ handleLogout }) => {
       try {
         const usersCollection = collection(db, "users");
         const usersSnapshot = await getDocs(usersCollection);
-        const allUsers = usersSnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        const allUsers = usersSnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        }));
 
         // Separate users into admins and non-admin users
         const adminsData = allUsers.filter((user) => user.role === "admin");
-        const usersData = allUsers.filter((user) => user.role !== "admin" && user.role !== "masteradmin");
+        const usersData = allUsers.filter(
+          (user) => user.role !== "admin" && user.role !== "masteradmin"
+        );
 
         setAdmins(adminsData);
         setUsers(usersData);
@@ -32,8 +36,8 @@ export const Masteradmin = ({ handleLogout }) => {
     if (window.confirm("Are you sure about deleting this user?")) {
       try {
         await deleteDoc(doc(db, "users", userId));
-        setAdmins(admins.filter(user => user.id !== userId));
-        setUsers(users.filter(user => user.id !== userId));
+        setAdmins(admins.filter((user) => user.id !== userId));
+        setUsers(users.filter((user) => user.id !== userId));
       } catch (error) {
         console.error("Error deleting user: ", error);
       }
@@ -48,7 +52,12 @@ export const Masteradmin = ({ handleLogout }) => {
           <li key={index} className="user-item">
             <span>{`Name: ${admin.name}`}</span>
             <span>{`Role: ${admin.role}`}</span>
-            <button className="remove-button" onClick={() => removeUser(admin.id)}>Remove</button>
+            <button
+              className="remove-button"
+              onClick={() => removeUser(admin.id)}
+            >
+              Remove
+            </button>
           </li>
         ))}
       </ul>
@@ -59,7 +68,12 @@ export const Masteradmin = ({ handleLogout }) => {
           <li key={index} className="user-item">
             <span>{`Name: ${user.name}`}</span>
             <span>{`Role: ${user.role}`}</span>
-            <button className="remove-button" onClick={() => removeUser(user.id)}>Remove</button>
+            <button
+              className="remove-button"
+              onClick={() => removeUser(user.id)}
+            >
+              Remove
+            </button>
           </li>
         ))}
       </ul>
