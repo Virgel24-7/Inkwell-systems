@@ -168,7 +168,6 @@ export const Librarypage = () => {
   }
 
   function emptyContent() {
-    if (emptyPop) console.log(emptyid);
     return (
       <Emptybook
         trigger={emptyPop}

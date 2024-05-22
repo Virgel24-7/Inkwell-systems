@@ -47,33 +47,33 @@ export const Userpage = (props) => {
 
   return (
     <div className="center-content">
-     BOOK HISTORY
+      BOOK HISTORY
       <div className="button-container">
-  <button
-    onClick={async () => {
-      setHistory();
-      setPage("res");
-    }}
-  >
-    Reservations
-  </button>
-  <button
-    onClick={async () => {
-      setHistory();
-      setPage("bor");
-    }}
-  >
-    Borrowed books
-  </button>
-  <button
-    onClick={async () => {
-      setHistory();
-      setPage("ret");
-    }}
-  >
-    Returned books
-  </button>
-</div>
+        <button
+          onClick={async () => {
+            setHistory();
+            setPage("res");
+          }}
+        >
+          Reservations
+        </button>
+        <button
+          onClick={async () => {
+            setHistory();
+            setPage("bor");
+          }}
+        >
+          Borrowed books
+        </button>
+        <button
+          onClick={async () => {
+            setHistory();
+            setPage("ret");
+          }}
+        >
+          Returned books
+        </button>
+      </div>
       <div style={{ color: "white" }}>
         {(() => {
           switch (page) {

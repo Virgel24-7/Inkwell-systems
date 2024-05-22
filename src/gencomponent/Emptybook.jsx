@@ -1,7 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./Popup.css";
 import { v4 } from "uuid";
-import { collection, addDoc, getDoc, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDoc,
+  doc,
+  updateDoc,
+  getDocs,
+  deleteDoc,
+} from "firebase/firestore";
 import { storage } from "../firebase-config";
 import {
   uploadBytes,
@@ -147,6 +155,9 @@ function Emptybook(props) {
           />
         </div>
         <button onClick={submit}>SUBMIT</button>
+        {props.bookid === "" || (
+          <button onClick={deleteBook}>DELETE BOOK</button>
+        )}
       </div>
     </div>
   ) : (
@@ -154,23 +165,23 @@ function Emptybook(props) {
   );
 
   async function submit() {
-    const newBookNoimg = {
+    const nBook = {
       title: titleRef.current.value,
       description: descRef.current.value,
       dewey: dewRef.current.value,
       author: authorRef.current.value,
-      copies: props.bookid === "" ? copRef.current.value : book.copies,
+      copies: props.bookid === "" ? Number(copRef.current.value) : book.copies,
     };
 
     let isImgChanged = !!imageRef.current.value;
     let image = null;
 
     if (
-      titleRef.current.value === "" ||
-      authorRef.current.value === "" ||
-      descRef.current.value === "" ||
-      dewRef.current.value === "" ||
-      (props.bookid === "" && copRef.current.value === -1) ||
+      nBook.title === "" ||
+      nBook.author === "" ||
+      nBook.description === "" ||
+      nBook.dewey === "" ||
+      (props.bookid === "" && nBook.copies === -1) ||
       (!imageRef.current.value && props.bookid === "")
     ) {
       alert("All fields required");
@@ -194,14 +205,14 @@ function Emptybook(props) {
 
     if (props.bookid === "") {
       await addDoc(booksCollectionRef, {
-        ...newBookNoimg,
+        ...nBook,
         image: image,
       });
       alert("Added successfully");
     } else {
       const btu = doc(db, "booksdemo", props.bookid);
       const newField = {
-        ...newBookNoimg,
+        ...nBook,
         image: isImgChanged ? image : book.covername,
       };
       alert("Updated successfully");
@@ -216,6 +227,66 @@ function Emptybook(props) {
     props.setTrigger(false);
     document.body.style.overflow = "unset";
     formRef.current.reset();
+  }
+
+  async function deleteBook() {
+    //check if currently reserved or borrowed, return if so
+    const historyCollectionRef = collection(db, "history");
+    const data = await getDocs(historyCollectionRef);
+    const hisArr = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+
+    if (
+      hisArr.some(
+        (hst) =>
+          (hst.state === "reserved" || hst.state === "borrowed") &&
+          hst.book === props.bookid
+      )
+    ) {
+      alert("CANNOT DELETE. Book currently being checked out.");
+      return;
+    }
+
+    const btd = doc(db, "booksdemo", props.bookid);
+    if ((await getDoc(btd)).data().copies !== 0) {
+      alert("CANNOT DELETE. There are still copies available.");
+      return;
+    }
+
+    const code = prompt(
+      "WARNING. THIS CANNOT BE UNDONE. Copy and paste this to confirm: " +
+        props.bookid
+    );
+    if (code !== props.bookid) {
+      alert("FAILED TO DELETE");
+      return;
+    }
+
+    //deleteTohistory and userRets
+    hisArr.forEach(async (hst) => {
+      if (hst.book === props.bookid) {
+        //update user
+        const utoUp = doc(db, "users", hst.userid);
+        const utoUpobj = (await getDoc(utoUp)).data();
+        const newRets = utoUpobj.returned.filter((ret) => ret !== hst.id);
+        const newField = { ...utoUpobj, returned: newRets };
+        updateDoc(utoUp, newField);
+
+        const htd = doc(db, "history", hst.id);
+        deleteDoc(htd);
+      }
+    });
+
+    //delete image to storage
+    const imageName = (await getDoc(btd)).data().image;
+    const deleteRef = ref(storage, `bookcovers/${imageName}`);
+    await deleteObject(deleteRef);
+
+    //delete to booksdemo
+    deleteDoc(btd);
+
+    await props.refresh();
+    closePopup();
+    alert("Deleted Successfully");
   }
 }
 

@@ -11,8 +11,8 @@ export const Bookcard = (props) => {
 
   useEffect(() => {
     const getImage = async () => {
-      const reference = ref(storage, `/bookcovers/${props.image}`);
       try {
+        const reference = ref(storage, `/bookcovers/${props.image}`);
         const url = await getDownloadURL(reference);
         setImgUrl(url);
       } catch (error) {}

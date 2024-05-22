@@ -19,7 +19,6 @@ function Popup(props) {
           <button
             onClick={() => {
               props.setEmptyPop(true);
-              console.log(props.bookId);
               props.setEmptyId(props.bookId);
               closePopup();
             }}
@@ -43,11 +42,23 @@ function Popup(props) {
             />
             <button
               onClick={() => {
-                props.addCopies(props.bookId, Number(nOfCopies));
+                const ncop = Number(nOfCopies);
+                if (!ncop || !Number.isInteger(ncop)) {
+                  alert("Invalid value. Integer only.");
+                  return;
+                }
+                if (props.copies + ncop < 0) {
+                  alert(
+                    "Invalid value. Would result to negative number of copies"
+                  );
+                  return;
+                }
+                props.addCopies(props.bookId, ncop);
+                alert("Number of copies updated");
                 closePopup();
               }}
             >
-              Add to library
+              Add to library(input negative to subtract)
             </button>
             <hr />
           </div>
