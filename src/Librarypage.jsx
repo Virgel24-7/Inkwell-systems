@@ -56,26 +56,12 @@ export const Librarypage = () => {
     return temp.data().copies;
   };
 
-  const updateNumOfCopies = async (id) => {
-    const tempDoc = doc(db, "booksdemo", id);
-    const newField = { copies: (await getActualCopies(id)) - 1 };
-    await updateDoc(tempDoc, newField);
-
-    openLibrary(booksCollectionRef, setLibrary);
-  };
-
   const addCopies = async (id, toAdd) => {
     const tempDoc = doc(db, "booksdemo", id);
     const newField = { copies: (await getActualCopies(id)) + toAdd };
     await updateDoc(tempDoc, newField);
 
     openLibrary(booksCollectionRef, setLibrary);
-  };
-
-  const updateReservers = async (id, reservers, user) => {
-    const tempDoc = doc(db, "booksdemo", id);
-    const newField = { reservers: [...reservers, user] };
-    await updateDoc(tempDoc, newField);
   };
 
   return (
@@ -124,10 +110,7 @@ export const Librarypage = () => {
                     dewey={book.dewey}
                     description={book.description}
                     image={book.image}
-                    reservers={book.reservers}
                     showPopContent={showPopContent}
-                    updateNOfCopies={updateNumOfCopies}
-                    updateReservers={updateReservers}
                     getActualCopies={getActualCopies}
                   />
                 ))

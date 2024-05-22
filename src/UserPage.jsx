@@ -40,59 +40,12 @@ export const Userpage = (props) => {
   }, []);
 
   const setHistory = async () => {
-    const getList = async () => {
-      const user = await getDoc(doc(db, "users", currentUser.id));
-
-      const setReserves = async () => {
-        const promises = user.data().reserves.map(async (reserveId, key) => {
-          const temp = await getDoc(doc(db, "history", reserveId));
-          const title = (
-            await getDoc(doc(db, "booksdemo", temp.data().book))
-          ).data().title;
-          return { ...temp.data(), id: temp.id, title: title, key: key };
-        });
-
-        setUserRes(await Promise.all(promises));
-        setLoadRes(false);
-      };
-
-      const setBorrowed = async () => {
-        const promises = user.data().borrowed.map(async (borrowId, key) => {
-          const temp = await getDoc(doc(db, "history", borrowId));
-          const bookData = await getDoc(doc(db, "booksdemo", temp.data().book));
-          return { 
-            ...temp.data(), 
-            id: temp.id, 
-            title: bookData.data().title, 
-            dateBorrowed: temp.data().dateBorrowed, // Ensure this line is present
-            key: key 
-          };
-        });
-      
-        setUserBor(await Promise.all(promises));
-        setLoadBor(false);
-      };
-
-      const setReturned = async () => {
-        const promises = user.data().returned.map(async (returnId, key) => {
-          const temp = await getDoc(doc(db, "history", returnId));
-          const title = (
-            await getDoc(doc(db, "booksdemo", temp.data().book))
-          ).data().title;
-          return { ...temp.data(), id: temp.id, title: title, key: key };
-        });
-
-        setUserRet(await Promise.all(promises));
-        setLoadRet(false);
-      };
-
-      await setReserves();
-      await setBorrowed();
-      await setReturned();
-      console.log("refreshed");
-    };
-
-    await getList();
+    setUserRes(await getRealReserves());
+    setUserBor(await getRealBorrows());
+    setUserRet(await getRealReturns());
+    setLoadRes(false);
+    setLoadBor(false);
+    setLoadRet(false);
   };
 
   let navigate = useNavigate();
@@ -186,7 +139,7 @@ export const Userpage = (props) => {
               ) : userRet.length === 0 ? (
                 <p>No returned books as of this moment.</p>
               ) : (
-                <Returnlist userRet={userRet} reserve={reserve} />
+                <Returnlist userRet={userRet} reserve={reserveBook} />
               );
 
               break;
@@ -196,33 +149,6 @@ export const Userpage = (props) => {
       <button onClick={handleLogout}> LOG OUT </button>
     </div>
   );
-
-  async function reserve(bookId) {
-    if (userRes.some((res) => res.book === bookId)) {
-      alert("Book currently being reserved");
-      return;
-    }
-
-    if (userBor.some((bor) => bor.book === bookId)) {
-      alert("Book currently being borrowed");
-      return;
-    }
-
-    if ((await getDoc(doc(db, "booksdemo", bookId))).data().copies === 0) {
-      alert("No copy available");
-      return;
-    }
-
-    const btr = doc(db, "booksdemo", bookId);
-    const btrdoc = await getDoc(btr);
-    const newField = {
-      reservers: [...btrdoc.data().reservers, currentUser.userId],
-      copies: btrdoc.data().copies - 1,
-    };
-    updateDoc(btr, newField);
-    await updateUserdoc(bookId);
-    alert("Succesfully reserved");
-  }
 
   function cancelReserved(reserveId, bookId) {
     //delete to userReserves
@@ -255,11 +181,8 @@ export const Userpage = (props) => {
     const deleteToBook = async () => {
       const book = await getDoc(doc(db, "booksdemo", bookId));
 
-      const cuservers = book.data().reservers;
-      const newCu = cuservers.filter((userId) => userId !== currentUser.userId);
-
       const tempDoc = doc(db, "booksdemo", bookId);
-      const newField = { reservers: newCu, copies: book.data().copies + 1 };
+      const newField = { copies: book.data().copies + 1 };
       await updateDoc(tempDoc, newField);
     };
 
@@ -275,7 +198,33 @@ export const Userpage = (props) => {
   }
 };
 
-export const updateUserdoc = async (bookId) => {
+export const reserveBook = async (bookId) => {
+  const btr = doc(db, "booksdemo", bookId);
+
+  if ((await getDoc(btr)).data().copies === 0) {
+    alert("No copy available");
+    return;
+  }
+
+  const userRes = await getRealReserves();
+  if (userRes.some((res) => res.book === bookId)) {
+    alert("Cannot reserve. Book currently being reserved");
+    return;
+  }
+
+  const userBor = await getRealBorrows();
+  if (userBor.some((bor) => bor.book === bookId)) {
+    alert("Cannot Reserve. Book currently being borrowed");
+    return;
+  }
+
+  const btro = (await getDoc(btr)).data();
+  const newField1 = {
+    copies: btro.copies - 1,
+  };
+  updateDoc(btr, newField1);
+
+  //add to history
   const dateReserved = new Date();
   const dueDate = new Date();
   dueDate.setDate(dateReserved.getDate() + due);
@@ -292,11 +241,54 @@ export const updateUserdoc = async (bookId) => {
   console.log(reserveId);
   console.log(typeof reserveId);
 
+  //edit userdoc
   const tempDoc = doc(db, "users", currentUser.id);
   const newField = await addToReserved(reserveId);
   await updateDoc(tempDoc, newField);
 
+  alert("Successfully reserved");
   return reserveId;
+};
+
+const getRealReserves = async () => {
+  const user = await getDoc(doc(db, "users", currentUser.id));
+  const promises = user.data().reserves.map(async (reserveId, key) => {
+    const temp = await getDoc(doc(db, "history", reserveId));
+    const title = (await getDoc(doc(db, "booksdemo", temp.data().book))).data()
+      .title;
+    return { ...temp.data(), id: temp.id, title: title, key: key };
+  });
+
+  return await Promise.all(promises);
+};
+
+const getRealBorrows = async () => {
+  const user = await getDoc(doc(db, "users", currentUser.id));
+  const promises = user.data().borrowed.map(async (borrowId, key) => {
+    const temp = await getDoc(doc(db, "history", borrowId));
+    const bookData = await getDoc(doc(db, "booksdemo", temp.data().book));
+    return {
+      ...temp.data(),
+      id: temp.id,
+      title: bookData.data().title,
+      dateBorrowed: temp.data().dateBorrowed, // Ensure this line is present
+      key: key,
+    };
+  });
+
+  return await Promise.all(promises);
+};
+
+const getRealReturns = async () => {
+  const user = await getDoc(doc(db, "users", currentUser.id));
+  const promises = user.data().returned.map(async (returnId, key) => {
+    const temp = await getDoc(doc(db, "history", returnId));
+    const title = (await getDoc(doc(db, "booksdemo", temp.data().book))).data()
+      .title;
+    return { ...temp.data(), id: temp.id, title: title, key: key };
+  });
+
+  return await Promise.all(promises);
 };
 
 const addToReserved = async (reserveId) => {
@@ -312,34 +304,33 @@ const addToReserved = async (reserveId) => {
 const Reservations = (props) => {
   return (
     <table className="table-container">
-    <thead>
-      <tr>
-        <th>Book Title</th>
-        <th>Date Reserved</th>
-        <th>Due Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      {props.userRes.map((reserve, key) => (
-        <tr key={key}>
-          <td>{reserve.title}</td>
-          <td>{reserve.dateReserved}</td>
-          <td>{reserve.dueDate}</td>
-          <td>
-            <button
-              onClick={() => props.cancelReserved(reserve.id, reserve.book)}
-            >
-              Cancel
-            </button>
-          </td>
+      <thead>
+        <tr>
+          <th>Book Title</th>
+          <th>Date Reserved</th>
+          <th>Due Date</th>
+          <th>Action</th>
         </tr>
-      ))}
-    </tbody>
-  </table>
-);
+      </thead>
+      <tbody>
+        {props.userRes.map((reserve, key) => (
+          <tr key={key}>
+            <td>{reserve.title}</td>
+            <td>{reserve.dateReserved}</td>
+            <td>{reserve.dueDate}</td>
+            <td>
+              <button
+                onClick={() => props.cancelReserved(reserve.id, reserve.book)}
+              >
+                Cancel
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 };
-
 
 const Borrowedlist = (props) => {
   return (
@@ -355,7 +346,8 @@ const Borrowedlist = (props) => {
         {props.userBor.map((borrow, key) => (
           <tr key={key}>
             <td>{borrow.title}</td>
-            <td>{new Date(borrow.dateBorrowed).toLocaleDateString()}</td> {/* Format date if necessary */}
+            <td>{new Date(borrow.dateBorrowed).toLocaleDateString()}</td>
+            {/* Format date if necessary */}
             <td>{borrow.dueDate}</td>
           </tr>
         ))}

@@ -91,7 +91,11 @@ export const Reservationlist = () => {
                   <td>
                     <button
                       onClick={() => {
-                        changeToBorrow(reserve.id, reserve.userid, reserve.book);
+                        changeToBorrow(
+                          reserve.id,
+                          reserve.userid,
+                          reserve.book
+                        );
                         openReservations(historyCollectionRef, setReservations);
                         setLoadRes(false);
                       }}
@@ -108,7 +112,6 @@ export const Reservationlist = () => {
     </div>
   );
 };
-
 
 async function openReservations(historyCollectionRef, setReservations) {
   const getReserves = async () => {
@@ -161,24 +164,6 @@ async function changeToBorrow(historyId, userId, bookId) {
       }),
     borrowed: borrowed,
   };
+
   await updateDoc(userToChange, newField2);
-
-  //change bookdoc
-  const bookToChange = doc(db, "booksdemo", bookId);
-  const borrowers = (await getDoc(bookToChange)).data().borrowers || [];
-  const uidtodelete = (await getDoc(doc(db, "users", userId))).data().userId;
-  borrowers.push(uidtodelete);
-  const newField3 = {
-    reservers: (await getDoc(bookToChange))
-      .data()
-      .reservers.filter((reserver) => {
-        console.log(reserver);
-        return reserver !== uidtodelete;
-      }),
-    borrowers: borrowers,
-  };
-
-  console.log(uidtodelete);
-  console.log(userId);
-  await updateDoc(bookToChange, newField3);
 }

@@ -3,7 +3,7 @@ import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
 import { currUserID } from "./Loginbox";
 import { useNavigate } from "react-router-dom";
-import { updateUserdoc } from "./UserPage";
+import { reserveBook } from "./UserPage";
 import { isAdmin } from "./Loginbox";
 
 export const Bookcard = (props) => {
@@ -41,23 +41,7 @@ export const Bookcard = (props) => {
           props.id
         );
       } else {
-        const tempX = props.reservers.filter((user) => {
-          return user === currUserID;
-        });
-
-        if (nOfCopies > 0) {
-          if (props.reservers.length === 0 || tempX.length === 0) {
-            props.updateReservers(props.id, props.reservers, currUserID);
-            props.updateNOfCopies(props.id);
-            updateUserdoc(props.id);
-
-            alert("Successfully reserved a copy of this book.");
-          } else if (tempX.length > 0) {
-            alert("You had already reserved this book.");
-          }
-        } else {
-          alert("Sorry, no copy available as of this moment.");
-        }
+        reserveBook(props.id);
       }
     }
   };

@@ -10,13 +10,13 @@ import { db } from "../firebase-config";
 
 export const Borrowedlist = () => {
   const [loadRes, setLoadRes] = useState(true);
-  const [borroweds, setborroweds] = useState([]);
+  const [borroweds, setBorroweds] = useState([]);
   const historyCollectionRef = collection(db, "history");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOption, setFilterOption] = useState("username");
 
   useEffect(() => {
-    openBorrowed(historyCollectionRef, setborroweds);
+    openBorrowed(historyCollectionRef, setBorroweds);
     setLoadRes(false);
   }, []);
 
@@ -81,7 +81,11 @@ export const Borrowedlist = () => {
                   <td>
                     <button
                       onClick={() => {
-                        changeToReturned(borrowed.id, borrowed.userid, borrowed.book);
+                        changeToReturned(
+                          borrowed.id,
+                          borrowed.userid,
+                          borrowed.book
+                        );
                         openBorrowed(historyCollectionRef, setBorroweds);
                         setLoadRes(false);
                       }}
@@ -99,7 +103,7 @@ export const Borrowedlist = () => {
   );
 };
 
-async function openBorrowed(historyCollectionRef, setborroweds) {
+async function openBorrowed(historyCollectionRef, setBorroweds) {
   const getReserves = async () => {
     const data = await getDocs(historyCollectionRef);
     const tempHis = data.docs.filter((historyDoc) => {
@@ -117,7 +121,7 @@ async function openBorrowed(historyCollectionRef, setborroweds) {
     const tempHisObject = await Promise.all(promises);
     console.log(tempHisObject);
 
-    setborroweds(tempHisObject);
+    setBorroweds(tempHisObject);
   };
 
   await getReserves();
@@ -151,13 +155,7 @@ async function changeToReturned(historyId, userId, bookId) {
 
   //change bookdoc
   const bookToChange = doc(db, "booksdemo", bookId);
-  const uidtodelete = (await getDoc(doc(db, "users", userId))).data().userId;
   const newField3 = {
-    borrowers: (await getDoc(bookToChange))
-      .data()
-      .borrowers.filter((borrower) => {
-        return borrower !== uidtodelete;
-      }),
     copies: (await getDoc(bookToChange)).data().copies + 1,
   };
   await updateDoc(bookToChange, newField3);
