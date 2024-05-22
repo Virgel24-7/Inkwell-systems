@@ -12,8 +12,10 @@ export const Bookcard = (props) => {
   useEffect(() => {
     const getImage = async () => {
       const reference = ref(storage, `/bookcovers/${props.image}`);
-      const url = await getDownloadURL(reference);
-      setImgUrl(url);
+      try {
+        const url = await getDownloadURL(reference);
+        setImgUrl(url);
+      } catch (error) {}
     };
 
     getImage();
@@ -57,7 +59,7 @@ export const Bookcard = (props) => {
                 props.author,
                 props.dewey,
                 props.description,
-                0, //plain description
+                isAdmin ? 1 : 0, //plain description
                 props.id,
                 props.title
               )
@@ -96,7 +98,7 @@ export const Bookcard = (props) => {
               <span className="icon arrow"></span>
             </span>
             <span className="button-text">
-              {isAdmin ? "Add copies" : "Reserve"}
+              {isAdmin ? "Edit book" : "Reserve"}
             </span>
           </button>
         </div>

@@ -153,25 +153,27 @@ export const Librarypage = () => {
         trigger={pop}
         setTrigger={setPop}
         content={popContent}
-        author={popContent?.author}
-        dewey={popContent?.dewey}
-        description={popContent?.description}
-        code={popContent?.code}
-        bookId={popContent?.id}
-        copies={popContent?.copy}
-        title={popContent?.title}
+        author={popContent.author}
+        dewey={popContent.dewey}
+        description={popContent.description}
+        code={popContent.code}
+        bookId={popContent.id}
+        copies={popContent.copy}
+        title={popContent.title}
         addCopies={addCopies}
-        setEmptyPop={setEmptyPop}
         setEmptyId={setEmptyId}
+        setEmptyPop={setEmptyPop}
       ></Popup>
     );
   }
 
   function emptyContent() {
+    if (emptyPop) console.log(emptyid);
     return (
       <Emptybook
         trigger={emptyPop}
         setTrigger={setEmptyPop}
+        setEmptyId={setEmptyId}
         bookid={emptyid}
         refresh={openLibrary}
       ></Emptybook>
