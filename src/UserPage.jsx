@@ -59,12 +59,16 @@ export const Userpage = (props) => {
       const setBorrowed = async () => {
         const promises = user.data().borrowed.map(async (borrowId, key) => {
           const temp = await getDoc(doc(db, "history", borrowId));
-          const title = (
-            await getDoc(doc(db, "booksdemo", temp.data().book))
-          ).data().title;
-          return { ...temp.data(), id: temp.id, title: title, key: key };
+          const bookData = await getDoc(doc(db, "booksdemo", temp.data().book));
+          return { 
+            ...temp.data(), 
+            id: temp.id, 
+            title: bookData.data().title, 
+            dateBorrowed: temp.data().dateBorrowed, // Ensure this line is present
+            key: key 
+          };
         });
-
+      
         setUserBor(await Promise.all(promises));
         setLoadBor(false);
       };
@@ -307,50 +311,84 @@ const addToReserved = async (reserveId) => {
 
 const Reservations = (props) => {
   return (
-    <div>
-      LIST OF RESERVATIONS
+    <table className="table-container">
+    <thead>
+      <tr>
+        <th>Book Title</th>
+        <th>Date Reserved</th>
+        <th>Due Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
       {props.userRes.map((reserve, key) => (
-        <div key={key}>
-          {reserve.title}: Date reserved: {reserve.dateReserved} - Due date:{" "}
-          {reserve.dueDate}
-          <button
-            onClick={() => props.cancelReserved(reserve.id, reserve.book)}
-          >
-            Cancel
-          </button>
-        </div>
+        <tr key={key}>
+          <td>{reserve.title}</td>
+          <td>{reserve.dateReserved}</td>
+          <td>{reserve.dueDate}</td>
+          <td>
+            <button
+              onClick={() => props.cancelReserved(reserve.id, reserve.book)}
+            >
+              Cancel
+            </button>
+          </td>
+        </tr>
       ))}
-    </div>
-  );
+    </tbody>
+  </table>
+);
 };
+
 
 const Borrowedlist = (props) => {
   return (
-    <div>
-      LIST OF BORROW CHECKOUTS
-      {props.userBor.map((borrow, key) => (
-        <div key={key}>
-          {borrow.title}: Date borrowed: {borrow.dateBorrowed} - Due date:{" "}
-          {borrow.dueDate}
-        </div>
-      ))}
-    </div>
+    <table className="table-container">
+      <thead>
+        <tr>
+          <th>Book Title</th>
+          <th>Date Borrowed</th>
+          <th>Due Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.userBor.map((borrow, key) => (
+          <tr key={key}>
+            <td>{borrow.title}</td>
+            <td>{new Date(borrow.dateBorrowed).toLocaleDateString()}</td> {/* Format date if necessary */}
+            <td>{borrow.dueDate}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };
 
 const Returnlist = (props) => {
   return (
-    <div>
-      LIST OF RETURNS
-      {props.userRet.map((returned, key) => (
-        <div key={key}>
-          {returned.title}: Date borrowed: {returned.dateBorrowed} - Date
-          returned: {returned.dateReturned}
-          <button onClick={() => props.reserve(returned.book)}>
-            Reserve again
-          </button>
-        </div>
-      ))}
-    </div>
+    <table className="table-container">
+      <thead>
+        <tr>
+          <th>Book Title</th>
+          <th>Date Borrowed</th>
+          <th>Date Returned</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {props.userRet.map((returned, key) => (
+          <tr key={key}>
+            <td>{returned.title}</td>
+            <td>{returned.dateBorrowed}</td>
+            <td>{returned.dateReturned}</td>
+            <td>
+              <button onClick={() => props.reserve(returned.book)}>
+                Reserve again
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
   );
 };

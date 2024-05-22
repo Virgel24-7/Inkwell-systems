@@ -740,31 +740,42 @@ a:hover:after {
   text-align: center;
   color: white; /* Ensuring the text color is white */
 }
-/*===============================RESERVATION LIST PAGE================================*/
+/*===============================TABLE LIST PAGE================================*/
 
+/* Center the table */
 .table-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
+  width: 80%;
+  margin: 20px auto; /* Center the table */
+  border-collapse: collapse; /* Ensure borders collapse into a single border */
+  color: white; /* Ensure text color is white */
+}
+
+/* Style the table */
+table {
+  width: 100%; /* Ensure table takes full width of container */
+  border-collapse: collapse; /* Ensure borders collapse into a single border */
+}
+
+/* Table header */
+table th, table td {
+  padding: 12px 15px;
+  border: 1px solid gray; /* Set border color to gray */
+  text-align: left; /* Align text to the left */
+}
+
+/* Style for header */
+thead th {
+  background-color: #f2f2f2; /* Optional: Add a background color to header */
+  color: black; /* Ensure header text color is black for better readability */
 }
 
 
-table {
-  width: 80%;
-  border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 18px;
+
+/* Ensure consistent text alignment */
+tbody td {
   text-align: left;
 }
 
 
-table th, table td {
-  padding: 12px 15px;
-  border: 1px solid gray; 
-}
 
-table thead th {
-  background-color: gray; 
-}
 
