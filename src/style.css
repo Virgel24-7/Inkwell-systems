@@ -21,19 +21,14 @@ body {
   grid-gap: 5px; /* Optional: Add spacing between elements */
 }
 
-.next-container {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start; /* Align children to the left */
-  padding-left: 5%; /* Adjust left padding */
-}
+
 
 .homeHeading h1 {
-  margin-top: 100px;
+  margin-top: 0px;
   text-align: left;
   margin-left: 5%;
   position: relative;
-  top: 40px;
+  top: 0px;
   color: white;
   display: flex;
   flex-direction: column;
@@ -46,6 +41,17 @@ body {
   margin-right: 65%;
   margin-left: 5%;
 }
+.next-container {
+  width: 100%;
+  display: flex;
+  
+  align-self: flex-end; 
+  margin-left: 6%; 
+  margin-top: 10px; /* Adjust top margin */
+  margin-bottom: 20px; 
+  bottom: 10px;
+}
+
 .next a {
   text-decoration: none;
   color: #e6e6e6;
@@ -53,7 +59,12 @@ body {
   padding: 5px 15px; /* Adjust padding for button size */
   border-radius: 40px;
   transition: 0.3s all ease;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  bottom: 150px;
 }
+
 .next a:hover {
   background-color: #8b6913;
 }
@@ -495,6 +506,7 @@ button:hover .button-text {
 }
 
 .login-container {
+  height: 50%;
   width: 420px;
   background: transparent;
   color: white;
@@ -518,7 +530,7 @@ button:hover .button-text {
 }
 
 .login-container .input-box {
-  width: 90%;
+  width: 100%;
   height: 50px;
   background: transparent;
   margin: 30px 0;
@@ -535,6 +547,11 @@ button:hover .button-text {
   border-radius: 40px;
   color: #fff;
   padding-left: 5%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  right: 15px;
+  
 }
 
 .input-box input::placeholder {
@@ -564,6 +581,8 @@ button:hover .button-text {
 .login-container .remember-forgot a {
   color: #fff;
   text-decoration: none;
+  margin-left: 100px;
+  align-items: center;
 }
 
 .login-container .remember-forgot a:hover {
@@ -594,11 +613,12 @@ button:hover .button-text {
   text-decoration: none;
   color: white;
   position: relative; /* Changed to position relative */
-  top: 600px;
+  top: 590px;
   background-color: none;
   border-radius: 10px;
   margin-right: 10px;
   padding: 5px;
+  z-index: 1000;
 }
 
 /*===============================POP UP================================*/
@@ -630,29 +650,29 @@ button:hover .button-text {
 }
 /*===============================SIGN UP================================*/
 .App-admin {
-  top: 120px;
   display: flex;
-  position: relative;
   flex-direction: column;
-  align-items: center;
-
-  height: 100vh; /* Use full viewport height */
-  background-color: black; /* Set background color */
-  color: white;
+  justify-content: center; /* Align items at the bottom */
+  align-items: center; /* Center items horizontally */
+  height: 100vh; /* Full viewport height */
+  background-image: url(assets/loginbgx.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: 0 1px;
+  
+  
 }
 
-.App-admin input {
-  margin-bottom: 10px;
-  width: 300px; /* Adjust width as needed */
-  height: 40px;
-  padding: 8px;
-  border: none;
-  border-radius: 4px;
-  background-color: black;
-  color: white;
-  font-size: 16px;
-  border: 3px solid gray;
+
+.App-admin .input-box{
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  margin: 30px 0;
+  padding-left: 5px;
 }
+
+
 .App-admin button {
   margin-bottom: 10px;
   width: 300px; /* Adjust width as needed */
@@ -669,7 +689,67 @@ button:hover .button-text {
   cursor: pointer;
   background-color: #007bff;
 }
+.App-admin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #282c34;
+}
 
+.glass-card {
+  height: 50%;
+  width: 420px;
+  background: transparent;
+  color: white;
+  padding: 30px 40px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin-bottom: 50px; /* Reduce margin to be more responsive */
+  display: flex;
+  flex-direction: column; /* Flex direction to stack items vertically */
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  position: relative;
+}
+
+.glass-card input {
+  width: 100%;
+  height: 250%;
+  background: transparent;
+  border: none;
+  outline: none;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  color: #fff;
+  padding-left: 5%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  right: 15px;
+}
+
+.glass-card button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #8b6913;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.glass-card button:hover {
+  background-color: #6a4f0a;
+}
+
+.glass-card p {
+  color: red;
+}
 /*===============================MASTER ADMIN================================*/
 .white-text {
   color: white;
@@ -738,7 +818,28 @@ button:hover .button-text {
   align-items: center;
   height: 100vh;
   text-align: center;
-  color: white; /* Ensuring the text color is white */
+  color: white; 
+}
+.button-container {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px; 
+}
+
+.button-container button {
+  background-color: gray; 
+  color: white; 
+  border: none; 
+  padding: 10px 20px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
+  margin-left: 15px ;
+}
+
+.button-container button:hover {
+  background-color: #6a4f0a; /* Darker background color on hover */
 }
 /*===============================ADMIN SEARCH BAR================================*/
 .search-container-admin {

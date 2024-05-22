@@ -47,48 +47,33 @@ export const Userpage = (props) => {
 
   return (
     <div className="center-content">
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius illo
-      voluptates fugiat sapiente soluta, ullam eos ea magnam atque architecto
-      ipsum maiores non molestias, omnis itaque quia assumenda rem sit
-      aspernatur. Non dolorem eaque nobis voluptatem mollitia necessitatibus
-      blanditiis, consequuntur eos. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Doloribus suscipit iure, eligendi accusantium velit
-      delectus quod laborum quasi minus facere hic repellat reprehenderit
-      repudiandae fuga quaerat harum in doloremque non temporibus consequatur
-      consectetur praesentium? Magnam consequuntur fugit, maiores iste
-      distinctio voluptatem tenetur consectetur eveniet incidunt quo! Eius, qui.
-      Assumenda neque itaque, aperiam animi, sed ipsa perspiciatis vel deserunt
-      labore suscipit, quae alias facere culpa voluptas? Modi excepturi pariatur
-      eaque nostrum tempora placeat. Voluptatibus magnam voluptates veniam
-      voluptatem voluptatum blanditiis perspiciatis eos minima soluta, quasi
-      ullam ipsa perferendis eius saepe non voluptas distinctio esse dolore sit
-      ea enim iure optio laudantium.
-      <div>
-        <button
-          onClick={async () => {
-            setHistory();
-            setPage("res");
-          }}
-        >
-          Reservations
-        </button>
-        <button
-          onClick={async () => {
-            setHistory();
-            setPage("bor");
-          }}
-        >
-          Borrowed books
-        </button>
-        <button
-          onClick={async () => {
-            setHistory();
-            setPage("ret");
-          }}
-        >
-          Returned books
-        </button>
-      </div>
+     BOOK HISTORY
+      <div className="button-container">
+  <button
+    onClick={async () => {
+      setHistory();
+      setPage("res");
+    }}
+  >
+    Reservations
+  </button>
+  <button
+    onClick={async () => {
+      setHistory();
+      setPage("bor");
+    }}
+  >
+    Borrowed books
+  </button>
+  <button
+    onClick={async () => {
+      setHistory();
+      setPage("ret");
+    }}
+  >
+    Returned books
+  </button>
+</div>
       <div style={{ color: "white" }}>
         {(() => {
           switch (page) {

@@ -63,47 +63,50 @@ export const Signupbox = () => {
 
   return (
     <div className="App-admin">
-      <input
-        type="text"
-        placeholder="Name..."
-        value={newName}
-        onChange={(event) => {
-          setNewName(event.target.value);
-        }}
-        style={{ color: "white", backgroundColor: "black" }}
-      />
-      <input
-        type="number"
-        placeholder="Age..."
-        value={newAge}
-        onChange={(event) => {
-          setNewAge(event.target.value);
-        }}
-        style={{ color: "white", backgroundColor: "black" }}
-      />
-      <input
-        type="email"
-        placeholder="Email..."
-        value={email}
-        onChange={(event) => {
-          setEmail(event.target.value);
-        }}
-        style={{ color: "white", backgroundColor: "black" }}
-      />
-      <input
-        type="password"
-        placeholder="Password..."
-        value={password}
-        onChange={(event) => {
-          setPassword(event.target.value);
-        }}
-        style={{ color: "white", backgroundColor: "black" }}
-      />
-      <button onClick={createUser} style={{ color: "white" }}>
-        {" "}
-        Create User
-      </button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      <div className="glass-card">
+        <div className="input-box">
+        <input
+          type="text"
+          placeholder="Name..."
+          value={newName}
+          onChange={(event) => {
+            setNewName(event.target.value);
+          }}
+        />
+        </div>
+        <div className="input-box">
+        <input
+          type="number"
+          placeholder="Age..."
+          value={newAge}
+          onChange={(event) => {
+            setNewAge(event.target.value);
+          }}
+        />
+        </div>
+        <div className="input-box">
+        <input
+          type="email"
+          placeholder="Email..."
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value);
+          }}
+        />
+        </div>
+        <div className="input-box">
+        <input
+          type="password"
+          placeholder="Password..."
+          value={password}
+          onChange={(event) => {
+            setPassword(event.target.value);
+          }}
+        />
+        </div>
+        <button onClick={createUser}>Create User</button>
+        {error && <p>{error}</p>}
+      </div>
     </div>
   );
 };
