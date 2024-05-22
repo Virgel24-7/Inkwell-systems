@@ -40,10 +40,17 @@ export const Librarypage = () => {
     }
   });
 
-  const showPopContent = async (author, dewey, description, code, id) => {
+  const showPopContent = async (
+    author,
+    dewey,
+    description,
+    code,
+    id,
+    title
+  ) => {
     if (author && dewey && description) {
       const copy = await getActualCopies(id);
-      setPopContent({ author, dewey, description, code, id, copy });
+      setPopContent({ author, dewey, description, code, id, copy, title });
     } else {
       setPopContent(content);
     }
@@ -135,6 +142,7 @@ export const Librarypage = () => {
         code={popContent?.code}
         bookId={popContent?.id}
         copies={popContent?.copy}
+        title={popContent?.title}
         addCopies={addCopies}
       ></Popup>
     );

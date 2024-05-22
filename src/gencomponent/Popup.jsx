@@ -14,6 +14,8 @@ function Popup(props) {
   return props.trigger ? (
     <div className="popup">
       <div className="popContent">
+        <p style={{ textAlign: "center" }}>{props.title.toUpperCase()}</p>
+        <hr />
         <button className="popCloser" onClick={closePopup}>
           Close
         </button>

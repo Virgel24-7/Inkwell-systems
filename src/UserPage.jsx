@@ -202,19 +202,19 @@ export const reserveBook = async (bookId) => {
   const btr = doc(db, "booksdemo", bookId);
 
   if ((await getDoc(btr)).data().copies === 0) {
-    alert("No copy available");
+    alert("CANNOT RESERVE.\nNo copy available");
     return;
   }
 
   const userRes = await getRealReserves();
   if (userRes.some((res) => res.book === bookId)) {
-    alert("Cannot reserve. Book currently being reserved");
+    alert("CANNOT RESERVE.\nBook currently being reserved");
     return;
   }
 
   const userBor = await getRealBorrows();
   if (userBor.some((bor) => bor.book === bookId)) {
-    alert("Cannot Reserve. Book currently being borrowed");
+    alert("CANNOT RESERVE.\nBook currently being borrowed");
     return;
   }
 

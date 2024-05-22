@@ -27,7 +27,7 @@ export const Bookcard = (props) => {
 
     if (currUserID === "") {
       if (nOfCopies === 0) {
-        alert("Sorry, no copy available as of this moment.");
+        alert("CANNOT RESERVE.\nNo copy available.");
       } else {
         navigate("/login");
       }
@@ -38,7 +38,8 @@ export const Bookcard = (props) => {
           props.dewey,
           props.description,
           1, //with add functionality
-          props.id
+          props.id,
+          props.title
         );
       } else {
         reserveBook(props.id);
@@ -57,7 +58,8 @@ export const Bookcard = (props) => {
                 props.dewey,
                 props.description,
                 0, //plain description
-                props.id
+                props.id,
+                props.title
               )
             }
           >
@@ -79,7 +81,8 @@ export const Bookcard = (props) => {
                     props.dewey,
                     props.description,
                     0, //plain description
-                    props.id
+                    props.id,
+                    props.title
                   );
                 }}
               >
