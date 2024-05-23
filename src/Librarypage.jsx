@@ -11,6 +11,7 @@ import { Bookcard } from "./Bookcard";
 import Popup from "./gencomponent/Popup";
 import { isAdmin } from "./Loginbox";
 import Emptybook from "./gencomponent/Emptybook";
+import notFound from "./assets/NoResults.png";
 
 export const Librarypage = () => {
   const [library, setLibrary] = useState([]);
@@ -118,7 +119,7 @@ export const Librarypage = () => {
               <div className="books">
                 {filteredLibrary.length === 0 ? (
                   <p className="no-results-found">
-                    <img src="src/assets/NoResults.png"></img>
+                    <img src={notFound}></img>
                     <br></br>
                     Sorry, we couldn't find any results.
                   </p>

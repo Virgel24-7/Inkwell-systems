@@ -18,6 +18,7 @@ import {
   deleteObject,
 } from "firebase/storage";
 import { db } from "../firebase-config";
+import sampleCover from "../assets/sampleCover.png";
 
 function Emptybook(props) {
   const [book, setBook] = useState({});
@@ -66,7 +67,7 @@ function Emptybook(props) {
       dewey: "",
       copies: -1,
       covername: "",
-      preview: "src/assets/sampleCover.png",
+      preview: null,
     });
   };
 
@@ -149,7 +150,9 @@ function Emptybook(props) {
             onClick={() => imageRef.current.click()}
             src={
               imageRef.current === null || !imageRef.current.value
-                ? book.preview
+                ? book.preview === null
+                  ? sampleCover
+                  : book.preview
                 : URL.createObjectURL(imageRef.current.files[0])
             }
           />

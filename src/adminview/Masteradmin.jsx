@@ -8,7 +8,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase-config"; // Import the Firestore instance
-import { deleteField } from "firebase/firestore/lite";
 
 export const Masteradmin = () => {
   const [admins, setAdmins] = useState([]);
