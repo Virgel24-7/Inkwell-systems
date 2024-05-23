@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
 import { db, auth } from "./firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -65,44 +64,44 @@ export const Signupbox = () => {
     <div className="App-admin">
       <div className="glass-card">
         <div className="input-box">
-        <input
-          type="text"
-          placeholder="Name..."
-          value={newName}
-          onChange={(event) => {
-            setNewName(event.target.value);
-          }}
-        />
+          <input
+            type="text"
+            placeholder="Name..."
+            value={newName}
+            onChange={(event) => {
+              setNewName(event.target.value);
+            }}
+          />
         </div>
         <div className="input-box">
-        <input
-          type="number"
-          placeholder="Age..."
-          value={newAge}
-          onChange={(event) => {
-            setNewAge(event.target.value);
-          }}
-        />
+          <input
+            type="number"
+            placeholder="Age..."
+            value={newAge}
+            onChange={(event) => {
+              setNewAge(event.target.value);
+            }}
+          />
         </div>
         <div className="input-box">
-        <input
-          type="email"
-          placeholder="Email..."
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-          }}
-        />
+          <input
+            type="email"
+            placeholder="Email..."
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
+          />
         </div>
         <div className="input-box">
-        <input
-          type="password"
-          placeholder="Password..."
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value);
-          }}
-        />
+          <input
+            type="password"
+            placeholder="Password..."
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
         </div>
         <button onClick={createUser}>Create User</button>
         {error && <p>{error}</p>}

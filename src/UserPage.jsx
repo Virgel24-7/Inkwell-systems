@@ -27,8 +27,6 @@ export const Userpage = (props) => {
   const [loadRet, setLoadRet] = useState(true);
 
   useEffect(() => {
-    console.log(typeof userRes);
-    console.log(userRes.length);
     const temp = async () => {
       await setHistory();
     };
@@ -202,9 +200,6 @@ export const reserveBook = async (bookId) => {
     dueDate: dueDate.toDateString(),
   });
 
-  console.log(reserveId);
-  console.log(typeof reserveId);
-
   //edit userdoc
   const tempDoc = doc(db, "users", currentUser.id);
   const newField = await addToReserved(reserveId);
@@ -258,10 +253,7 @@ const getRealReturns = async () => {
 
 const addToReserved = async (reserveId) => {
   const tempDoc = await getDoc(doc(db, "users", currentUser.id));
-  console.log(tempDoc.data());
   const newArray = { reserves: [...tempDoc.data().reserves, reserveId] };
-
-  console.log(newArray);
 
   return newArray;
 };
