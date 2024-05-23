@@ -39,10 +39,10 @@ body {
   margin-right: 65%;
   margin-left: 5%;
 }
+
 .next-container {
   width: 100%;
   display: flex;
-
   align-self: flex-end;
   margin-left: 6%;
   margin-top: 10px; /* Adjust top margin */
@@ -119,6 +119,169 @@ body {
 
 .slider span:hover img {
   transform: translateY(-50px) scale(1.2);
+}
+
+/*============================ABOUT US PAGE==============================*/
+.about-container {
+  align-items: center;
+  width: 95%;
+}
+
+.who-container {
+  grid-gap: 5px; /* Optional: Add spacing between elements */
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110vh; /* Full viewport height for centering */
+  margin: 20px;
+}
+
+.aboutHeading h1 {
+  margin-top: 0px;
+  text-align: left;
+  margin-left: 13%;
+  position: relative;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.aboutHeading p {
+  color: #e6e6e6;
+  text-align: justify;
+  margin-right: 15%;
+  margin-left: 13%;
+}
+
+.meet-team {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 110vh; /* Full viewport height for centering */
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.meet-team-title h1 {
+  margin-top: 50px;
+  position: relative;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.meet-team-cards {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 65vh; /* Full viewport height for centering */
+  width: 110vh;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+  position: relative;
+  padding: 0;
+  margin-left: 15%;
+}
+
+.team-card-container {
+  min-width: 30vh;
+  position: relative;
+  margin: 2rem 0.5rem 0rem;
+  width: 200px;
+  height: 281.25px;
+}
+
+.team-card-container .team-view-container {
+  transition: 0.5s;
+  opacity: 1;
+  position: absolute;
+  top: 40%;
+  width: 200px;
+  height: 281.25px;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.view-img {
+  border-radius: 15px;
+  width: 200px;
+  height: 281.25px;
+}
+
+.team-card-container:hover .team-view-container {
+  cursor: pointer;
+  opacity: 0;
+}
+
+.team-card-container .team-img-container {
+  top: 40%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  width: 200px;
+  height: 281.25px;
+}
+
+.team-img-container h1 {
+  color: hsl(0, 0%, 100%);
+  font-weight: 600;
+  font-size: 2rem;
+  margin: 0rem 1.2rem 0rem;
+  text-align: center;
+}
+
+.team-img-container h2 {
+  color: hsl(0, 0%, 100%);
+  font-weight: 600;
+  font-size: 0.6rem;
+  margin: 0rem 1.2rem 0rem;
+  text-align: left;
+}
+
+.team-img-container .self-title {
+  text-align: center;
+}
+
+.team-img-container p {
+  color: hsl(215, 51%, 70%);
+  font-size: 0.9rem;
+  font-weight: 300;
+  margin: 1rem 1.2rem;
+  text-align: left;
+}
+
+.team-card-container:hover .team-img-container {
+  cursor: pointer;
+  border-style: solid;
+  border-color: #C98D00;
+  border-width: 2px;
+}
+
+.nft-img {
+  width: 50%;
+  opacity: 1;
+  transition: 0.5s;
+  backface-visibility: hidden;
+  float: left;
+  margin-top: 10%;
+  margin-left: 10%;
+  margin-bottom: 5%;
+}
+
+hr {
+  height: 1px;
+  width: 88%;
+  margin: 0.5rem 0.5rem 0.5rem;
+  border: none;
+  background-color: #C98D00;
 }
 
 /*===============================NAV BAR================================*/
