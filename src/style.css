@@ -601,10 +601,12 @@ button:hover .button-text {
 }
 
 .accessOption {
+  text-align: center;
   align-items: center;
 }
 
 .links-access a {
+  text-align: center;
   display: inline-block;
   margin-bottom: 10px;
   text-decoration: none;
