@@ -57,13 +57,8 @@ export const Reservationlist = () => {
           </select>
         </form>
       </div>
-      <div style={{ color: "white" }}>
-        habrcsvfvbdcvsdcbhdtbvxfgcHAHAHA Lorem ipsum dolor sit amet consectetur,
-        adipisicing elit. Excepturi cumque, laborum ullam vero eos illo
-        repellendus voluptates ipsa consequatur dolorem mollitia tenetur quidem
-        earum voluptatum! Ut vero labore pariatur cumque iure. Saepe magnam quia
-        veritatis sit eveniet dolor placeat alias, officiis provident. Libero
-        explicabo natus facilis vero. Delectus, et velit?
+      <div className = "center-content"style={{ color: "white" }}>
+       BOOKS STATUS
       </div>
       <div className="table-container">
         {loadRes ? (

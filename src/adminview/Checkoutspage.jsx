@@ -13,7 +13,7 @@ export const Checkoutspage = () => {
       <br />
       <br />
       <br />
-      <div>
+      <div className="button-container">
         <button onClick={() => setPage("res")}>Reservations</button>
         <button onClick={() => setPage("bor")}>Borrowed books</button>
       </div>

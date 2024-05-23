@@ -107,6 +107,8 @@ export const Librarypage = () => {
             <br />
             <div>
               {isAdmin && (
+                <div className="button-container">
+
                 <button
                   onClick={() => {
                     setEmptyId("");
@@ -115,6 +117,7 @@ export const Librarypage = () => {
                 >
                   Add a new book
                 </button>
+                </div>
               )}
               <div className="books">
                 {filteredLibrary.length === 0 ? (
