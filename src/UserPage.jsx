@@ -1,5 +1,5 @@
 import React from "react";
-import { db, auth } from "./firebase-config";
+import { db } from "./firebase-config";
 import {
   doc,
   updateDoc,
@@ -7,10 +7,9 @@ import {
   getDoc,
   addDoc,
   deleteDoc,
+  getDocs,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
-
-const due = 3;
 
 export let currentUser = null;
 export const setCurrentUser = (user) => {
@@ -25,6 +24,7 @@ export const Userpage = (props) => {
   const [loadBor, setLoadBor] = useState(true);
   const [userRet, setUserRet] = useState([]);
   const [loadRet, setLoadRet] = useState(true);
+  const [totalFee, setTotalFee] = useState(0);
 
   useEffect(() => {
     const temp = async () => {
@@ -38,6 +38,7 @@ export const Userpage = (props) => {
     setUserRes(await getRealReserves());
     setUserBor(await getRealBorrows());
     setUserRet(await getRealReturns());
+    setTotalFee(await getRealFee());
     setLoadRes(false);
     setLoadBor(false);
     setLoadRet(false);
@@ -72,6 +73,7 @@ export const Userpage = (props) => {
           Returned books
         </button>
       </div>
+      Total overdue fee: {totalFee}
       <div className="user-content" style={{ color: "white" }}>
         {(() => {
           switch (page) {
@@ -163,6 +165,15 @@ export const Userpage = (props) => {
 export const reserveBook = async (bookId) => {
   const btr = doc(db, "booksdemo", bookId);
 
+  const balance = (await getDoc(doc(db, "users", currentUser.id))).data()
+    .totalFee;
+  if (balance > 0) {
+    alert(
+      `CANNOT RESERVE.\nYou currently have ${balance} balance. Please settle this first.`
+    );
+    return;
+  }
+
   if ((await getDoc(btr)).data().copies === 0) {
     alert("CANNOT RESERVE.\nNo copy available");
     return;
@@ -189,7 +200,7 @@ export const reserveBook = async (bookId) => {
   //add to history
   const dateReserved = new Date();
   const dueDate = new Date();
-  dueDate.setDate(dateReserved.getDate() + due);
+  dueDate.setDate(dateReserved.getDate() + (await masterData()).resDays);
 
   const hisCollectionRef = collection(db, "history");
   const { id: reserveId } = await addDoc(hisCollectionRef, {
@@ -222,20 +233,39 @@ const getRealReserves = async () => {
 };
 
 const getRealBorrows = async () => {
-  const user = await getDoc(doc(db, "users", currentUser.id));
+  let total = 0;
+  const date = new Date();
+
+  const userdoc = doc(db, "users", currentUser.id);
+  const user = await getDoc(userdoc);
   const promises = user.data().borrowed.map(async (borrowId, key) => {
     const temp = await getDoc(doc(db, "history", borrowId));
-    const bookData = await getDoc(doc(db, "booksdemo", temp.data().book));
+    const title = (await getDoc(doc(db, "booksdemo", temp.data().book))).data()
+      .title;
+    const overdueDays =
+      (Number(Date.parse(date.toDateString())) -
+        Number(Date.parse(temp.data().dueDate))) /
+      86400000;
+    const overdueFee =
+      overdueDays <= 0 ? 0 : overdueDays * temp.data().overdueRate;
+    total += overdueFee;
+
     return {
       ...temp.data(),
       id: temp.id,
-      title: bookData.data().title,
-      dateBorrowed: temp.data().dateBorrowed, // Ensure this line is present
+      title: title,
+      dateBorrowed: temp.data().dateBorrowed,
+      days: overdueDays <= 0 ? 0 : overdueDays,
       key: key,
+      overdueRate: temp.data().overdueRate,
+      overdueFee: overdueFee,
     };
   });
 
-  return await Promise.all(promises);
+  const obj = await Promise.all(promises);
+  updateDoc(userdoc, { totalFee: total });
+
+  return obj;
 };
 
 const getRealReturns = async () => {
@@ -251,11 +281,38 @@ const getRealReturns = async () => {
   return await Promise.all(promises);
 };
 
+const getRealFee = async () => {
+  return (await getDoc(doc(db, "users", currentUser.id))).data().totalFee;
+};
+
 const addToReserved = async (reserveId) => {
   const tempDoc = await getDoc(doc(db, "users", currentUser.id));
   const newArray = { reserves: [...tempDoc.data().reserves, reserveId] };
 
   return newArray;
+};
+
+export const setUserData = () => {
+  getRealReserves();
+  getRealBorrows();
+  getRealReturns();
+  getRealFee();
+};
+
+const masterData = async () => {
+  try {
+    const usersCollection = collection(db, "users");
+    const usersSnapshot = await getDocs(usersCollection);
+    const allUsers = usersSnapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    const master = allUsers.find((user) => user.role === "masteradmin");
+    return master;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+  }
 };
 
 const Reservations = (props) => {
@@ -297,15 +354,20 @@ const Borrowedlist = (props) => {
           <th>Book Title</th>
           <th>Date Borrowed</th>
           <th>Due Date</th>
+          <th># of days from due</th>
+          <th>Daily rate(overdue)</th>
+          <th>Overdue fee</th>
         </tr>
       </thead>
       <tbody>
         {props.userBor.map((borrow, key) => (
           <tr key={key}>
             <td>{borrow.title}</td>
-            <td>{new Date(borrow.dateBorrowed).toLocaleDateString()}</td>
-            {/* Format date if necessary */}
+            <td>{borrow.dateBorrowed}</td>
             <td>{borrow.dueDate}</td>
+            <td>{borrow.days}</td>
+            <td>{borrow.overdueRate}</td>
+            <td>{borrow.overdueFee}</td>
           </tr>
         ))}
       </tbody>

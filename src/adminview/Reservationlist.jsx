@@ -57,14 +57,21 @@ export const Reservationlist = () => {
           </select>
         </form>
       </div>
-      <div className = "center-content"style={{ color: "white" }}>
-       BOOKS STATUS
+      <div className="center-content" style={{ color: "white" }}>
+        BOOKS STATUS
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <p>RESERVATIONS LIST</p>
       </div>
       <div className="table-container">
         {loadRes ? (
-          <p>Loading reservations...</p>
+          <div style={{ textAlign: "center" }}>
+            <p>Loading reservations ...</p>
+          </div>
         ) : filteredReserves.length === 0 ? (
-          <p>No reservations found.</p>
+          <div style={{ textAlign: "center" }}>
+            <p>No reservations found.</p>
+          </div>
         ) : (
           <table>
             <thead>
@@ -131,7 +138,23 @@ async function openReservations(historyCollectionRef, setReservations) {
   await getReserves();
 }
 
-async function changeToBorrow(historyId, userId, bookId) {
+const masterData = async () => {
+  try {
+    const usersCollection = collection(db, "users");
+    const usersSnapshot = await getDocs(usersCollection);
+    const allUsers = usersSnapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    const master = allUsers.find((user) => user.role === "masteradmin");
+    return master;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+  }
+};
+
+async function changeToBorrow(historyId, userId) {
   //change historydoc
   const resToChange = doc(db, "history", historyId);
 
@@ -143,8 +166,9 @@ async function changeToBorrow(historyId, userId, bookId) {
     state: "borrowed",
     dateBorrowed: dateBorrowed.toDateString(),
     dueDate: dueDate.toDateString(),
+    overdueRate: (await masterData()).overdueRate,
   };
-  await updateDoc(resToChange, newField);
+  updateDoc(resToChange, newField);
 
   //change userdoc
   const userToChange = doc(db, "users", userId);
@@ -159,5 +183,5 @@ async function changeToBorrow(historyId, userId, bookId) {
     borrowed: borrowed,
   };
 
-  await updateDoc(userToChange, newField2);
+  updateDoc(userToChange, newField2);
 }

@@ -4,7 +4,7 @@ import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase-config";
-import { setCurrentUser } from "./UserPage";
+import { setCurrentUser, setUserData } from "./UserPage";
 
 export let currUserID = "";
 export let currUserName = "";
@@ -58,6 +58,9 @@ export const Loginbox = (props) => {
         isAdmin =
           user.role === "admin" || user.role === "masteradmin" ? true : false;
         isMasterAdmin = user.role === "masteradmin" ? true : false;
+        if (user.role === "user") {
+          setUserData();
+        }
         navigate("/");
       } else {
         alert("User not found");
