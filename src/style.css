@@ -824,18 +824,24 @@ button:hover .button-text {
 
 /*===============================USER PAGE================================*/
 .center-content {
+  position: fixed; /* Changed from display: fixed to position: fixed */
+  top: 15%; /* Adjusted to be 15% from the top of the viewport */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: auto;
   text-align: center;
   color: white;
 }
+
 .button-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 40px;
+ 
 }
 
 .button-container button {
@@ -853,6 +859,7 @@ button:hover .button-text {
 .button-container button:hover {
   background-color: #6a4f0a; /* Darker background color on hover */
 }
+
 /*===============================ADMIN SEARCH BAR================================*/
 .search-container-admin {
   position: relative;
@@ -920,15 +927,21 @@ button:hover .button-text {
 /*===============================TABLE LIST PAGE================================*/
 
 .table-container {
+  position: relative;
+  top: 20%;
   width: 80%;
   margin: 20px auto;
+  max-height: 400px; /* Set a maximum height for the table container */
+  overflow-y: auto; /* Enable vertical scrolling */
   border-collapse: collapse;
   color: white;
 }
+
 table {
   width: 100%;
   border-collapse: collapse;
 }
+
 table th,
 table td {
   padding: 12px 15px;
