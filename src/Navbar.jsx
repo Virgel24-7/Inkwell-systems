@@ -1,23 +1,11 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { currUserID } from "./Loginbox";
 import { logout } from "./Logout";
+import logo from "./assets/logo.png";
 
 export const Navbar = (props) => {
   const [sidebarActive, setSidebarActive] = useState(false);
-  const [imgUrl, setImgUrl] = useState("");
-
-  useEffect(() => {
-    const getImage = async () => {
-      try {
-        const reference = ref(storage, `/assets/logo.png`);
-        const url = await getDownloadURL(reference);
-        setImgUrl(url);
-      } catch (error) {}
-    };
-
-    getImage();
-  });
 
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
@@ -25,7 +13,7 @@ export const Navbar = (props) => {
 
   return (
     <nav>
-      <img src={imgUrl} alt="logo" />
+      <img src={logo} alt="logo" />
 
       <input
         type="checkbox"
