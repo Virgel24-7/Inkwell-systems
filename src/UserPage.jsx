@@ -32,7 +32,7 @@ export const Userpage = (props) => {
     };
 
     temp();
-  }, []);
+  }, [page]);
 
   const setHistory = async () => {
     setUserRes(await getRealReserves());
@@ -220,12 +220,63 @@ export const reserveBook = async (bookId) => {
   return reserveId;
 };
 
+const cancelRes = (reserveId, bookId) => {
+  //delete to userReserves
+  const deleteToUser = async () => {
+    const user = await getDoc(doc(db, "users", currentUser.id));
+
+    const cuserReserves = user.data().reserves;
+    const newCb = cuserReserves.filter((resId) => resId !== reserveId);
+
+    const tempDoc = doc(db, "users", currentUser.id);
+    const newField = { reserves: newCb };
+    await updateDoc(tempDoc, newField);
+  };
+
+  //delete to bookreservers
+  const deleteToBook = async () => {
+    const book = await getDoc(doc(db, "booksdemo", bookId));
+
+    const tempDoc = doc(db, "booksdemo", bookId);
+    const newField = { copies: book.data().copies + 1 };
+    await updateDoc(tempDoc, newField);
+  };
+
+  //delete to history
+  const deleteToHistory = async () => {
+    const historyToDelete = doc(db, "history", reserveId);
+    await deleteDoc(historyToDelete);
+  };
+
+  deleteToUser();
+  deleteToBook();
+  deleteToHistory();
+};
+
 const getRealReserves = async () => {
-  const user = await getDoc(doc(db, "users", currentUser.id));
-  const promises = user.data().reserves.map(async (reserveId, key) => {
+  const date = new Date();
+
+  const userdoc = doc(db, "users", currentUser.id);
+  const user = await getDoc(userdoc);
+  const filtRes = user.data().reserves.filter(async (res) => {
+    const temp = await getDoc(doc(db, "history", res));
+    const overdueDays =
+      (Number(Date.parse(date.toDateString())) -
+        Number(Date.parse(temp.data().dueDate))) /
+      86400000;
+
+    if (overdueDays > 0) {
+      cancelRes(res, temp.data().book);
+    }
+
+    return overdueDays <= 0;
+  });
+
+  const promises = await filtRes.map(async (reserveId, key) => {
     const temp = await getDoc(doc(db, "history", reserveId));
     const title = (await getDoc(doc(db, "booksdemo", temp.data().book))).data()
       .title;
+
     return { ...temp.data(), id: temp.id, title: title, key: key };
   });
 
@@ -317,89 +368,109 @@ const masterData = async () => {
 
 const Reservations = (props) => {
   return (
-    <table className="table-container">
-      <thead>
-        <tr>
-          <th>Book Title</th>
-          <th>Date Reserved</th>
-          <th>Due Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.userRes.map((reserve, key) => (
-          <tr key={key}>
-            <td>{reserve.title}</td>
-            <td>{reserve.dateReserved}</td>
-            <td>{reserve.dueDate}</td>
-            <td>
-              <button
-                onClick={() => props.cancelReserved(reserve.id, reserve.book)}
-              >
-                Cancel
-              </button>
-            </td>
+    <div>
+      <br />
+      <br />
+      RESERVATIONS LIST
+      <p>Be sure to borrow before the due date or it will auto-cancel.</p>
+      <table className="table-container">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Date Reserved</th>
+            <th>Due Date</th>
+            <th>Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {props.userRes.map((reserve, key) => (
+            <tr key={key}>
+              <td>{reserve.title}</td>
+              <td>{reserve.dateReserved}</td>
+              <td>{reserve.dueDate}</td>
+              <td>
+                <button
+                  onClick={() => props.cancelReserved(reserve.id, reserve.book)}
+                >
+                  Cancel
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
 const Borrowedlist = (props) => {
   return (
-    <table className="table-container">
-      <thead>
-        <tr>
-          <th>Book Title</th>
-          <th>Date Borrowed</th>
-          <th>Due Date</th>
-          <th># of days from due</th>
-          <th>Daily rate(overdue)</th>
-          <th>Overdue fee</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.userBor.map((borrow, key) => (
-          <tr key={key}>
-            <td>{borrow.title}</td>
-            <td>{borrow.dateBorrowed}</td>
-            <td>{borrow.dueDate}</td>
-            <td>{borrow.days}</td>
-            <td>{borrow.overdueRate}</td>
-            <td>{borrow.overdueFee}</td>
+    <div>
+      <br />
+      <br />
+      BORROW CHECKOUTS LIST
+      <p>
+        Be sure to return before the due date or there will be overdue fees.
+      </p>
+      <table className="table-container">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Date Borrowed</th>
+            <th>Due Date</th>
+            <th># of days from due</th>
+            <th>Daily rate(overdue)</th>
+            <th>Overdue fee</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {props.userBor.map((borrow, key) => (
+            <tr key={key}>
+              <td>{borrow.title}</td>
+              <td>{borrow.dateBorrowed}</td>
+              <td>{borrow.dueDate}</td>
+              <td>{borrow.days}</td>
+              <td>{borrow.overdueRate}</td>
+              <td>{borrow.overdueFee}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
 const Returnlist = (props) => {
   return (
-    <table className="table-container">
-      <thead>
-        <tr>
-          <th>Book Title</th>
-          <th>Date Borrowed</th>
-          <th>Date Returned</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.userRet.map((returned, key) => (
-          <tr key={key}>
-            <td>{returned.title}</td>
-            <td>{returned.dateBorrowed}</td>
-            <td>{returned.dateReturned}</td>
-            <td>
-              <button onClick={() => props.reserve(returned.book)}>
-                Reserve again
-              </button>
-            </td>
+    <div>
+      <br />
+      <br />
+      RETURN LIST
+      <p>Feel free to reserve and borrow the same book/s again.</p>
+      <table className="table-container">
+        <thead>
+          <tr>
+            <th>Book Title</th>
+            <th>Date Borrowed</th>
+            <th>Date Returned</th>
+            <th>Action</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {props.userRet.map((returned, key) => (
+            <tr key={key}>
+              <td>{returned.title}</td>
+              <td>{returned.dateBorrowed}</td>
+              <td>{returned.dateReturned}</td>
+              <td>
+                <button onClick={() => props.reserve(returned.book)}>
+                  Reserve again
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
