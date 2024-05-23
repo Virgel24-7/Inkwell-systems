@@ -101,7 +101,7 @@ export const Userpage = (props) => {
             default:
               return loadRet ? (
                 <p>Loading reservations...</p>
-              ) : userRet.length === 0 ? (
+              ) : !userRet || userRet.length === 0 ? (
                 <p>No returned books as of this moment.</p>
               ) : (
                 <Returnlist userRet={userRet} reserve={reserveBook} />
@@ -245,6 +245,7 @@ const getRealBorrows = async () => {
 
 const getRealReturns = async () => {
   const user = await getDoc(doc(db, "users", currentUser.id));
+  if (!user.data().returned) return;
   const promises = user.data().returned.map(async (returnId, key) => {
     const temp = await getDoc(doc(db, "history", returnId));
     const title = (await getDoc(doc(db, "booksdemo", temp.data().book))).data()
