@@ -337,9 +337,9 @@ a:hover:after {
 }
 
 .showDesc button:hover {
-    background-color: #282936;
-    border: 3px solid #282936;
-    color: #ffffff;
+  background-color: #282936;
+  border: 3px solid #282936;
+  color: #ffffff;
 }
 
 .books {
@@ -841,7 +841,6 @@ button:hover .button-text {
   display: flex;
   justify-content: center;
   margin-top: 40px;
- 
 }
 
 .button-container button {
@@ -858,6 +857,18 @@ button:hover .button-text {
 
 .button-container button:hover {
   background-color: #6a4f0a; /* Darker background color on hover */
+}
+
+.user-content {
+  overflow-y: auto;
+  max-height: 500px;
+  width: 1000px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.user-content::-webkit-scrollbar {
+  display: none;
 }
 
 /*===============================ADMIN SEARCH BAR================================*/

@@ -72,7 +72,7 @@ export const Userpage = (props) => {
           Returned books
         </button>
       </div>
-      <div style={{ color: "white" }}>
+      <div className="user-content" style={{ color: "white" }}>
         {(() => {
           switch (page) {
             case "res":
