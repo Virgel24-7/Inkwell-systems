@@ -70,11 +70,6 @@ export const Navbar = (props) => {
             About us
           </Link>
         )}
-        {props.isAdmin || (
-          <Link className="contact-link" to="/contact">
-            Contact
-          </Link>
-        )}
         {props.isMasterAdmin && (
           <Link className="masteradmin-link" to="/masteradmin">
             Admins/Users

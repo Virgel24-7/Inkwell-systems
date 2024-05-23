@@ -75,7 +75,7 @@ export const Bookcard = (props) => {
         <div>
           <br />
           {!isAdmin && (
-            <div>
+            <div className="showDesc">
               <button
                 onClick={() => {
                   props.showPopContent(
@@ -90,7 +90,6 @@ export const Bookcard = (props) => {
               >
                 Show Description
               </button>
-              <br />
             </div>
           )}
           <button className="learn-more" onClick={toggleCopy}>

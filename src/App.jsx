@@ -5,7 +5,6 @@ import { Homepage } from "./Homepage";
 import { Signupbox } from "./Signupbox";
 import "./style.css";
 import { Aboutpage } from "./Aboutpage";
-import { Contactpage } from "./Contactpage";
 import { Librarypage } from "./Librarypage";
 import { Userpage } from "./UserPage";
 import { Accesspage } from "./Accesspage";
@@ -50,7 +49,6 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="books" element={<Librarypage />} />
             <Route path="about" element={<Aboutpage />} />
-            <Route path="contact" element={<Contactpage />} />
             <Route
               path={userText === "" ? "login" : `/${userText.toLowerCase()}`}
               element={!isUser ? <Accesspage /> : <Userpage />}

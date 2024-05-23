@@ -325,6 +325,23 @@ a:hover:after {
   padding-right: 10px;
 }
 
+.showDesc button {
+  text-decoration: none;
+  color: #000000;
+  border: 3px solid #000000;
+  padding: 5px 15px; /* Adjust padding for button size */
+  border-radius: 40px;
+  transition: 0.3s all ease;
+  display: flex;
+  align-items: center;
+}
+
+.showDesc button:hover {
+    background-color: #282936;
+    border: 3px solid #282936;
+    color: #ffffff;
+}
+
 .books {
   top: 300px;
   position: relative;
