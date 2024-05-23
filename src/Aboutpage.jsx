@@ -1,5 +1,7 @@
 import galanidaA from "./assets/Galanida_ID.png";
 import galanidaB from "./assets/Galanida_Silhouette.jpg";
+import soralloA from "./assets/Sorallo_ID.png";
+import soralloB from "./assets/Sorallo_Silhouette.jpg";
 
 export const Aboutpage = () => {
   return (
@@ -45,7 +47,7 @@ export const Aboutpage = () => {
               <hr></hr>
               <h2 className="self-title">Firebase Backend Programmer</h2>
               <p>22101054@usc.edu.ph
-              +63 ### ### ####
+              +63 711 420 3423
               </p>
               </div>
             </div>
@@ -68,10 +70,10 @@ export const Aboutpage = () => {
               <h2>John Von Lawdwig S.</h2>
               <h1>GALANIDA</h1>
               <hr></hr>
-              <h2 className="self-title">CSS Frontend Programmer</h2>
+              <h2 className="self-title">CSS / React Frontend Programmer</h2>
               <p>
               20800221@usc.edu.ph
-              +63 991 372 1099
+              +63 991 372 1299
               </p>
               </div>
             </div>
@@ -79,14 +81,14 @@ export const Aboutpage = () => {
             <div class="team-card-container">
               <div class="team-view-container">
                 <img
-                  src={galanidaB}
+                  src={soralloB}
                   class="view-img"
                   alt="Silhouette of Sorallo, Kinshin #22101520"
                 />
               </div>
               <div class="team-img-container">
                 <img
-                  src={galanidaA}
+                  src={soralloA}
                   class="nft-img"
                   alt="Image of Sorallo, Kinshin #22101520"
                 />
@@ -94,9 +96,9 @@ export const Aboutpage = () => {
               <h2>Kinshin A.</h2>
               <h1>SORALLO</h1>
               <hr></hr>
-              <h2 className="self-title">CSS Frontend Programmer</h2>
+              <h2 className="self-title">CSS / React Frontend Programmer</h2>
               <p>22101520@usc.edu.ph
-              +63 ### ### ####
+              +63 813 029 6394
               </p>
               </div>
             </div>
@@ -121,7 +123,7 @@ export const Aboutpage = () => {
               <hr></hr>
               <h2 className="self-title">Firebase Backend Programmer</h2>
               <p>22103868@usc.edu.ph
-              +63 ### ### ####
+              +63 931 415 9265
               </p>
               </div>
             </div>

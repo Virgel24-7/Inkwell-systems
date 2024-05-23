@@ -135,7 +135,7 @@ body {
   align-items: center;
   justify-content: center;
   height: 110vh; /* Full viewport height for centering */
-  margin: 20px;
+  margin: 0px 20px 20px 20px;
 }
 
 .aboutHeading h1 {
@@ -159,16 +159,29 @@ body {
 .meet-team {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  height: 110vh; /* Full viewport height for centering */
+  flex-wrap: wrap;
+  width: 180%;
+  height: 115vh; /* Full viewport height for centering */
   text-align: center;
   align-items: center;
   justify-content: center;
   margin: 20px;
 }
 
+.meet-team-title {
+  width: 55%;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .meet-team-title h1 {
-  margin-top: 50px;
+  margin-top: 20%;
   position: relative;
   color: white;
   display: flex;
@@ -179,24 +192,26 @@ body {
 .meet-team-cards {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
-  height: 65vh; /* Full viewport height for centering */
-  width: 110vh;
+  height: 60%; /* Full viewport height for centering */
+  width: 110%;
   text-align: center;
   align-items: center;
   justify-content: center;
   margin: 20px;
   position: relative;
   padding: 0;
-  margin-left: 15%;
+  margin-left: 60px;
 }
 
 .team-card-container {
-  min-width: 30vh;
-  position: relative;
-  margin: 2rem 0.5rem 0rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   width: 200px;
   height: 281.25px;
+  min-width: 10%;
+  position: relative;
+  margin: 2rem 0.5rem 0rem;
 }
 
 .team-card-container .team-view-container {
