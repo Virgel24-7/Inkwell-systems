@@ -859,7 +859,6 @@ button:hover .button-text {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
 
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1085,6 +1084,27 @@ button:hover .button-text {
   color: white;
 }
 
+.name-box {
+  display: flex;
+  gap: 10px;
+}
+
+.editname-button {
+  background-image: url(assets/edit.png);
+  background-size: contain;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  /* put the height and width of your image here */
+  height: 20px;
+  width: 20px;
+  border: none;
+}
+
+.editname-button span {
+  display: none;
+}
+
 .button-container {
   display: flex;
   justify-content: center;
@@ -1234,7 +1254,6 @@ thead th {
   color: black;
 }
 
-
 tbody td {
   text-align: left;
 }
@@ -1253,7 +1272,6 @@ tbody td {
   border-radius: 20px;
   width: 30%; /* Adjust width as needed */
   margin-left: 20%;
-  
 }
 
 .upload-photo {
@@ -1282,11 +1300,8 @@ tbody td {
 }
 
 .data-field-description input {
-  
   border-radius: 20px;
   width: 70%; /* Adjust width as needed */
   margin-left: 0%;
   height: 100px;
-  
-  
 }

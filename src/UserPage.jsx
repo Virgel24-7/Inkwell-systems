@@ -43,9 +43,16 @@ export const Userpage = (props) => {
 
   return (
     <div className="center-content">
-      <span>
-        Name: {name} <button onClick={changeName}>Change Name</button>
-      </span>
+      <div className="name-box">
+        Name: {name}
+        <button
+          className="editname-button"
+          onClick={changeName}
+          title="Edit name"
+        >
+          <span></span>
+        </button>
+      </div>
       <p>BOOK HISTORY</p>
       <div className="button-container">
         <button
@@ -116,10 +123,11 @@ export const Userpage = (props) => {
 
   function changeName() {
     const newName = prompt(
-      "Enter new name(this will reflect on the next login): "
+      "Enter new name\nAlphanumeric only\n(this will reflect on the next login): "
     );
 
-    if (!newName) {
+    if (!newName || !/^[a-zA-Z0-9]+$/.test(newName)) {
+      alert("Invalid. Alphanumeric only.");
       return;
     }
 

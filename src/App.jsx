@@ -48,7 +48,7 @@ function App() {
     <Router>
       <div className="App">
         <Navbar
-          userText={userText === "" ? "Login" : userText}
+          userText={userText === "" ? "Log in" : userText}
           setUser={setUser}
         />
         <div className="content">
