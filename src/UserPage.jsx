@@ -43,9 +43,16 @@ export const Userpage = (props) => {
 
   return (
     <div className="center-content">
-      <span>
-        Name: {name} <button onClick={changeName}>Change Name</button>
-      </span>
+      <div className="name-box">
+        Name: {name}
+        <button
+          className="editname-button"
+          onClick={changeName}
+          title="Edit name"
+        >
+          <span></span>
+        </button>
+      </div>
       <p>BOOK HISTORY</p>
       <div className="button-container">
         <button
