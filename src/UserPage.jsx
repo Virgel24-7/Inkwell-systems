@@ -10,11 +10,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
-
-export let currentUser = null;
-export const setCurrentUser = (user) => {
-  currentUser = user;
-};
+import { currentUser } from "./App";
 
 export const Userpage = (props) => {
   const [page, setPage] = useState("res");

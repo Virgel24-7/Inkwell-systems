@@ -9,11 +9,12 @@ import {
 } from "firebase/firestore";
 import { Bookcard } from "./Bookcard";
 import Popup from "./gencomponent/Popup";
-import { isAdmin } from "./Loginbox";
+import { currentUser } from "./App";
 import Emptybook from "./gencomponent/Emptybook";
 import notFound from "./assets/NoResults.png";
 
 export const Librarypage = () => {
+  const isAdmin = currentUser ? currentUser.role === "admin" : false;
   const [library, setLibrary] = useState([]);
   const booksCollectionRef = collection(db, "booksdemo");
   const [searchTerm, setSearchTerm] = useState("");
@@ -108,15 +109,14 @@ export const Librarypage = () => {
             <div>
               {isAdmin && (
                 <div className="button-container">
-
-                <button
-                  onClick={() => {
-                    setEmptyId("");
-                    setEmptyPop(true);
-                  }}
-                >
-                  Add a new book
-                </button>
+                  <button
+                    onClick={() => {
+                      setEmptyId("");
+                      setEmptyPop(true);
+                    }}
+                  >
+                    Add a new book
+                  </button>
                 </div>
               )}
               <div className="books">
