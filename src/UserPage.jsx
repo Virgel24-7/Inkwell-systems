@@ -14,6 +14,7 @@ import { currentUser } from "./App";
 
 export const Userpage = (props) => {
   const [page, setPage] = useState("res");
+  const [name, setName] = useState(currentUser.name);
   const [userRes, setUserRes] = useState([]);
   const [loadRes, setLoadRes] = useState(true);
   const [userBor, setUserBor] = useState([]);
@@ -42,7 +43,10 @@ export const Userpage = (props) => {
 
   return (
     <div className="center-content">
-      BOOK HISTORY
+      <span>
+        Name: {name} <button onClick={changeName}>Change Name</button>
+      </span>
+      <p>BOOK HISTORY</p>
       <div className="button-container">
         <button
           onClick={async () => {
@@ -109,6 +113,20 @@ export const Userpage = (props) => {
       </div>
     </div>
   );
+
+  function changeName() {
+    const newName = prompt(
+      "Enter new name(this will reflect on the next login): "
+    );
+
+    if (!newName) {
+      return;
+    }
+
+    const uToUp = doc(db, "users", currentUser.id);
+    updateDoc(uToUp, { name: newName });
+    setName(newName);
+  }
 
   function cancelReserved(reserveId, bookId) {
     //delete to userReserves

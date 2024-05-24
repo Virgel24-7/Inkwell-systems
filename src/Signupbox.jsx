@@ -5,7 +5,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export const Signupbox = () => {
   const [newName, setNewName] = useState("");
-  const [newAge, setNewAge] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -31,7 +30,6 @@ export const Signupbox = () => {
       // Add user data to Firestore
       await addDoc(usersCollectionRef, {
         name: newName,
-        age: Number(newAge),
         userId: user.uid, // Store the user ID for reference
         reserves: [],
         borrowed: [],
@@ -40,7 +38,6 @@ export const Signupbox = () => {
 
       // Reset input fields
       setNewName("");
-      setNewAge("");
       setEmail("");
       setPassword("");
       setError(null);
@@ -60,16 +57,6 @@ export const Signupbox = () => {
             value={newName}
             onChange={(event) => {
               setNewName(event.target.value);
-            }}
-          />
-        </div>
-        <div className="input-box">
-          <input
-            type="number"
-            placeholder="Age..."
-            value={newAge}
-            onChange={(event) => {
-              setNewAge(event.target.value);
             }}
           />
         </div>
