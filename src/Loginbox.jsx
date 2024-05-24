@@ -45,9 +45,10 @@ export const Loginbox = (props) => {
         setCurrentUser(user);
         if (user.role === "user") {
           setUserData();
+        } else {
+          alert(`Logging in as ${user.role}`);
         }
 
-        alert(`Logging in as ${user.role}`);
         navigate("/");
       } else {
         alert("User not found");

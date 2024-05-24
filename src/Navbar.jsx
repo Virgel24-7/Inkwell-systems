@@ -80,12 +80,12 @@ export const Navbar = (props) => {
           <Link
             className="login-link"
             to={
-              props.userText === ""
+              props.userText === "Log in"
                 ? "login"
                 : `/${props.userText.toLowerCase()}`
             }
           >
-            {props.userText.toUpperCase()}
+            {props.userText}
           </Link>
         )}
         {(role === "user" || role === "admin" || role === "masteradmin") && (

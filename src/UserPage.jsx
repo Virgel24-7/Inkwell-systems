@@ -123,10 +123,11 @@ export const Userpage = (props) => {
 
   function changeName() {
     const newName = prompt(
-      "Enter new name(this will reflect on the next login): "
+      "Enter new name\nAlphanumeric only\n(this will reflect on the next login): "
     );
 
-    if (!newName) {
+    if (!newName || !/^[a-zA-Z0-9]+$/.test(newName)) {
+      alert("Invalid. Alphanumeric only.");
       return;
     }
 
