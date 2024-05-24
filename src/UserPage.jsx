@@ -411,7 +411,7 @@ const Reservations = (props) => {
               <td>{reserve.dateReserved}</td>
               <td>{reserve.dueDate}</td>
               <td>
-                <button
+                <button className="remove-button"
                   onClick={() => props.cancelReserved(reserve.id, reserve.book)}
                 >
                   Cancel
@@ -485,7 +485,8 @@ const Returnlist = (props) => {
               <td>{returned.dateBorrowed}</td>
               <td>{returned.dateReturned}</td>
               <td>
-                <button onClick={() => props.reserve(returned.book)}>
+                <button className="remove-button"
+                onClick={() => props.reserve(returned.book)}>
                   Reserve again
                 </button>
               </td>
