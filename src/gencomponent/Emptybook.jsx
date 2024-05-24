@@ -75,94 +75,96 @@ function Emptybook(props) {
 
   return props.trigger ? (
     <div className="popup">
-      <div className="popContent">
-        <button
-          className="popCloser"
-          onClick={() => {
-            closePopup();
-          }}
-        >
-          CLOSE
-        </button>
+  <div className="popContent">
+    <button
+      className="popCloser"
+      onClick={() => {
+        closePopup();
+      }}
+    >
+      CLOSE
+    </button>
 
-        <form ref={formRef}>
-          <div>
-            Book title :
-            <input
-              className="titleref"
-              type="text"
-              ref={titleRef}
-              defaultValue={book.title}
-            />
-          </div>
-          <div>
-            Author/s :
-            <input
-              className="authorref"
-              type="text"
-              ref={authorRef}
-              defaultValue={book.author}
-            />
-          </div>
-          <div>
-            Description:
-            <input
-              className="descref"
-              type="text"
-              ref={descRef}
-              defaultValue={book.description}
-            />
-          </div>
-          <div>
-            Dewey decimal:
-            <input
-              className="dewref"
-              type="text"
-              ref={dewRef}
-              defaultValue={book.dewey}
-            />
-          </div>
-          {props.bookid === "" && (
-            <div>
-              Number of Copies:
-              <input
-                className="copref"
-                type="number"
-                ref={copRef}
-                defaultValue={book.copies}
-              />
-            </div>
-          )}
-          <div>
-            Upload book cover{"(recommended aspect ratio(15:22))"}
-            <input
-              className="imageref"
-              type="file"
-              ref={imageRef}
-              style={{ display: "none" }}
-              onChange={() => setReimg(!reimg)}
-            />
-          </div>
-        </form>
+    <div className="upload-photo">
+      <label>Upload book cover (recommended aspect ratio 15:22)</label>
+      <input
+        className="imageref"
+        type="file"
+        ref={imageRef}
+        style={{ display: "none" }}
+        onChange={() => setReimg(!reimg)}
+      />
+    </div>
 
-        <div className="prevBx">
-          <img
-            onClick={() => imageRef.current.click()}
-            src={
-              imageRef.current === null || !imageRef.current.value
-                ? book.preview === null
-                  ? sampleCover
-                  : book.preview
-                : URL.createObjectURL(imageRef.current.files[0])
-            }
+    <form ref={formRef}>
+      <div className="data-field-container">
+        Book title :
+        <input
+          className="titleref"
+          type="text"
+          ref={titleRef}
+          defaultValue={book.title}
+        />
+      </div>
+      <div className="data-field-container">
+        Author/s :
+        <input
+          className="authorref"
+          type="text"
+          ref={authorRef}
+          defaultValue={book.author}
+        />
+      </div>
+      
+      <div className="data-field-container">
+        Dewey decimal:
+        <input
+          className="dewref"
+          type="text"
+          ref={dewRef}
+          defaultValue={book.dewey}
+        />
+      </div>
+      {props.bookid === "" && (
+        <div className="data-field-container">
+          Number of Copies:
+          <input
+            className="copref"
+            type="number"
+            ref={copRef}
+            defaultValue={book.copies}
           />
         </div>
-        <button onClick={submit}>SUBMIT</button>
-        {props.bookid === "" || (
-          <button onClick={deleteBook}>DELETE BOOK</button>
-        )}
+      )}
+      
+    </form>
+    <div className="data-field-description">
+        Description:
+        <input
+          className="descref"
+          type="text"
+          ref={descRef}
+          defaultValue={book.description}
+        />
       </div>
+    <div className="prevBx">
+      <img
+        onClick={() => imageRef.current.click()}
+        src={
+          imageRef.current === null || !imageRef.current.value
+            ? book.preview === null
+              ? sampleCover
+              : book.preview
+            : URL.createObjectURL(imageRef.current.files[0])
+        }
+      />
     </div>
+    <button onClick={submit}>SUBMIT</button>
+    {props.bookid === "" || (
+      <button onClick={deleteBook}>DELETE BOOK</button>
+    )}
+  </div>
+</div>
   ) : (
     ""
   );
