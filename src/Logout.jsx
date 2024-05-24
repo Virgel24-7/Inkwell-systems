@@ -9,8 +9,6 @@ export const logout = (setUser) => {
         // Sign-out successful.
         localStorage.removeItem("user");
         setCurrentUser(null);
-        console.log(auth);
-        console.log(currentUser);
         alert("Signed out successfully");
 
         setUser(null);

@@ -23,7 +23,7 @@ export const Loginbox = (props) => {
         email,
         password
       );
-      currUserID = auth.currentUser.uid;
+      const currUserID = auth.currentUser.uid;
       logInAsUser(currUserID);
     } catch (error) {
       console.log(error);
