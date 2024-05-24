@@ -1,5 +1,5 @@
 /*===============================HOME PAGE================================*/
-* {
+.App {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -276,7 +276,7 @@ body {
 .team-card-container:hover .team-img-container {
   cursor: pointer;
   border-style: solid;
-  border-color: #C98D00;
+  border-color: #c98d00;
   border-width: 2px;
 }
 
@@ -296,7 +296,7 @@ hr {
   width: 88%;
   margin: 0.5rem 0.5rem 0.5rem;
   border: none;
-  background-color: #C98D00;
+  background-color: #c98d00;
 }
 
 /*===============================NAV BAR================================*/
