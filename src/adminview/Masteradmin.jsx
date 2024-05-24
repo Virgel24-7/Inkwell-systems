@@ -12,10 +12,14 @@ import { db } from "../firebase-config"; // Import the Firestore instance
 export const Masteradmin = () => {
   const [admins, setAdmins] = useState([]);
   const [users, setUsers] = useState([]);
+  const [currPrice, setCurrPrice] = useState(Number());
+  const [currRes, setCurrRes] = useState(Number());
+  const [currBor, setCurrBor] = useState(Number());
+  const [master, setMaster] = useState({});
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [currPrice, currRes, currBor]);
 
   const fetchUsers = async () => {
     try {
@@ -31,9 +35,14 @@ export const Masteradmin = () => {
       const usersData = allUsers.filter(
         (user) => user.role !== "admin" && user.role !== "masteradmin"
       );
+      const masterData = allUsers.find((user) => user.role === "masteradmin");
 
       setAdmins(adminsData);
       setUsers(usersData);
+      setMaster(masterData);
+      setCurrPrice(masterData.overdueRate);
+      setCurrRes(masterData.resDays);
+      setCurrBor(masterData.borDays);
     } catch (error) {
       console.error("Error fetching users: ", error);
     }
@@ -118,8 +127,90 @@ export const Masteradmin = () => {
           </li>
         ))}
       </ul>
+
+      <div>
+        Current number of days to Reserve before auto cancel: {currRes}
+        <button onClick={changeRes}>Change</button>
+      </div>
+      <div>
+        Current number of days to borrow before overdue: {currBor}
+        <button onClick={changeBor}>Change</button>
+      </div>
+      <div>
+        Current Overdue rate(daily): {currPrice}
+        <button onClick={changeRate}>Change</button>
+      </div>
     </div>
   );
+
+  async function changeRate() {
+    let rate = 0;
+    let go = false;
+    do {
+      rate = prompt("How much should the new rate be?");
+      console.log(Number(rate));
+      console.log(typeof Number(rate));
+      console.log(Number(rate) < 0);
+      if (
+        rate !== "0" &&
+        (!Number(rate) || Number(rate) < 0 || !Number.isInteger(Number(rate)))
+      )
+        alert("Invalid value. Only positive integers.");
+      else go = true;
+    } while (!go);
+
+    const masterdoc = doc(db, "users", master.id);
+    updateDoc(masterdoc, { overdueRate: Number(rate) });
+    alert("Successfully changed rate.");
+    setCurrPrice(Number(rate));
+    fetchUsers();
+  }
+
+  async function changeRes() {
+    let rate = 0;
+    let go = false;
+    do {
+      rate = prompt("How much should the new rate be?");
+      console.log(Number(rate));
+      console.log(typeof Number(rate));
+      console.log(Number(rate) < 0);
+      if (
+        rate !== "0" &&
+        (!Number(rate) || Number(rate) < 0 || !Number.isInteger(Number(rate)))
+      )
+        alert("Invalid value. Only positive integers.");
+      else go = true;
+    } while (!go);
+
+    const masterdoc = doc(db, "users", master.id);
+    updateDoc(masterdoc, { resDays: Number(rate) });
+    alert("Successfully changed rate.");
+    setCurrRes(Number(rate));
+    fetchUsers();
+  }
+
+  async function changeBor() {
+    let rate = 0;
+    let go = false;
+    do {
+      rate = prompt("How much should the new rate be?");
+      console.log(Number(rate));
+      console.log(typeof Number(rate));
+      console.log(Number(rate) < 0);
+      if (
+        rate !== "0" &&
+        (!Number(rate) || Number(rate) < 0 || !Number.isInteger(Number(rate)))
+      )
+        alert("Invalid value. Only positive integers.");
+      else go = true;
+    } while (!go);
+
+    const masterdoc = doc(db, "users", master.id);
+    updateDoc(masterdoc, { borDays: Number(rate) });
+    alert("Successfully changed rate.");
+    setCurrBor(Number(rate));
+    fetchUsers();
+  }
 
   async function changeToAdmin(userId) {
     //if user has reserves, borrows, or returns, return

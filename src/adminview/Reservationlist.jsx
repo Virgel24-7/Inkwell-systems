@@ -4,6 +4,7 @@ import {
   getDoc,
   getDocs,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase-config";
@@ -57,14 +58,21 @@ export const Reservationlist = () => {
           </select>
         </form>
       </div>
-      <div className = "center-content"style={{ color: "white" }}>
-       BOOKS STATUS
+      <div className="center-content" style={{ color: "white" }}>
+        BOOKS STATUS
+      </div>
+      <div style={{ textAlign: "center" }}>
+        <p>RESERVATIONS LIST</p>
       </div>
       <div className="table-container">
         {loadRes ? (
-          <p>Loading reservations...</p>
+          <div style={{ textAlign: "center" }}>
+            <p>Loading reservations ...</p>
+          </div>
         ) : filteredReserves.length === 0 ? (
-          <p>No reservations found.</p>
+          <div style={{ textAlign: "center" }}>
+            <p>No reservations found.</p>
+          </div>
         ) : (
           <table>
             <thead>
@@ -109,13 +117,28 @@ export const Reservationlist = () => {
 };
 
 async function openReservations(historyCollectionRef, setReservations) {
+  const date = new Date();
   const getReserves = async () => {
     const data = await getDocs(historyCollectionRef);
     const tempHis = data.docs.filter((historyDoc) => {
       return historyDoc.data().state === "reserved";
     });
 
-    const promises = tempHis.map(async (hisDoc) => ({
+    const tempHis2 = tempHis.filter((resDoc) => {
+      const temp = resDoc.data();
+      const overdueDays =
+        (Number(Date.parse(date.toDateString())) -
+          Number(Date.parse(temp.dueDate))) /
+        86400000;
+
+      if (overdueDays > 0) {
+        cancelRes(resDoc.id);
+      }
+
+      return overdueDays <= 0;
+    });
+
+    const promises = tempHis2.map(async (hisDoc) => ({
       ...hisDoc.data(),
       id: hisDoc.id,
       title: (await getDoc(doc(db, "booksdemo", hisDoc.data().book))).data()
@@ -131,7 +154,43 @@ async function openReservations(historyCollectionRef, setReservations) {
   await getReserves();
 }
 
-async function changeToBorrow(historyId, userId, bookId) {
+const cancelRes = async (resid) => {
+  const rtdoc = doc(db, "history", resid);
+  const rtd = (await getDoc(rtdoc)).data();
+
+  //update user
+  const utdoc = doc(db, "users", rtd.userid);
+  const newResArr = (await getDoc(utdoc))
+    .data()
+    .reserves.filter((res) => res !== resid);
+  updateDoc(utdoc, { reserves: newResArr });
+
+  //update book
+  const btdoc = doc(db, "booksdemo", rtd.book);
+  const btu = (await getDoc(btdoc)).data();
+  updateDoc(btdoc, { copies: btu.copies + 1 });
+
+  //delete res
+  deleteDoc(rtdoc);
+};
+
+const masterData = async () => {
+  try {
+    const usersCollection = collection(db, "users");
+    const usersSnapshot = await getDocs(usersCollection);
+    const allUsers = usersSnapshot.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
+
+    const master = allUsers.find((user) => user.role === "masteradmin");
+    return master;
+  } catch (error) {
+    console.error("Error fetching users: ", error);
+  }
+};
+
+async function changeToBorrow(historyId, userId) {
   //change historydoc
   const resToChange = doc(db, "history", historyId);
 
@@ -143,8 +202,9 @@ async function changeToBorrow(historyId, userId, bookId) {
     state: "borrowed",
     dateBorrowed: dateBorrowed.toDateString(),
     dueDate: dueDate.toDateString(),
+    overdueRate: (await masterData()).overdueRate,
   };
-  await updateDoc(resToChange, newField);
+  updateDoc(resToChange, newField);
 
   //change userdoc
   const userToChange = doc(db, "users", userId);
@@ -159,5 +219,5 @@ async function changeToBorrow(historyId, userId, bookId) {
     borrowed: borrowed,
   };
 
-  await updateDoc(userToChange, newField2);
+  updateDoc(userToChange, newField2);
 }
