@@ -8,6 +8,8 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase-config";
+import { useNavigate } from "react-router-dom";
+import { currentUser } from "../App";
 
 const duePeriod = 7;
 
@@ -18,7 +20,12 @@ export const Reservationlist = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOption, setFilterOption] = useState("username");
 
+  let navigate = useNavigate();
+
   useEffect(() => {
+    if (currentUser === null || currentUser.role !== "admin") {
+      navigate("/");
+    }
     openReservations(historyCollectionRef, setReservations);
     setLoadRes(false);
   }, []);

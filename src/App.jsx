@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Homepage } from "./Homepage";
 import { Signupbox } from "./Signupbox";
@@ -61,6 +66,7 @@ function App() {
             </Route>
             <Route path="checkouts" element={<Checkoutspage />} />
             <Route path="masteradmin" element={<Masteradmin />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </div>

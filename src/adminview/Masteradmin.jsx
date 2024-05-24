@@ -8,6 +8,8 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase-config"; // Import the Firestore instance
+import { useNavigate } from "react-router-dom";
+import { currentUser } from "../App";
 
 export const Masteradmin = () => {
   const [admins, setAdmins] = useState([]);
@@ -17,7 +19,12 @@ export const Masteradmin = () => {
   const [currBor, setCurrBor] = useState(Number());
   const [master, setMaster] = useState({});
 
+  let navigate = useNavigate();
+
   useEffect(() => {
+    if (currentUser === null || currentUser.role !== "masteradmin") {
+      navigate("/");
+    }
     fetchUsers();
   }, [currPrice, currRes, currBor]);
 
@@ -93,9 +100,9 @@ export const Masteradmin = () => {
       <h1 className="title">Admin</h1>
       <ul className="user-list">
         <li className="user-item">
-        <span className="short-span">Name: </span>
-        <span className="short-span">Role: </span>
-        <span className="long-span">Change Status: </span>
+          <span className="short-span">Name: </span>
+          <span className="short-span">Role: </span>
+          <span className="long-span">Change Status: </span>
         </li>
         {admins.map((admin, index) => (
           <li key={index} className="user-item">
@@ -111,7 +118,7 @@ export const Masteradmin = () => {
         ))}
       </ul>
       <hr className="master-hr"></hr>
-        
+
       <h1 className="title">Users</h1>
       <ul className="user-list">
         <li className="user-item">
@@ -142,32 +149,29 @@ export const Masteradmin = () => {
 
       <ul className="user-list">
         <li className="user-item">
-        <span className="masteredits-text">Current number of days to Reserve before auto cancel:</span> 
-        <span className="masteredits-value">{currRes}</span>
-          <button 
-            className="remove-button"
-            onClick={changeRes}
-          >
+          <span className="masteredits-text">
+            Current number of days to Reserve before auto cancel:
+          </span>
+          <span className="masteredits-value">{currRes}</span>
+          <button className="remove-button" onClick={changeRes}>
             Change
           </button>
         </li>
         <li className="user-item">
-        <span className="masteredits-text">Current number of days to borrow before overdue:</span>
-        <span className="masteredits-value">{currBor}</span>
-          <button 
-            className="remove-button"
-            onClick={changeBor}
-          >
+          <span className="masteredits-text">
+            Current number of days to borrow before overdue:
+          </span>
+          <span className="masteredits-value">{currBor}</span>
+          <button className="remove-button" onClick={changeBor}>
             Change
           </button>
         </li>
         <li className="user-item">
-        <span className="masteredits-text">Current Overdue Rate (daily):</span> 
-        <span className="masteredits-value">{currPrice}</span>
-          <button 
-            className="remove-button"
-            onClick={changeRate}
-          >
+          <span className="masteredits-text">
+            Current Overdue Rate (daily):
+          </span>
+          <span className="masteredits-value">{currPrice}</span>
+          <button className="remove-button" onClick={changeRate}>
             Change
           </button>
         </li>

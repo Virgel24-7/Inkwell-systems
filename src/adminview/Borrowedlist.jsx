@@ -7,6 +7,8 @@ import {
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase-config";
+import { currentUser } from "../App";
+import { useNavigate } from "react-router-dom";
 
 export const Borrowedlist = () => {
   const [loadRes, setLoadRes] = useState(true);
@@ -14,8 +16,12 @@ export const Borrowedlist = () => {
   const historyCollectionRef = collection(db, "history");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOption, setFilterOption] = useState("username");
+  let navigate = useNavigate();
 
   useEffect(() => {
+    if (currentUser === null || currentUser.role !== "admin") {
+      navigate("/");
+    }
     openBorrowed(historyCollectionRef, setBorroweds);
     setLoadRes(false);
   }, []);
