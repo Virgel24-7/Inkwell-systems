@@ -100,6 +100,7 @@ export const Reservationlist = () => {
                   <td>{reserve.dueDate}</td>
                   <td>
                     <button
+                      className="remove-button"
                       onClick={() => {
                         changeToBorrow(
                           reserve.id,

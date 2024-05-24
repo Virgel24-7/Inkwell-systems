@@ -17,6 +17,7 @@ function Popup(props) {
         <p style={{ textAlign: "center" }}>{props.title.toUpperCase()}</p>
         {props.code === 1 && (
           <button
+            className="popSubmit"
             onClick={() => {
               props.setEmptyPop(true);
               props.setEmptyId(props.bookId);
@@ -41,6 +42,7 @@ function Popup(props) {
               }}
             />
             <button
+              className="popSubmit"
               onClick={() => {
                 const ncop = Number(nOfCopies);
                 if (!ncop || !Number.isInteger(ncop)) {
@@ -58,7 +60,7 @@ function Popup(props) {
                 closePopup();
               }}
             >
-              Add to library(input negative to subtract)
+              Add to library (input negative to subtract)
             </button>
             <hr />
           </div>

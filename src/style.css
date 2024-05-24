@@ -915,7 +915,7 @@ button:hover .button-text {
 
 .errorNotif {
   margin-top: 45%;
-  position: absolute; 
+  position: absolute;
   z-index: 2;
 }
 
@@ -1257,8 +1257,10 @@ thead th {
 tbody td {
   text-align: left;
 }
+
 /*===============================ADD BOOKS================================*/
 .data-field-container {
+  display: flex;
   top: 100px;
   display: relative;
   align-items: center;
@@ -1285,6 +1287,7 @@ tbody td {
   margin-top: 50%;
   margin-right: 10px;
 }
+
 .data-field-description {
   display: flex;
   position: relative;

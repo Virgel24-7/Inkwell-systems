@@ -102,6 +102,7 @@ export const Borrowedlist = () => {
                   <td>{borrowed.overdueFee}</td>
                   <td>
                     <button
+                      className="remove-button"
                       onClick={() => {
                         changeToReturned(
                           borrowed.id,

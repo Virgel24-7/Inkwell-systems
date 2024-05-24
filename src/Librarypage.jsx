@@ -115,7 +115,7 @@ export const Librarypage = () => {
                       setEmptyPop(true);
                     }}
                   >
-                    Add a new book
+                    Add a New Book
                   </button>
                   <br></br>
                 </div>

@@ -81,12 +81,6 @@ export const Loginbox = (props) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <div className="remember-forgot">
-            <label>
-              <input type="checkbox" />Remember me
-            <a href="#">Forgot Password?</a>
-            </label>
-          </div>
           <button type="submit" className="btn" disabled={isLoading}>
             {isLoading ? "Signing In..." : "Login"}
           </button>
