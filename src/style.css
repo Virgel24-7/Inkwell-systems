@@ -16,9 +16,16 @@ body {
 }
 
 .container {
-  display: grid;
+  display: flex;
   grid-template-columns: 200fr 1fr;
   grid-gap: 5px; /* Optional: Add spacing between elements */
+  color: white;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height for centering */
+  margin: 20px;
 }
 
 .homeHeading h1 {
@@ -528,7 +535,7 @@ a:hover:after {
   align-items: center;
   flex-wrap: wrap;
   padding: 30px;
-  margin-top: 8%;
+  margin-top: 6%;
 }
 
 .card {
@@ -943,22 +950,25 @@ button:hover .button-text {
   color: white;
 }
 
-.container {
-  color: white;
-  text-align: center;
+.master-Container {
   display: flex;
+  grid-gap: 5px; /* Optional: Add spacing between elements */
+  color: white;
   flex-direction: column;
-  align-items: center;
+  text-align: left;
+  align-items: left;
   justify-content: center;
-  height: 100vh; /* Full viewport height for centering */
-}
-.container {
-  margin: 20px;
+  height: auto;
+  margin: 100px auto 25px auto;
+  width: 100vh;
 }
 
 .title {
-  margin-bottom: 20px;
   font-size: 24px;
+}
+
+.master-hr {
+  width: 100%;
 }
 
 .section-title {
@@ -973,16 +983,23 @@ button:hover .button-text {
   padding: 0;
 }
 
+.user-list .short-span {
+  text-align: left;
+  align-items: left;
+  min-width: 200px;
+}
+
+.user-list .long-span {
+  text-align: left;
+  align-items: left;
+  min-width: 280px;
+}
+
 .user-item {
   display: flex;
-  justify-content: space-between; /* Adjusted to better fit multiple items */
   gap: 20px;
   margin: 10px 0;
   align-items: center;
-}
-
-.user-item span {
-  flex: 1; /* Allow spans to take up equal space */
 }
 
 .remove-button {
@@ -992,10 +1009,23 @@ button:hover .button-text {
   padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
+  width: 130px;
 }
 
 .remove-button:hover {
   background-color: #cc0000;
+}
+
+.user-list .masteredits-text {
+  text-align: left;
+  align-items: left;
+  min-width: 400px;
+}
+
+.user-list .masteredits-value {
+  text-align: left;
+  align-items: left;
+  min-width: 20px;
 }
 
 /*===============================USER PAGE================================*/
