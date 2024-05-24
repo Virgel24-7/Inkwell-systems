@@ -89,14 +89,14 @@ export const Aboutpage = () => {
             <div className="team-card-container">
               <div className="team-view-container">
                 <img
-                  src={galanidaB}
+                  src={soralloB}
                   class="view-img"
                   alt="Silhouette of Sorallo, Kinshin #22101520"
                 />
               </div>
               <div className="team-img-container">
                 <img
-                  src={galanidaA}
+                  src={soralloA}
                   class="nft-img"
                   alt="Image of Sorallo, Kinshin #22101520"
                 />
