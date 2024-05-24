@@ -73,7 +73,6 @@ export const Bookcard = (props) => {
           <span className="truncate-popup">{props.title}</span>
         </div>
         <div>
-          <br />
           {!isAdmin && (
             <div className="showDesc">
               <button
