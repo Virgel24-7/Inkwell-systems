@@ -55,23 +55,28 @@ body {
   bottom: 10px;
 }
 
-.next a {
-  text-decoration: none;
-  color: #e6e6e6;
-  border: 3px solid #8b6913;
-  padding: 5px 15px; /* Adjust padding for button size */
-  border-radius: 40px;
-  transition: 0.3s all ease;
+.book-cards {
   display: flex;
-  margin-top: 20px;
-  align-items: center;
-  bottom: 150px;
+  position: relative;
+  flex-wrap: nowrap; 
+  gap: 20px;
+  left: -40px;
+  margin-right: -10px; 
+  background-color: none;
+  overflow-x: auto; 
+  padding-bottom: 20px; 
 }
 
-.next a:hover {
-  background-color: #8b6913;
+.book-cards .card {
+  top: 10px;
+  width: 308px; 
+  height: 440px; 
 }
 
+.book-cards .card img {
+  width: 100%; 
+  height: auto; 
+}
 .slider {
   margin-top: 50px;
   position: absolute;
@@ -420,10 +425,10 @@ a:hover:after {
 /*===============================BOOKS================================*/
 .search-container {
   position: sticky;
-  top: 10px;
+  top: 20px;
   height: 10%;
   width: 40%;
-  right: 40%;
+  right: 30%;
   margin: 10px auto;
   background: none;
   display: flex;
@@ -733,8 +738,9 @@ button:hover .button-text {
   width: 100%;
   height: 50px;
   background: transparent;
-  margin: 30px 0;
+  margin: 30px 0px;
   padding-left: 5px;
+  margin-right: 200px;
 }
 
 .input-box input {
@@ -763,46 +769,19 @@ button:hover .button-text {
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
+  
 }
 
-.login-container .remember-forgot {
-  display: flex;
-  justify-content: space-between;
-  font-size: 14.5px;
-  margin: -15px 0 15px;
-}
 
-.remember-forgot label input {
-  accent-color: #fff;
-  margin-right: 3px;
-}
 
-.login-container .remember-forgot a {
-  position: relative;
-  color: #fff;
-  text-decoration: none;
-  padding: 0 10px;
-  margin-left: 100px;
-  align-items: center;
-  justify-content: flex-end;
-}
 
-.login-container .remember-forgot a:after {
-  content: "";
-  position: absolute;
-  background-color: #8b6913;
-  height: 3px;
-  width: 0;
-  left: 12px;
-  bottom: -2px;
-}
 
-.login-container .remember-forgot a:hover:after {
-  width: 80%;
-}
+
+
+
 
 .login-container .btn {
-  width: 100%;
+  width: 70%;
   height: 45px;
   background: #fff;
   border: none;
@@ -813,6 +792,7 @@ button:hover .button-text {
   font-size: 16px;
   color: #333;
   font-weight: 600;
+  padding-left: 0px;
 }
 
 .accessOption {
@@ -827,7 +807,7 @@ button:hover .button-text {
   text-decoration: none;
   color: white;
   position: relative; /* Changed to position relative */
-  top: 550px;
+  top: 570px;
   background-color: none;
   border-radius: 10px;
   margin-right: 10px;
