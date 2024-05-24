@@ -425,10 +425,10 @@ a:hover:after {
 /*===============================BOOKS================================*/
 .search-container {
   position: sticky;
-  top: 10px;
+  top: 20px;
   height: 10%;
   width: 40%;
-  right: 40%;
+  right: 30%;
   margin: 10px auto;
   background: none;
   display: flex;
