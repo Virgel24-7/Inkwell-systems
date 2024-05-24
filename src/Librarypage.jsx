@@ -107,7 +107,7 @@ export const Librarypage = () => {
             <br />
             <div>
               {isAdmin && (
-                <div className="button-container">
+                <div className="addbutton-container">
 
                 <button
                   onClick={() => {
@@ -117,6 +117,7 @@ export const Librarypage = () => {
                 >
                   Add a new book
                 </button>
+                <br></br>
                 </div>
               )}
               <div className="books">
