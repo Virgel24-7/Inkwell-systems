@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { currUserID } from "./Loginbox";
 import { logout } from "./Logout";
 import logo from "./assets/logo.png";
+import { currentUser } from "./App";
 
 export const Navbar = (props) => {
   const [sidebarActive, setSidebarActive] = useState(false);
+  const role = currentUser ? currentUser.role : "notUser";
 
   const toggleSidebar = () => {
     setSidebarActive(!sidebarActive);
@@ -55,27 +56,27 @@ export const Navbar = (props) => {
         <Link className="home-link" to="/">
           Home
         </Link>
-        {!props.isMasterAdmin && (
+        {role !== "masteradmin" && (
           <Link className="book-link" to="/books">
             Books
           </Link>
         )}
-        {props.isAdmin && !props.isMasterAdmin && (
+        {role === "admin" && (
           <Link className="admin-link" to="/checkouts">
             Checkouts
           </Link>
         )}
-        {props.isAdmin || (
+        {role === "admin" || role === "masteradmin" || (
           <Link className="about-link" to="/about">
             About us
           </Link>
         )}
-        {props.isMasterAdmin && (
+        {role === "masteradmin" && (
           <Link className="masteradmin-link" to="/masteradmin">
             Admins/Users
           </Link>
         )}
-        {props.isAdmin || props.isMasterAdmin || (
+        {role === "admin" || role === "masteradmin" || (
           <Link
             className="login-link"
             to={
@@ -84,12 +85,12 @@ export const Navbar = (props) => {
                 : `/${props.userText.toLowerCase()}`
             }
           >
-            {props.userText}
+            {props.userText.toUpperCase()}
           </Link>
         )}
-        {currUserID === "" || (
+        {(role === "user" || role === "admin" || role === "masteradmin") && (
           <Link to="/">
-            <span onClick={() => logout(props.handleLogout)}>Log out</span>
+            <span onClick={() => logout(props.setUser)}>Log out</span>
           </Link>
         )}
       </div>

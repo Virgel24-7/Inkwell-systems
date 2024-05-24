@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Navbar } from "./Navbar";
 import { Homepage } from "./Homepage";
@@ -12,67 +12,51 @@ import { Loginbox } from "./Loginbox";
 import { Masteradmin } from "./adminview/Masteradmin";
 import { Checkoutspage } from "./adminview/Checkoutspage";
 
+export let currentUser = () => {
+  try {
+    return JSON.parse(window.localStorage.getItem("user"));
+  } catch (error) {
+    return null;
+  }
+};
+export const setCurrentUser = (user) => {
+  currentUser = user;
+};
+
 function App() {
   const [userText, setUserText] = useState("");
-  const [isUser, setIsUser] = useState(false);
-  const [userId, setUserId] = useState(""); // State to store user ID
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isMasterAdmin, setIsMasterAdmin] = useState(false); // State to store master admin status
+  const [user, setUser] = useState(currentUser);
 
-  const handleLogin = (userId, role) => {
-    setUserId(userId); // Set the user ID after successful login
-    setIsUser(true); // Set the user status
-    setIsAdmin(role === "admin" || role === "masteradmin");
-    setIsMasterAdmin(role === "masteradmin");
-  };
+  const [role, setRole] = useState("");
 
-  const handleLogout = () => {
-    setUserId(""); // Clear the user ID on logout
-    setIsUser(false); // Clear the user status
-    setIsAdmin(false);
-    setIsMasterAdmin(false);
-    setUserText("");
-  };
+  useEffect(() => {
+    if (user) {
+      window.localStorage.setItem("user", JSON.stringify(user));
+    }
+
+    setCurrentUser(user ? user : null);
+    setUserText(currentUser ? user.name : "");
+    setRole(currentUser ? user.role : "");
+  }, [user]);
 
   return (
     <Router>
       <div className="App">
         <Navbar
           userText={userText === "" ? "Login" : userText}
-          userId={userId}
-          isAdmin={isAdmin}
-          isMasterAdmin={isMasterAdmin} // Pass isMasterAdmin to Navbar
-          handleLogout={handleLogout}
+          setUser={setUser}
         />
         <div className="content">
           <Routes>
-            <Route path="/" element={<Homepage />} />
+            <Route path="/" element={<Homepage user={user} />} />
             <Route path="books" element={<Librarypage />} />
             <Route path="about" element={<Aboutpage />} />
             <Route
               path={userText === "" ? "login" : `/${userText.toLowerCase()}`}
-              element={!isUser ? <Accesspage /> : <Userpage />}
+              element={role !== "user" ? <Accesspage /> : <Userpage />}
             >
-              <Route
-                index
-                element={
-                  <Loginbox
-                    updateUserText={(uText) => setUserText(uText)}
-                    logUser={() => setIsUser(true)}
-                    handleLogin={handleLogin} // Pass the callback function to Loginbox
-                  />
-                }
-              />
-              <Route
-                path="log-in"
-                element={
-                  <Loginbox
-                    updateUserText={(uText) => setUserText(uText)}
-                    logUser={() => setIsUser(true)}
-                    handleLogin={handleLogin} // Pass the callback function to Loginbox
-                  />
-                }
-              />
+              <Route index element={<Loginbox setUser={setUser} />} />
+              <Route path="log-in" element={<Loginbox setUser={setUser} />} />
               <Route path="sign-up" element={<Signupbox />} />
             </Route>
             <Route path="checkouts" element={<Checkoutspage />} />

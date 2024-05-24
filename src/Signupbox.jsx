@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { db, auth } from "./firebase-config";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -10,7 +10,6 @@ export const Signupbox = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const [users, setUsers] = useState([]);
   const usersCollectionRef = collection(db, "users");
 
   const createUser = async () => {
@@ -50,15 +49,6 @@ export const Signupbox = () => {
       setError(error.message);
     }
   };
-
-  useEffect(() => {
-    const getUsers = async () => {
-      const data = await getDocs(usersCollectionRef);
-      setUsers(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    };
-
-    getUsers();
-  }, []);
 
   return (
     <div className="App-admin">
