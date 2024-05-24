@@ -827,7 +827,7 @@ button:hover .button-text {
   text-decoration: none;
   color: white;
   position: relative; /* Changed to position relative */
-  top: 550px;
+  top: 570px;
   background-color: none;
   border-radius: 10px;
   margin-right: 10px;
