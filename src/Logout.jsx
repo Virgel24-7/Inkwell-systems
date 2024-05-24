@@ -1,17 +1,19 @@
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase-config";
-import { logOut } from "./Loginbox";
-import { setCurrentUser } from "./UserPage";
+import { currentUser, setCurrentUser } from "./App";
 
-export const logout = (handleLogout) => {
+export const logout = (setUser) => {
   const handleout = () => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
+        localStorage.removeItem("user");
         setCurrentUser(null);
-        logOut();
-        handleLogout();
+        console.log(auth);
+        console.log(currentUser);
         alert("Signed out successfully");
+
+        setUser(null);
       })
       .catch((error) => {
         // An error happened.

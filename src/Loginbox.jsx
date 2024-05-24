@@ -1,21 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "./firebase-config";
 import { signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "./firebase-config";
-import { setCurrentUser, setUserData } from "./UserPage";
-
-export let currUserID = "";
-export let currUserName = "";
-export let isAdmin = false;
-export let isMasterAdmin = false;
-export const logOut = () => {
-  currUserID = "";
-  currUserName = "";
-  isAdmin = false;
-  isMasterAdmin = false;
-};
+import { setUserData } from "./UserPage";
+import { setCurrentUser } from "./App";
 
 export const Loginbox = (props) => {
   const [email, setEmail] = useState("");
@@ -50,17 +40,14 @@ export const Loginbox = (props) => {
       const user = tempUsers.find((user) => user.userId === userID);
 
       if (user) {
-        currUserName = user.name;
-        props.updateUserText(currUserName.toUpperCase());
-        props.logUser();
+        window.localStorage.setItem("user", JSON.stringify(user));
+        props.setUser(user);
         setCurrentUser(user);
-        props.handleLogin(userID, user.role); // Call the handleLogin function with the user ID
-        isAdmin =
-          user.role === "admin" || user.role === "masteradmin" ? true : false;
-        isMasterAdmin = user.role === "masteradmin" ? true : false;
         if (user.role === "user") {
           setUserData();
         }
+
+        alert(`Logging in as ${user.role}`);
         navigate("/");
       } else {
         alert("User not found");

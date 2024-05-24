@@ -89,13 +89,18 @@ export const Masteradmin = () => {
   };
 
   return (
-    <div className="container">
+    <div className="master-Container">
       <h1 className="title">Admin</h1>
       <ul className="user-list">
+        <li className="user-item">
+        <span className="short-span">Name: </span>
+        <span className="short-span">Role: </span>
+        <span className="long-span">Change Status: </span>
+        </li>
         {admins.map((admin, index) => (
           <li key={index} className="user-item">
-            <span>{`Name: ${admin.name}`}</span>
-            <span>{`Role: ${admin.role}`}</span>
+            <span className="short-span">{`${admin.name}`}</span>
+            <span className="short-span">{`${admin.role}`}</span>
             <button
               className="remove-button"
               onClick={() => removeUser(admin.id)}
@@ -105,13 +110,19 @@ export const Masteradmin = () => {
           </li>
         ))}
       </ul>
-
+      <hr className="master-hr"></hr>
+        
       <h1 className="title">Users</h1>
       <ul className="user-list">
+        <li className="user-item">
+          <span className="short-span">Name: </span>
+          <span className="short-span">Role: </span>
+          <span className="long-span">Change Status: </span>
+        </li>
         {users.map((user, index) => (
           <li key={index} className="user-item">
-            <span>{`Name: ${user.name}`}</span>
-            <span>{`Role: ${user.role}`}</span>
+            <span className="short-span">{`${user.name}`}</span>
+            <span className="short-span">{`${user.role}`}</span>
             <button
               className="remove-button"
               onClick={() => removeUser(user.id)}
@@ -127,19 +138,40 @@ export const Masteradmin = () => {
           </li>
         ))}
       </ul>
+      <hr className="master-hr"></hr>
 
-      <div>
-        Current number of days to Reserve before auto cancel: {currRes}
-        <button onClick={changeRes}>Change</button>
-      </div>
-      <div>
-        Current number of days to borrow before overdue: {currBor}
-        <button onClick={changeBor}>Change</button>
-      </div>
-      <div>
-        Current Overdue rate(daily): {currPrice}
-        <button onClick={changeRate}>Change</button>
-      </div>
+      <ul className="user-list">
+        <li className="user-item">
+        <span className="masteredits-text">Current number of days to Reserve before auto cancel:</span> 
+        <span className="masteredits-value">{currRes}</span>
+          <button 
+            className="remove-button"
+            onClick={changeRes}
+          >
+            Change
+          </button>
+        </li>
+        <li className="user-item">
+        <span className="masteredits-text">Current number of days to borrow before overdue:</span>
+        <span className="masteredits-value">{currBor}</span>
+          <button 
+            className="remove-button"
+            onClick={changeBor}
+          >
+            Change
+          </button>
+        </li>
+        <li className="user-item">
+        <span className="masteredits-text">Current Overdue Rate (daily):</span> 
+        <span className="masteredits-value">{currPrice}</span>
+          <button 
+            className="remove-button"
+            onClick={changeRate}
+          >
+            Change
+          </button>
+        </li>
+      </ul>
     </div>
   );
 

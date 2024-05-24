@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { storage } from "./firebase-config";
 import { getDownloadURL, ref } from "firebase/storage";
-import { currUserID } from "./Loginbox";
+import { currentUser } from "./App";
 import { useNavigate } from "react-router-dom";
 import { reserveBook } from "./UserPage";
-import { isAdmin } from "./Loginbox";
 
 export const Bookcard = (props) => {
   const [imgUrl, setImgUrl] = useState("");
+  const isAdmin = currentUser ? currentUser.role === "admin" : false;
 
   useEffect(() => {
     const getImage = async () => {
@@ -27,7 +27,7 @@ export const Bookcard = (props) => {
     //minus 1 for users, plus input for admin
     const nOfCopies = await props.getActualCopies(props.id);
 
-    if (currUserID === "") {
+    if (!currentUser) {
       if (nOfCopies === 0) {
         alert("CANNOT RESERVE.\nNo copy available.");
       } else {
@@ -73,7 +73,6 @@ export const Bookcard = (props) => {
           <span className="truncate-popup">{props.title}</span>
         </div>
         <div>
-          <br />
           {!isAdmin && (
             <div className="showDesc">
               <button
