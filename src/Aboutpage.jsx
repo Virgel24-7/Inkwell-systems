@@ -1,7 +1,11 @@
+import alotayaA from "./assets/Alotaya_ID.png";
+import alotayaB from "./assets/Alotaya_Silhouette.jpg";
 import galanidaA from "./assets/Galanida_ID.png";
 import galanidaB from "./assets/Galanida_Silhouette.jpg";
 import soralloA from "./assets/Sorallo_ID.png";
 import soralloB from "./assets/Sorallo_Silhouette.jpg";
+import torresA from "./assets/Torres_ID.png";
+import torresB from "./assets/Torres_Silhouette.jpg";
 
 export const Aboutpage = () => {
   return (
@@ -40,14 +44,14 @@ export const Aboutpage = () => {
             <div className="team-card-container">
               <div className="team-view-container">
                 <img
-                  src={galanidaB}
+                  src={alotayaB}
                   className="view-img"
                   alt="Silhouette of Alotaya, Isaac Jadon #22101054"
                 />
               </div>
               <div className="team-img-container">
                 <img
-                  src={galanidaA}
+                  src={alotayaA}
                   className="nft-img"
                   alt="Image of Alotaya, Isaac Jadon #22101054"
                 />
@@ -112,14 +116,14 @@ export const Aboutpage = () => {
             <div className="team-card-container">
               <div className="team-view-container">
                 <img
-                  src={galanidaB}
+                  src={torresB}
                   className="view-img"
                   alt="Silhouette of Torres, Virgel Rai #22103868"
                 />
               </div>
               <div className="team-img-container">
                 <img
-                  src={galanidaA}
+                  src={torresA}
                   className="nft-img"
                   alt="Image of Torres, Virgel Rai #22103868"
                 />
