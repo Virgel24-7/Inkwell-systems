@@ -17,7 +17,7 @@ function Popup(props) {
         <p style={{ textAlign: "center" }}>{props.title.toUpperCase()}</p>
         {props.code === 1 && (
           <button
-            className="popSubmit"
+            className="empSubmit"
             onClick={() => {
               props.setEmptyPop(true);
               props.setEmptyId(props.bookId);

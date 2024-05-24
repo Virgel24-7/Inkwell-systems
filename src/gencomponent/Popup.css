@@ -16,9 +16,143 @@
   position: relative;
   padding: 50px;
   width: 100%;
-  max-width: 650px;
+  max-width: 750px;
   background-color: white;
   border-radius: 10px;
+}
+
+.img-instruction {
+  grid-area: label;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+}
+
+.img-instruction p {
+  font-size: 14px;
+  margin: 0em;
+  align-self: center;
+}
+
+.emptypopContent {
+  display: grid;
+  grid-template-areas:
+    "topx topx"
+    "image form"
+    "label form"
+    "button button";
+  position: relative;
+  padding: 50px;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 50px auto 50px 50px;
+  width: 100%;
+  max-width: 750px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.border {
+  position: absolute;
+  left: 36%;
+  width: 2px;
+  height: 72%;
+  background: rgba(200, 142, 0);
+  right: -9px;
+  top: 13.2%;
+}
+
+.top-line {
+  grid-area: topx;
+  width: 101.2%;
+  height: 30px;
+  margin-bottom: 10px;
+  background-color: rgba(200, 142, 0);
+  align-content: center;
+}
+
+.sys-name {
+  display: flex;
+  justify-content: center;
+  margin: 0px;
+  color: aliceblue;
+}
+
+.form-box {
+  grid-area: form;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "up"
+    "down";
+  padding: 5px;
+}
+
+.top-half {
+  grid-area: up;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.key-value {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  padding: 0px;
+  padding-left: 20px;
+  margin: -7px;
+}
+
+.bottom-half {
+  grid-area: down;
+  margin-top: 25px;
+}
+
+.key-name {
+  text-align: left;
+}
+
+.descref {
+  height: 100%;
+  padding: 5px 15px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-family: inherit;
+  font-size: 15px;
+  text-align: justify;
+  resize: none;
+}
+
+textarea.descref {
+  line-height: 1.6;
+}
+
+.field {
+  height: 30px;
+  padding: 5px;
+  align-self: center;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-family: inherit;
+  font-size: 15px;
+  text-align: justify;
+}
+
+.blank-box {
+  grid-area: box;
+}
+
+.button-box {
+  grid-area: button;
+  width: 100%;
+  display: flex;
+  padding: 0px;
+  margin: 0px;
+  margin-top: 10px;
+  justify-content: space-between;
 }
 
 .popCloser {
@@ -43,9 +177,13 @@
 }
 
 .prevBx {
+  grid-area: image;
   display: flex;
   align-items: center;
-  width: 100%;
+  justify-content: left;
+  width: 210px;
+  height: 308px;
+  padding: 0%;
 }
 
 .prevBx img {
@@ -56,18 +194,21 @@
 }
 
 .upload-View {
+  justify-content: left;
+  width: 210px;
+  height: 308px;
+  padding: 0%;
   transition: 0.5s ease;
   background-color: rgba(200, 142, 0, 0.5);
   opacity: 0;
-  position: absolute;
   display: flex;
   align-items: center;
-  justify-content: center;
-  top: 255px;
-  left: 50%;
   width: 210px;
   height: 308px;
+  position: absolute;
+  left: 154px;
   transform: translate(-50%, -50%);
+  top: 254px;
 }
 
 .prevBx .upload-View:hover {
@@ -78,45 +219,6 @@
 .upload-View .view-logo {
   width: 84px;
   height: 84px;
-}
-
-.split-Details {
-  width: 100%;
-  display: flex;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.leftside-Details {
-  width: 50%;
-}
-
-.rightside-Details {
-  width: 50%;
-}
-
-.clear-Table {
-  border-collapse: collapse; /* Removes borders between cells */
-  border: none; /* Removes border around the entire table */
-}
-
-.clear-Table td, .clear-Table th {
-  border: none; /* Removes borders from individual cells */
-  padding: 2px; /* Add some padding for better readability (optional) */
-}
-
-.descref {
-  width: 100%;
-  height: 115px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  font-family: inherit;
-  font-size: 14px;
-  text-align: justify;
-  resize: none;
 }
 
 .popSubmit {
@@ -132,6 +234,25 @@
 }
 
 .popSubmit:hover {
+  background-color: #ffffff;
+  border: 3px solid rgba(200, 142, 0);
+  color: rgba(200, 142, 0);
+}
+
+.empSubmit {
+  text-decoration: none;
+  color: #ffffff;
+  border: 3px solid rgba(200, 142, 0);
+  background-color: rgba(200, 142, 0);
+  padding: 5px 5px; /* Adjust padding for button size */
+  border-radius: 5px;
+  transition: 0.3s all ease;
+  align-items: center;
+  margin: 5px;
+  width: 100%;
+}
+
+.empSubmit:hover {
   background-color: #ffffff;
   border: 3px solid rgba(200, 142, 0);
   color: rgba(200, 142, 0);

@@ -24,6 +24,7 @@ import uploadView from "../assets/Upload_Logo.png";
 function Emptybook(props) {
   const [book, setBook] = useState({});
   const [reimg, setReimg] = useState(false);
+
   let bookObj = null;
 
   const titleRef = useRef();
@@ -32,7 +33,6 @@ function Emptybook(props) {
   const dewRef = useRef();
   const copRef = useRef();
   const imageRef = useRef(null);
-  const formRef = useRef(null);
 
   useEffect(() => {
     initialize();
@@ -58,7 +58,7 @@ function Emptybook(props) {
 
       getBookObj();
     }
-  }, [props.trigger, reimg]);
+  }, [props.trigger]);
 
   const initialize = () => {
     setBook({
@@ -76,7 +76,8 @@ function Emptybook(props) {
 
   return props.trigger ? (
     <div className="popup">
-      <div className="popContent">
+      <div className="emptypopContent">
+        <span className="border"></span>
         <button
           className="popCloser"
           onClick={() => {
@@ -85,7 +86,18 @@ function Emptybook(props) {
         >
           CLOSE
         </button>
-        <p>Upload book cover (recommended aspect ratio(15:22)):</p>
+        <div className="top-line">
+          <p className="sys-name">
+            <i>
+              <b>Inkwell Systems</b>
+            </i>
+          </p>
+        </div>
+        <span className="img-instruction">
+          <p className="label">Upload book cover</p>
+          <p className="label">recommended aspect ratio(15:22)</p>
+        </span>
+        <span className="blank-box"></span>
         <div className="prevBx">
           <img
             src={
@@ -96,7 +108,7 @@ function Emptybook(props) {
                 : URL.createObjectURL(imageRef.current.files[0])
             }
           />
-          <div class="upload-View" onClick={() => imageRef.current.click()}>
+          <div className="upload-View" onClick={() => imageRef.current.click()}>
             <img
               src={uploadView}
               className="view-logo"
@@ -105,93 +117,80 @@ function Emptybook(props) {
           </div>
         </div>
 
-        <form ref={formRef}>
-          <div className="split-Details">
-            <div className="leftside-Details">
-              <div>
+        <div className="form-box">
+          <div className="top-half">
+            <div>
+              <input
+                className="imageref"
+                type="file"
+                ref={imageRef}
+                style={{ display: "none" }}
+                onChange={() => setReimg(!reimg)}
+              />
+            </div>
+            <div className="key-value">
+              <p className="key-name">Book Title</p>
+              <input
+                className="field"
+                type="text"
+                ref={titleRef}
+                defaultValue={book.title}
+              />
+            </div>
+            <div className="key-value">
+              <p className="key-name">Author/s</p>
+              <input
+                className="field"
+                type="text"
+                ref={authorRef}
+                defaultValue={book.author}
+              />
+            </div>
+            <div className="key-value">
+              <p className="key-name">Dewey decimal</p>
+              <input
+                className="field"
+                type="text"
+                ref={dewRef}
+                defaultValue={book.dewey}
+              />
+            </div>
+            {props.bookid === "" && (
+              <div className="key-value">
+                <p className="key-name">Number of copies</p>
                 <input
-                  className="imageref"
-                  type="file"
-                  ref={imageRef}
-                  style={{ display: "none" }}
-                  onChange={() => setReimg(!reimg)}
+                  className="field"
+                  type="number"
+                  ref={copRef}
+                  defaultValue={book.copies !== -1 ? book.copies : ""}
                 />
               </div>
-              <br></br>
-              <br></br>
-              <table className="clear-Table">
-                <tr>
-                  <td>Book Title :</td>
-                  <td>
-                    <input
-                      className="titleref"
-                      type="text"
-                      ref={titleRef}
-                      defaultValue={book.title}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Author/s :</td>
-                  <td>
-                    <input
-                      className="authorref"
-                      type="text"
-                      ref={authorRef}
-                      defaultValue={book.author}
-                    />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Dewey decimal:</td>
-                  <td>
-                    <input
-                      className="dewref"
-                      type="text"
-                      ref={dewRef}
-                      defaultValue={book.dewey}
-                    />
-                  </td>
-                </tr>
-                {props.bookid === "" && (
-                  <tr>
-                    <td>No. of Copies:</td>
-                    <td>
-                      <input
-                        className="copref"
-                        type="number"
-                        ref={copRef}
-                        defaultValue={book.copies}
-                      />
-                    </td>
-                  </tr>
-                )}
-              </table>
-            </div>
-            <div className="rightside-Details">
-              <table className="clear-Table">
-                <tr>
-                  <td>Description:</td>
-                </tr>
-                <tr>
-                  <td>
-                    <textarea
-                      className="descref"
-                      type="text"
-                      ref={descRef}
-                      defaultValue={book.description}
-                    />
-                  </td>
-                </tr>
-              </table>
+            )}
+          </div>
+          <div className="bottom-half">
+            <div className="key-value">
+              <p className="key-name">Description</p>
+              <textarea
+                className="descref"
+                type="text"
+                style={{ height: "160px" }}
+                ref={descRef}
+                defaultValue={book.description}
+              ></textarea>
             </div>
           </div>
-        </form>
+        </div>
 
-        <button className="popSubmit" onClick={submit}>SUBMIT</button>
-        {props.bookid === "" || (
-          <button className="popSubmit" onClick={deleteBook}>DELETE BOOK</button>
-        )}
+        <div className="button-box">
+          <button className="empSubmit" onClick={submit}>
+            SUBMIT
+          </button>
+          {props.bookid === "" || (
+            <button className="empSubmit" onClick={deleteBook}>
+              DELETE BOOK
+            </button>
+          )}
+        </div>
       </div>
     </div>
   ) : (
@@ -260,7 +259,6 @@ function Emptybook(props) {
   function closePopup() {
     props.setTrigger(false);
     document.body.style.overflow = "unset";
-    formRef.current.reset();
   }
 
   async function deleteBook() {
