@@ -7,11 +7,6 @@ import { db } from "./firebase-config";
 import { setUserData } from "./UserPage";
 import { setCurrentUser } from "./App";
 
-export let currUserID = "";
-export let currUserName = "";
-export let isAdmin = false;
-export let isMasterAdmin = false;
-
 export const Loginbox = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
