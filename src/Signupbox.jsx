@@ -80,8 +80,8 @@ export const Signupbox = () => {
             }}
           />
         </div>
+        {error && <p className="errorNotif">{error}</p>}
         <button onClick={createUser}>Create User</button>
-        {error && <p>{error}</p>}
       </div>
     </div>
   );

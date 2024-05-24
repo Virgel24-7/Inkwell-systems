@@ -345,6 +345,7 @@ nav a {
   text-decoration: none;
   justify-content: flex-end;
 }
+
 a {
   position: relative;
   text-decoration: none;
@@ -352,6 +353,7 @@ a {
   padding: 0 10px;
   justify-content: flex-end;
 }
+
 a:after {
   content: "";
   position: absolute;
@@ -364,6 +366,7 @@ a:after {
 a:hover:after {
   width: 60%;
 }
+
 #sidebar-active {
   display: none;
 }
@@ -542,7 +545,7 @@ a:hover:after {
   position: relative;
   height: 440px;
   background: #f0f0f0;
-  margin: 30px 10px;
+  margin: 50px 10px;
   padding: 20px 15px;
   display: flex;
   flex-direction: column;
@@ -703,7 +706,7 @@ button:hover .button-text {
 }
 
 .login-container {
-  height: 50%;
+  height: 55%;
   width: 420px;
   background: transparent;
   color: white;
@@ -712,7 +715,7 @@ button:hover .button-text {
   border-radius: 10px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 50px; /* Reduce margin to be more responsive */
+  margin-bottom: 55px; /* Reduce margin to be more responsive */
   display: flex;
   flex-direction: column; /* Flex direction to stack items vertically */
   align-items: center; /* Center content horizontally */
@@ -775,14 +778,27 @@ button:hover .button-text {
 }
 
 .login-container .remember-forgot a {
+  position: relative;
   color: #fff;
   text-decoration: none;
+  padding: 0 10px;
   margin-left: 100px;
   align-items: center;
+  justify-content: flex-end;
 }
 
-.login-container .remember-forgot a:hover {
-  text-decoration: underline;
+.login-container .remember-forgot a:after {
+  content: "";
+  position: absolute;
+  background-color: #8b6913;
+  height: 3px;
+  width: 0;
+  left: 12px;
+  bottom: -2px;
+}
+
+.login-container .remember-forgot a:hover:after {
+  width: 80%;
 }
 
 .login-container .btn {
@@ -811,12 +827,27 @@ button:hover .button-text {
   text-decoration: none;
   color: white;
   position: relative; /* Changed to position relative */
-  top: 590px;
+  top: 550px;
   background-color: none;
   border-radius: 10px;
   margin-right: 10px;
   padding: 5px;
   z-index: 2;
+  font-size: 15px;
+  justify-content: flex-end;
+}
+
+.links-access a:after {
+  content: "";
+  position: absolute;
+  background-color: #8b6913;
+  height: 3px;
+  width: 0;
+  left: 6px;
+  bottom: -2px;
+}
+.links-access a:hover:after {
+  width: 80%;
 }
 
 /*===============================POP UP================================*/
@@ -871,7 +902,8 @@ button:hover .button-text {
 }
 
 .App-admin button {
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 60px;
   width: 300px; /* Adjust width as needed */
   height: 40px;
   padding: 8px;
@@ -882,10 +914,17 @@ button:hover .button-text {
   font-size: 16px;
 }
 
+.errorNotif {
+  margin-top: 45%;
+  position: absolute; 
+  z-index: 2;
+}
+
 .App-admin button {
   cursor: pointer;
   background-color: #007bff;
 }
+
 .App-admin {
   display: flex;
   flex-direction: column;
@@ -896,7 +935,7 @@ button:hover .button-text {
 }
 
 .glass-card {
-  height: 50%;
+  height: 55%;
   width: 420px;
   background: transparent;
   color: white;
@@ -905,7 +944,7 @@ button:hover .button-text {
   border-radius: 10px;
   backdrop-filter: blur(20px);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 50px; /* Reduce margin to be more responsive */
+  margin-bottom: 55px; /* Reduce margin to be more responsive */
   display: flex;
   flex-direction: column; /* Flex direction to stack items vertically */
   align-items: center; /* Center content horizontally */
@@ -915,7 +954,7 @@ button:hover .button-text {
 
 .glass-card input {
   width: 100%;
-  height: 250%;
+  height: 100%;
   background: transparent;
   border: none;
   outline: none;
@@ -927,10 +966,10 @@ button:hover .button-text {
   display: flex;
   align-items: center;
   right: 15px;
+  margin-bottom: 100px;
 }
 
 .glass-card button {
-  margin-top: 20px;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -1071,7 +1110,7 @@ button:hover .button-text {
 .addbutton-container {
   display: flex;
   justify-content: center;
-  margin: auto 65% 8.5% auto;
+  margin: auto auto 8.5% 3.5%;
 }
 
 .addbutton-container button {

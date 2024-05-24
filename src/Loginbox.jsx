@@ -82,9 +82,9 @@ export const Loginbox = (props) => {
           </div>
           <div className="remember-forgot">
             <label>
-              <input type="checkbox" /> Remember me
+              <input type="checkbox" />Remember me
+            <a href="#">Forgot Password?</a>
             </label>
-            <a href="#"> Forgot Password?</a>
           </div>
           <button type="submit" className="btn" disabled={isLoading}>
             {isLoading ? "Signing In..." : "Login"}
