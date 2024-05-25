@@ -28,7 +28,7 @@ export const Reservationlist = () => {
     }
     openReservations(historyCollectionRef, setReservations);
     setLoadRes(false);
-  }, [reservations]);
+  }, []);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());

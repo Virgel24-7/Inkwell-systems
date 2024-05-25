@@ -24,7 +24,7 @@ export const Borrowedlist = () => {
     }
     openBorrowed(historyCollectionRef, setBorroweds);
     setLoadRes(false);
-  }, [borroweds]);
+  }, []);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value.toLowerCase());
