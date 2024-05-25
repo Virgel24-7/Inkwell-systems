@@ -58,24 +58,24 @@ body {
 .book-cards {
   display: flex;
   position: relative;
-  flex-wrap: nowrap; 
+  flex-wrap: nowrap;
   gap: 20px;
   left: -40px;
-  margin-right: -10px; 
+  margin-right: -10px;
   background-color: none;
-  overflow-x: auto; 
-  padding-bottom: 20px; 
+  overflow-x: auto;
+  padding-bottom: 20px;
 }
 
 .book-cards .card {
   top: 10px;
-  width: 308px; 
-  height: 440px; 
+  width: 308px;
+  height: 440px;
 }
 
 .book-cards .card img {
-  width: 100%; 
-  height: auto; 
+  width: 100%;
+  height: auto;
 }
 .slider {
   margin-top: 50px;
@@ -535,8 +535,9 @@ a:hover:after {
 
 .books {
   top: 300px;
-  position: relative;
-  width: 1100px;
+  position: absolute;
+  top: 600px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -557,7 +558,7 @@ a:hover:after {
   box-shadow: 0.5px 10px #e6e6e6;
   transition: transform 1s;
   bottom: 400px;
-  left: 200px;
+  /* left: 200px; */
   border-radius: 30px;
   text-align: left;
 }
@@ -769,16 +770,7 @@ button:hover .button-text {
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
-  
 }
-
-
-
-
-
-
-
-
 
 .login-container .btn {
   width: 70%;
@@ -1111,6 +1103,9 @@ button:hover .button-text {
   display: flex;
   justify-content: center;
   margin: auto auto 8.5% 3.5%;
+  position: absolute;
+  top: 200px;
+  width: 100%;
 }
 
 .addbutton-container button {

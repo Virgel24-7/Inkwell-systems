@@ -19,12 +19,7 @@ export const Masteradmin = () => {
   const [currBor, setCurrBor] = useState(Number());
   const [master, setMaster] = useState({});
 
-  let navigate = useNavigate();
-
   useEffect(() => {
-    if (currentUser === null || currentUser.role !== "masteradmin") {
-      navigate("/");
-    }
     fetchUsers();
   }, [currPrice, currRes, currBor]);
 

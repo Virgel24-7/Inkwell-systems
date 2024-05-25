@@ -58,7 +58,15 @@ function App() {
             <Route path="about" element={<Aboutpage />} />
             <Route
               path={userText === "" ? "login" : `/${userText.toLowerCase()}`}
-              element={role !== "user" ? <Accesspage /> : <Userpage />}
+              element={
+                role !== "user" &&
+                role !== "masteradmin" &&
+                role !== "admin" ? (
+                  <Accesspage />
+                ) : (
+                  <Userpage />
+                )
+              }
             >
               <Route index element={<Loginbox setUser={setUser} />} />
               <Route path="log-in" element={<Loginbox setUser={setUser} />} />
@@ -66,7 +74,6 @@ function App() {
             </Route>
             <Route path="checkouts" element={<Checkoutspage />} />
             <Route path="masteradmin" element={<Masteradmin />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </div>
       </div>

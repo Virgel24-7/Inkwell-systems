@@ -1,20 +1,24 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from '@firebase/firestore'
+import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDNJQ3mVwHd3UQfHpABczul94S7idozL1c",
-    authDomain: "inkwell-sys.firebaseapp.com",
-    projectId: "inkwell-sys",
-    storageBucket: "inkwell-sys.appspot.com",
-    messagingSenderId: "160191100269",
-    appId: "1:160191100269:web:33a4f759c15457bc451664",
-    measurementId: "G-L3HLG1MBMY"
-  };
+  apiKey: "AIzaSyCq_RFoW7fxmfmp9pR9RhSgQW4RiBBLquo",
+  authDomain: "inkwell-systems.firebaseapp.com",
+  projectId: "inkwell-systems",
+  storageBucket: "inkwell-systems.appspot.com",
+  messagingSenderId: "40393222334",
+  appId: "1:40393222334:web:a459faed6cdf88275616ef",
+};
 
-  const app = initializeApp(firebaseConfig);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
-  export const db = getFirestore(app);
-  export const auth = getAuth(app);
-  export const storage = getStorage(app);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
+export const storage = getStorage(app);
