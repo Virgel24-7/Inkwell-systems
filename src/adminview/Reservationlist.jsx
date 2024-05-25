@@ -227,5 +227,6 @@ async function changeToBorrow(historyId, userId) {
     borrowed: borrowed,
   };
 
+  alert("Book successfully being borrowed.");
   updateDoc(userToChange, newField2);
 }
