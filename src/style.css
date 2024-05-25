@@ -427,8 +427,8 @@ a:hover:after {
   position: sticky;
   top: 20px;
   height: 10%;
-  width: 40%;
-  right: 30%;
+  width: 30%;
+  right: 40%;
   margin: 10px auto;
   background: none;
   display: flex;
@@ -437,7 +437,7 @@ a:hover:after {
   border-radius: 60px;
   padding-left: 10px;
   padding-right: 0px;
-  z-index: 2; /* Ensure it's above other content */
+  z-index: 2;
 }
 
 .search-bar {
