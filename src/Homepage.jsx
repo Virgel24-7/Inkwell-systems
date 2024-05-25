@@ -71,6 +71,11 @@ export const Homepage = (props) => {
           ))}
         </div>
       </div>
+      <div className="next-container">
+        <div className="next">
+          <Link to="books">Next Page</Link>
+        </div>
+      </div>
     </div>
   );
 };

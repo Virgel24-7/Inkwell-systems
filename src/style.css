@@ -55,6 +55,23 @@ body {
   bottom: 10px;
 }
 
+.next a {
+  text-decoration: none;
+  color: #e6e6e6;
+  border: 3px solid #8b6913;
+  padding: 5px 15px; /* Adjust padding for button size */
+  border-radius: 40px;
+  transition: 0.3s all ease;
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  bottom: 150px;
+}
+
+.next a:hover {
+  background-color: #8b6913;
+}
+
 .book-cards {
   display: flex;
   position: relative;
@@ -427,7 +444,7 @@ a:hover:after {
   position: sticky;
   top: 20px;
   height: 10%;
-  width: 30%;
+  width: 35%;
   right: 40%;
   margin: 10px auto;
   background: none;
@@ -488,7 +505,7 @@ a:hover:after {
   color: #000000;
   font-size: 14px;
   padding: 5px 10px 5px 10px;
-  width: 55%;
+  width: 65%;
   background-image: url(assets/DropDown.png);
   background-size: 30px 30px;
   background-repeat: no-repeat;
