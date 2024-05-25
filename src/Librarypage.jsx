@@ -79,19 +79,6 @@ export const Librarypage = () => {
 
   return (
     <div>
-      {isAdmin && (
-        <div className="addbutton-container">
-          <button
-            onClick={() => {
-              setEmptyId("");
-              setEmptyPop(true);
-            }}
-          >
-            Add a New Book
-          </button>
-          <br></br>
-        </div>
-      )}
       <div>
         {!library || library.length === 0 ? (
           <p style={{ color: "white" }}>Loading library...</p>
@@ -120,6 +107,19 @@ export const Librarypage = () => {
             <br />
             <br />
             <div>
+              {isAdmin && (
+                <div className="addbutton-container">
+                  <button
+                    onClick={() => {
+                      setEmptyId("");
+                      setEmptyPop(true);
+                    }}
+                  >
+                    Add a New Book
+                  </button>
+                  <br></br>
+                </div>
+              )}
               <div className="books">
                 {filteredLibrary.length === 0 ? (
                   <p className="no-results-found">
