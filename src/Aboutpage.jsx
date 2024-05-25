@@ -55,12 +55,12 @@ export const Aboutpage = () => {
                   className="nft-img"
                   alt="Image of Alotaya, Isaac Jadon #22101054"
                 />
-              <hr></hr>
-              <h2>Isaac Jadon R.</h2>
-              <h1>ALOTAYA</h1>
-              <hr></hr>
-              <h2 className="self-title">Firebase Backend Programmer</h2>
-              <p>22101054@usc.edu.ph +63 711 420 3423</p>
+                <hr></hr>
+                <h2>Isaac Jadon R.</h2>
+                <h1>ALOTAYA</h1>
+                <hr></hr>
+                <h2 className="self-title">Firebase Backend Programmer</h2>
+                <p>22101054@usc.edu.ph +63 711 420 3423</p>
               </div>
             </div>
 
@@ -78,15 +78,12 @@ export const Aboutpage = () => {
                   className="nft-img"
                   alt="Image of Galanida, John Von Lawdwig #20800221"
                 />
-              <hr></hr>
-              <h2>John Von Lawdwig S.</h2>
-              <h1>GALANIDA</h1>
-              <hr></hr>
-              <h2 className="self-title">CSS / React Frontend Programmer</h2>
-              <p>
-              20800221@usc.edu.ph
-              +63 991 372 1299
-              </p>
+                <hr></hr>
+                <h2>John Von Lawdwig S.</h2>
+                <h1>GALANIDA</h1>
+                <hr></hr>
+                <h2 className="self-title">CSS / React Frontend Programmer</h2>
+                <p>20800221@usc.edu.ph +63 991 372 1299</p>
               </div>
             </div>
 
@@ -94,22 +91,22 @@ export const Aboutpage = () => {
               <div className="team-view-container">
                 <img
                   src={soralloB}
-                  class="view-img"
+                  className="view-img"
                   alt="Silhouette of Sorallo, Kinshin #22101520"
                 />
               </div>
               <div className="team-img-container">
                 <img
                   src={soralloA}
-                  class="nft-img"
+                  className="nft-img"
                   alt="Image of Sorallo, Kinshin #22101520"
                 />
-              <hr></hr>
-              <h2>Kinshin A.</h2>
-              <h1>SORALLO</h1>
-              <hr></hr>
-              <h2 className="self-title">CSS / React Frontend Programmer</h2>
-              <p>22101520@usc.edu.ph +63 813 029 6394</p>
+                <hr></hr>
+                <h2>Kinshin A.</h2>
+                <h1>SORALLO</h1>
+                <hr></hr>
+                <h2 className="self-title">CSS / React Frontend Programmer</h2>
+                <p>22101520@usc.edu.ph +63 813 029 6394</p>
               </div>
             </div>
 
@@ -127,12 +124,12 @@ export const Aboutpage = () => {
                   className="nft-img"
                   alt="Image of Torres, Virgel Rai #22103868"
                 />
-              <hr></hr>
-              <h2>Virgel Rai S.</h2>
-              <h1>TORRES</h1>
-              <hr></hr>
-              <h2 className="self-title">Firebase Backend Programmer</h2>
-              <p>22103868@usc.edu.ph +63 931 415 9265</p>
+                <hr></hr>
+                <h2>Virgel Rai S.</h2>
+                <h1>TORRES</h1>
+                <hr></hr>
+                <h2 className="self-title">Firebase Backend Programmer</h2>
+                <p>22103868@usc.edu.ph +63 931 415 9265</p>
               </div>
             </div>
           </div>

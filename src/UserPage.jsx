@@ -411,7 +411,8 @@ const Reservations = (props) => {
               <td>{reserve.dateReserved}</td>
               <td>{reserve.dueDate}</td>
               <td>
-                <button className="remove-button"
+                <button
+                  className="remove-button"
                   onClick={() => props.cancelReserved(reserve.id, reserve.book)}
                 >
                   Cancel
@@ -421,6 +422,11 @@ const Reservations = (props) => {
           ))}
         </tbody>
       </table>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
@@ -458,6 +464,11 @@ const Borrowedlist = (props) => {
           ))}
         </tbody>
       </table>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
@@ -485,8 +496,10 @@ const Returnlist = (props) => {
               <td>{returned.dateBorrowed}</td>
               <td>{returned.dateReturned}</td>
               <td>
-                <button className="remove-button"
-                onClick={() => props.reserve(returned.book)}>
+                <button
+                  className="remove-button"
+                  onClick={() => props.reserve(returned.book)}
+                >
                   Reserve again
                 </button>
               </td>
@@ -494,6 +507,11 @@ const Returnlist = (props) => {
           ))}
         </tbody>
       </table>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
