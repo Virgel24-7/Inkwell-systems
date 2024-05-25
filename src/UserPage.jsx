@@ -126,7 +126,7 @@ export const Userpage = (props) => {
       "Enter new name\nAlphanumeric only\n(this will reflect on the next login): "
     );
 
-    if (!newName || !/^[a-zA-Z0-9]+$/.test(newName)) {
+    if (!newName || !/^[a-z\d\-_\s]+$/i.test(newName)) {
       alert("Invalid. Alphanumeric only.");
       return;
     }
