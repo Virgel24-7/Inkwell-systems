@@ -7,6 +7,13 @@ import { Bookcard } from "./Bookcard";
 
 export const Homepage = (props) => {
   const [images, setImages] = useState([]);
+  const bookCardsData = [
+    { id: 1, title: "Book One", author: "Author One", dewey: "000.1", description: "Description for book one", image: "book1.jpg" },
+    { id: 2, title: "Book Two", author: "Author Two", dewey: "000.2", description: "Description for book two", image: "book2.jpg" },
+    { id: 3, title: "Book Three", author: "Author Three", dewey: "000.3", description: "Description for book three", image: "book3.jpg" },
+    { id: 4, title: "Book Four", author: "Author Four", dewey: "000.4", description: "Description for book four", image: "book4.jpg" },
+    { id: 5, title: "Book Five", author: "Author Five", dewey: "000.5", description: "Description for book five", image: "book5.jpg" }
+  ];
 
   useEffect(() => {
     const getImagesFromFirebase = async () => {
@@ -70,6 +77,21 @@ export const Homepage = (props) => {
             </span>
           ))}
         </div>
+      </div>
+      <div className="book-cards">
+        {bookCardsData.map((book) => (
+          <Bookcard
+            key={book.id}
+            id={book.id}
+            title={book.title}
+            author={book.author}
+            dewey={book.dewey}
+            description={book.description}
+            image={book.image}
+            showPopContent={props.showPopContent} // Assuming you have this function passed as a prop to Homepage
+            getActualCopies={props.getActualCopies} // Assuming you have this function passed as a prop to Homepage
+          />
+        ))}
       </div>
     </div>
   );
